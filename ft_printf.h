@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/01 13:27:12 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/12 22:49:08 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,38 @@
 
 #include "libft/libft.h"
 #include <stdarg.h>
+#include <stdlib.h>
+#include <stdio.h> //dont forget to delete
 
 #define TRUE 1
 #define FALSE 0
 
-typedef struct s_arg
-{
-	char			*str;
-	char			type;
-	struct s_arg	*next;
-}					t_arg;
+#define VALID_CHARS "#0-+ 123456789.hlLcspdiouxXf"
+#define CONVERSIONS "cspdiouxXf"
+#define INT_OR_OCTAL	"diouxX"
+#define FLAGS		"0# +-"
 
-int	ft_printf(const char *format, ...);
+
+typedef struct		s_conv_spec
+{
+	char			str[30]; //make it char *str after you make append function
+	int				zero_flag;
+	int				hash_flag;
+	int				space_flag;
+	int				plus_flag;
+	int				dash_flag;
+	int				width_int;
+	int				precision;
+	char			length[2];
+	char			specifier;
+}					t_conv_spec;
+
+int		ft_printf(const char *format, ...);
+void	parse(const char *format, va_list ap);
+void	fill(t_conv_spec *arg);
+void	initiate(t_conv_spec *arg);
+
+
+
 
 #endif
