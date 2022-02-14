@@ -6,24 +6,18 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/14 13:42:45 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/14 15:05:37 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	initiate(t_conv_spec *arg)
+void	reset(t_conv_spec *arg)
 {
-	ft_bzero(arg->str, 30);
-	arg->specifier = '\0';
-	arg->dash_flag= FALSE;
-	arg->hash_flag= FALSE;
-	arg->plus_flag= FALSE;
-	arg->space_flag = FALSE;
-	arg->zero_flag= FALSE;
-	arg->width_int = 0;
-	arg->precision = 0;
-	ft_bzero(arg->length, 2);
+	printf("%s\n", arg->str);
+	if (arg->str != NULL)
+		ft_strdel(&(arg->str));
+	initiate(arg);
 }
 
 static void fill_specifier(t_conv_spec *arg)

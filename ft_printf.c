@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:51:31 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/12 23:04:02 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/14 15:09:46 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 	}
 	return (count);	
 }*/
-
-
 
 static int	is_specifier(char c)
 {
@@ -72,6 +70,30 @@ void	ft_putarg(t_conv_spec *arg, va_list ap)
 	}
 }
 
+static void	realloc_before_append(char **str)
+{
+	char	*new;
+//think about if malloc fails
+	new = (char *)malloc(sizeof(char) * (ft_strlen(*str) + 2));
+	ft_strcpy(new, *str);
+	ft_strdel(str);
+	*str = new;
+}
+
+void	initiate(t_conv_spec *arg)
+{
+	arg->str = ft_memalloc(1);
+	arg->specifier = '\0';
+	arg->dash_flag= FALSE;
+	arg->hash_flag= FALSE;
+	arg->plus_flag= FALSE;
+	arg->space_flag = FALSE;
+	arg->zero_flag= FALSE;
+	arg->width_int = 0;
+	arg->precision = 0;
+	ft_bzero(arg->length, 2);
+}
+
 void	parse(const char *format, va_list ap)
 {
 	int		i;
@@ -84,6 +106,7 @@ void	parse(const char *format, va_list ap)
 	j = 0;
 	count  = 0;
 	specifier = FALSE;
+	initiate(&arg);
 	while (format[i] != '\0')
 	{
 		if (format[i] == '%')
@@ -95,7 +118,7 @@ void	parse(const char *format, va_list ap)
 				specifier = TRUE;
 				j = 0;
 				count++;
-				initiate(&arg);
+				reset(&arg); //change name to reset
 			}
 		}
 		else
@@ -104,6 +127,7 @@ void	parse(const char *format, va_list ap)
 				ft_putchar(format[i]);
 			else
 			{
+				realloc_before_append(&(arg.str));
 				arg.str[j++] = format[i]; // realloc_append fonksiyonu yaz
 				if (is_specifier(format[i]) == TRUE)
 				{
