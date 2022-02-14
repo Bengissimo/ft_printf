@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/14 13:05:51 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/14 13:17:32 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,6 @@ static void	fill_flags(t_conv_spec *arg) //flag olmayan birseyle karsilasinca br
 	}
 }
 
-
-
 static void fill_width(t_conv_spec *arg)
 {
 	int		i;
@@ -107,19 +105,14 @@ static void fill_width(t_conv_spec *arg)
 	while (is_flag(arg->str[i]) == TRUE && arg->str[i] != '\0')
 		i++;
 	printf("i: %d\n", i);
-	while (arg->str[i] != '\0')
+	while (arg->str[i] != '\0' && ft_isdigit(arg->str[i]) == TRUE)
 	{
-		if (ft_isdigit(arg->str[i]) == TRUE)
+		width = width * 10 + arg->str[i] - '0';
+		if (width > 2147483644)
 		{
-			width = width * 10 + arg->str[i] - '0';
-			if (width > 2147483644)
-			{
-				width  = -1;
-				break;
-			}
-		}
-		else
+			width = -1;
 			break;
+		}
 		i++;
 	}
 	arg->width_int = width;
@@ -127,13 +120,24 @@ static void fill_width(t_conv_spec *arg)
 
 static void	fill_precision(t_conv_spec *arg)
 {
-	char *dot;
+	char	*dot;
+	long	precision;
+	int		i;
 
+	precision = 0;
+	i = 1;
 	dot = ft_strchr(arg->str, '.');
-	if (dot != NULL && ft_isdigit(*(dot + 1)) == TRUE)
-		arg->precision = ft_atoi(dot + 1);
-	else
-		arg->precision = 0;
+	while (dot[i] != '\0' && ft_isdigit(dot[i]) == TRUE)
+	{
+		precision = precision * 10 + dot[i] - '0';
+		if (precision > 2147483646)
+		{
+			precision = -1;
+			break;
+		}
+		i++;
+	}
+	arg->precision = precision;
 	//if there is '-' after '.' ignore prceision!
 }
 
