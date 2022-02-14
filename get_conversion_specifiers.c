@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/14 13:17:32 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/14 13:42:45 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ static void	fill_precision(t_conv_spec *arg)
 	precision = 0;
 	i = 1;
 	dot = ft_strchr(arg->str, '.');
-	while (dot[i] != '\0' && ft_isdigit(dot[i]) == TRUE)
+	while (dot != NULL && dot[i] != '\0' && ft_isdigit(dot[i]) == TRUE)
 	{
 		precision = precision * 10 + dot[i] - '0';
 		if (precision > 2147483646)
@@ -138,7 +138,6 @@ static void	fill_precision(t_conv_spec *arg)
 		i++;
 	}
 	arg->precision = precision;
-	//if there is '-' after '.' ignore prceision!
 }
 
 static int	is_int_or_octal(char c)
