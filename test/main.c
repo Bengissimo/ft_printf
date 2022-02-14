@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/12 22:59:27 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/14 13:02:21 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 int main(void)
 {
-	ft_printf("Hello %+5.2ld\n", 5);
+	ft_printf("Hello %   #00000555555555555555555d\n", 5);
 	return (0);
 }

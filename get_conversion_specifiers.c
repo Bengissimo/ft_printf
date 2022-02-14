@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/12 23:03:32 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/14 13:05:51 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,28 +60,6 @@ static int	is_char_in_str(char c, char *str)
 	return (found);
 }
 
-static void	fill_flags(t_conv_spec *arg) //flag olmayan birseyle karsilasinca break
-{
-	int	i;
-
-	i = 0;
-	while (arg->str[i] != '\0')
-	{
-		if (is_char_in_str('-', arg->str) == TRUE)
-			arg->dash_flag = TRUE;
-		if (is_char_in_str('+', arg->str) == TRUE)
-			arg->plus_flag = TRUE;
-		if (is_char_in_str('#', arg->str) == TRUE)
-			arg->hash_flag = TRUE;
-		if (is_char_in_str(' ', arg->str) == TRUE && arg->plus_flag == FALSE)
-			arg->space_flag = TRUE;
-		if (is_char_in_str('0', arg->str) == TRUE && arg->dash_flag == FALSE
-		&& ft_isdigit(arg->str[i + 1]) == TRUE)
-			arg->zero_flag = TRUE;
-		i++;
-	}
-}
-
 static int	is_flag(char c)
 {
 	int i;
@@ -96,20 +74,55 @@ static int	is_flag(char c)
 	return (FALSE);
 }
 
-static void fill_width(t_conv_spec *arg)
+static void	fill_flags(t_conv_spec *arg) //flag olmayan birseyle karsilasinca break
 {
-	int i;
-	int	width;
+	int	i;
 
 	i = 0;
+	while (arg->str[i] != '\0' && is_flag(arg->str[i]) == TRUE)
+	{
+		if (arg->str[i] == '-')
+			arg->dash_flag = TRUE;
+		else if (arg->str[i] == '+')
+			arg->plus_flag = TRUE;
+		else if (arg->str[i] == '#')
+			arg->hash_flag = TRUE;
+		else if (arg->str[i] == ' ' && arg->plus_flag == FALSE)
+			arg->space_flag = TRUE;
+		else if (arg->str[i] == '0' && arg->width_int > 0 && arg->dash_flag == FALSE)
+			arg->zero_flag = TRUE;
+		i++;
+	}
+}
+
+
+
+static void fill_width(t_conv_spec *arg)
+{
+	int		i;
+	long	width;
+
+	i = 0;
+	width = 0;
 	while (is_flag(arg->str[i]) == TRUE && arg->str[i] != '\0')
 		i++;
-	if (ft_isdigit(arg->str[i + 10]) == FALSE)
+	printf("i: %d\n", i);
+	while (arg->str[i] != '\0')
 	{
-		width = ft_atoi(arg->str + i);
-		if (width > 0 && width < 2147483647)
-			arg->width_int = width;
+		if (ft_isdigit(arg->str[i]) == TRUE)
+		{
+			width = width * 10 + arg->str[i] - '0';
+			if (width > 2147483644)
+			{
+				width  = -1;
+				break;
+			}
+		}
+		else
+			break;
+		i++;
 	}
+	arg->width_int = width;
 }
 
 static void	fill_precision(t_conv_spec *arg)
@@ -119,7 +132,8 @@ static void	fill_precision(t_conv_spec *arg)
 	dot = ft_strchr(arg->str, '.');
 	if (dot != NULL && ft_isdigit(*(dot + 1)) == TRUE)
 		arg->precision = ft_atoi(dot + 1);
-	arg->precision = 0;
+	else
+		arg->precision = 0;
 	//if there is '-' after '.' ignore prceision!
 }
 
@@ -213,8 +227,8 @@ void	fill(t_conv_spec *arg)
 	fill_specifier(arg);
 	if (ft_strlen(arg->str) > 1)
 	{
+		fill_width(arg);
 		fill_flags(arg);
-		fill_width(arg);	
 		fill_length_h(arg);
 		fill_length_l(arg);
 		fill_length_upper_l(arg);
