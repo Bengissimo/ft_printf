@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/14 15:05:37 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/14 15:14:44 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	is_flag(char c)
 	return (FALSE);
 }
 
-static void	fill_flags(t_conv_spec *arg) //flag olmayan birseyle karsilasinca break
+static void	fill_flags(t_conv_spec *arg)
 {
 	int	i;
 

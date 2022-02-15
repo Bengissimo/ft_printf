@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:51:31 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/14 15:09:46 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/15 09:58:49 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,13 @@ void	initiate(t_conv_spec *arg)
 	ft_bzero(arg->length, 2);
 }
 
+static void	clean_up(char **str, int *flag)
+{
+	ft_strdel(str);
+	if (*flag == TRUE)
+		ft_putendl("specifier not found");
+}
+
 void	parse(const char *format, va_list ap)
 {
 	int		i;
@@ -128,35 +135,25 @@ void	parse(const char *format, va_list ap)
 			else
 			{
 				realloc_before_append(&(arg.str));
-				arg.str[j++] = format[i]; // realloc_append fonksiyonu yaz
+				arg.str[j++] = format[i];
 				if (is_specifier(format[i]) == TRUE)
 				{
 					specifier = FALSE;
-					/*ft_putstr(tmp);
-					ft_putchar('[');
-					ft_putnbr(count);
-					ft_putstr("]");*/
 					ft_putarg(&arg, ap);
 				}
 			}
 		}
 		i++;
 	}
-	if (specifier == TRUE) //error case
-	{
-		ft_putendl("specifier not found");
-	}
-	
+	clean_up(&(arg.str), &specifier);
 }
 
 int	ft_printf(const char *format, ...)
 {
 	va_list ap;
-	
+
 	va_start(ap, format);
 	parse(format, ap);
-	//fn here
-	
 	va_end(ap);
 	return (0);
 }

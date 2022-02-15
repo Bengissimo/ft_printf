@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/14 15:02:13 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/15 09:56:54 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	parse(const char *format, va_list ap);
 void	fill(t_conv_spec *arg);
 void	reset(t_conv_spec *arg);
 void	initiate(t_conv_spec *arg);
+
 
 
 
