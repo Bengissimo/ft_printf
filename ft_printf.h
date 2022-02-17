@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/15 09:56:54 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/17 10:05:17 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h> //dont forget to delete
+#include <wctype.h>
 
 #define TRUE 1
 #define FALSE 0
@@ -35,7 +36,7 @@ typedef struct		s_conv_spec
 	int				space_flag;
 	int				plus_flag;
 	int				dash_flag;
-	int				width_int;
+	int				width;
 	int				precision;
 	char			length[2];
 	char			specifier;
@@ -46,6 +47,13 @@ void	parse(const char *format, va_list ap);
 void	fill(t_conv_spec *arg);
 void	reset(t_conv_spec *arg);
 void	initiate(t_conv_spec *arg);
+
+
+int	print_c(t_conv_spec *arg, va_list ap);
+int	print_s(t_conv_spec *arg, va_list ap);
+void	ft_putarg(t_conv_spec *arg, va_list ap);
+
+
 
 
 

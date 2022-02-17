@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/14 15:14:44 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/17 09:28:48 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	reset(t_conv_spec *arg)
 {
-	printf("%s\n", arg->str);
 	if (arg->str != NULL)
 		ft_strdel(&(arg->str));
 	initiate(arg);
@@ -83,7 +82,7 @@ static void	fill_flags(t_conv_spec *arg)
 			arg->hash_flag = TRUE;
 		else if (arg->str[i] == ' ' && arg->plus_flag == FALSE)
 			arg->space_flag = TRUE;
-		else if (arg->str[i] == '0' && arg->width_int > 0 && arg->dash_flag == FALSE)
+		else if (arg->str[i] == '0' && arg->width > 0 && arg->dash_flag == FALSE)
 			arg->zero_flag = TRUE;
 		i++;
 	}
@@ -98,7 +97,6 @@ static void fill_width(t_conv_spec *arg)
 	width = 0;
 	while (is_flag(arg->str[i]) == TRUE && arg->str[i] != '\0')
 		i++;
-	printf("i: %d\n", i);
 	while (arg->str[i] != '\0' && ft_isdigit(arg->str[i]) == TRUE)
 	{
 		width = width * 10 + arg->str[i] - '0';
@@ -109,7 +107,7 @@ static void fill_width(t_conv_spec *arg)
 		}
 		i++;
 	}
-	arg->width_int = width;
+	arg->width = width;
 }
 
 static void	fill_precision(t_conv_spec *arg)
