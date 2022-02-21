@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/17 10:05:17 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/17 10:51:32 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	initiate(t_conv_spec *arg);
 
 int	print_c(t_conv_spec *arg, va_list ap);
 int	print_s(t_conv_spec *arg, va_list ap);
+int	print_p(t_conv_spec *arg, va_list ap);
 void	ft_putarg(t_conv_spec *arg, va_list ap);
 
 

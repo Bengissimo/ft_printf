@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/17 10:04:58 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/21 14:18:36 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,12 @@ void	ft_putarg(t_conv_spec *arg, va_list ap)
 		print_c(arg, ap);
 	else if (arg->specifier == 's')
 		print_s(arg, ap);
+	else if (arg->specifier == 'p')
+		print_p(arg, ap);
+		
 }
 
-static void	print_repeated(char c, int count)
+static int	print_repeated(char c, int count)
 {
 	int i = 0;
 	while (i < count)
@@ -56,6 +59,7 @@ static void	print_repeated(char c, int count)
 		ft_putchar(c);
 		i++;
 	}
+	return (i);
 }
 
 int	print_c(t_conv_spec *arg, va_list ap)
@@ -99,29 +103,28 @@ int	print_s(t_conv_spec *arg, va_list ap)
 
 	s = va_arg(ap, char *);
 	len = ft_strlen(s);
-	if (arg->width <= len && arg->precision == FALSE)
+	if (arg->precision == TRUE)
+		len = arg->precision;
+	if (arg->width <= len)
 		return (ft_putstr_nbyte(s, len));
-	if (arg->width <= len && arg->precision == TRUE)
-		return (ft_putstr_nbyte(s, arg->precision));
-	if (arg->dash_flag == TRUE && arg->precision == FALSE) // width > len
-	{
-		ft_putstr_nbyte(s, len);
-		print_repeated(' ', arg->width - len);
-		return(len);
-	}
-	if (arg->dash_flag == TRUE && arg->precision == TRUE) // width > len
-	{
-		ft_putstr_nbyte(s, arg->precision);
-		print_repeated(' ', arg->width - arg->precision);
-		return(arg->precision);
-	}
-	if (arg->dash_flag == FALSE && arg->precision == TRUE) // width > len
-	{
-		print_repeated(' ', arg->width - arg->precision);
-		return (ft_putstr_nbyte(s, arg->precision));
-	}
-	print_repeated(' ', arg->width - len);
-	return (ft_putstr_nbyte(s, len));
+	if (arg->dash_flag == TRUE) // width > len
+		return(ft_putstr_nbyte(s, len) + print_repeated(' ', arg->width - len));
+	return (print_repeated(' ', arg->width - len) + ft_putstr_nbyte(s, len));
 }
 
+int print_p(t_conv_spec *arg, va_list ap)
+{
+	void	*ptr;
+	char	*str;
+	int		strlen;
 
+	ptr = va_arg(ap, void *);
+	str = ft_itoa_base((long)ptr, 16);
+	strlen = ft_strlen(str);
+	if (arg->width < strlen)
+	{
+		ft_putstr("0x");
+		ft_putstr(str);
+	}
+	return (ft_strlen(str) + 2);
+}
