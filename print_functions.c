@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/22 11:08:40 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/22 13:12:26 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int print_p(t_conv_spec *arg, va_list ap)
 	}
 	return (ft_strlen(str) + 2);
 }
-int print_d_i(t_conv_spec *arg, va_list ap)
+int print_d_or_i(t_conv_spec *arg, va_list ap)
 {
 	int		nb;
 	char	*str;
@@ -139,14 +139,17 @@ int print_d_i(t_conv_spec *arg, va_list ap)
 	nb = va_arg(ap, int);
 	str = ft_itoa(nb);
 	len  = ft_strlen(str);
-	if (arg->precision == TRUE && arg->precision > len)
+	if (arg->precision == TRUE && arg->precision > len) //if precision true ignore 0 flag
 	{
-		print_repeated('0', arg->precision - len);
-		len = arg->precision;
-		if (arg->width > len && arg->dash_flag == FALSE)
+		if (arg->width > arg->precision && arg->dash_flag == FALSE && arg->space_flag == FALSE && arg->plus_flag == FALSE)
 		{
-			print_repeated(' ', arg->width - len);
+			return (print_repeated(' ', arg->width - arg->precision - len) + print_repeated('0', arg->precision - len) + ft_putstr_nbyte(str, len));
+		}
 		if (arg->width > len && arg->dash_flag == TRUE)
+
+	}
+	if (arg->zero_flag == TRUE)
+	{
 
 	}
 		

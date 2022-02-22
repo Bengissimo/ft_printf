@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/22 11:31:15 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/22 13:12:27 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int main(void)
 	int nb = 8;
 	//ft_printf("Hello (%p)", p);
 	
-	printf("(%010d)", nb);
+	printf("(%#05d)", nb);
 	return (0);
 }
 
