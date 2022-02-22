@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/21 14:18:36 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:02:08 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	ft_putarg(t_conv_spec *arg, va_list ap)
 		print_s(arg, ap);
 	else if (arg->specifier == 'p')
 		print_p(arg, ap);
+	else if (arg->specifier == 'd' || arg->specifier == 'i')
+		print_d_i(arg, ap);
 		
 }
 
@@ -127,4 +129,13 @@ int print_p(t_conv_spec *arg, va_list ap)
 		ft_putstr(str);
 	}
 	return (ft_strlen(str) + 2);
+}
+int print_d_i(t_conv_spec *arg, va_list ap)
+{
+	int		nb;
+	char	*str;
+	
+	nb = va_arg(ap, int);
+	str = ft_itoa(nb);
+	
 }
