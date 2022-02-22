@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/21 15:02:08 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/22 11:08:40 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	print_s(t_conv_spec *arg, va_list ap)
 
 	s = va_arg(ap, char *);
 	len = ft_strlen(s);
-	if (arg->precision == TRUE)
+	if (arg->precision == TRUE && arg->precision > len)
 		len = arg->precision;
 	if (arg->width <= len)
 		return (ft_putstr_nbyte(s, len));
