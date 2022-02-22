@@ -134,8 +134,22 @@ int print_d_i(t_conv_spec *arg, va_list ap)
 {
 	int		nb;
 	char	*str;
+	int		len;
 	
 	nb = va_arg(ap, int);
 	str = ft_itoa(nb);
+	len  = ft_strlen(str);
+	if (arg->precision == TRUE && arg->precision > len)
+	{
+		print_repeated('0', arg->precision - len);
+		len = arg->precision;
+		if (arg->width > len && arg->dash_flag == FALSE)
+		{
+			print_repeated(' ', arg->width - len);
+		if (arg->width > len && arg->dash_flag == TRUE)
+
+	}
+		
+
 	
 }
