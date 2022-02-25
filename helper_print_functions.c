@@ -6,22 +6,22 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:11:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/25 11:16:53 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/25 12:24:01 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	print_repeated(char c, int count)
+int	putchar_nbyte(char c, int n)
 {
 	int	i = 0;
 
-	while (i < count)
+	while (i < n)
 	{
 		write(1, &c, 1);
 		i++;
 	}
-	return (count);
+	return (n);
 }
 
 int	putstr_nbyte(char const *s, int nbyte)

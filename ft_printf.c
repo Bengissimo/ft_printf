@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:51:31 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/25 10:31:40 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/25 13:07:23 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	parse(const char *format, va_list ap)
 				if (is_specifier(format[i]) == TRUE)
 				{
 					specifier = FALSE;
-					ft_putflag(&flag, ap);
+					put_format(&flag, ap);
 				}
 			}
 		}

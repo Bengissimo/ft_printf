@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/25 11:15:38 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/25 13:58:09 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@
 	printf("specifier: %c\n", flag->specifier);
 }*/
 
-static void	put_fmt_nbr(int nb)
+/*static void	put_fmt_nbr(int nb)
 {
 	ft_putnbr(nb);
-}
+}*/
 
 
 void	put_format(t_flag *flag, va_list ap)
 {
 	fill(flag);
 	//check_print(flag);
-	int nb;
-	if (flag->specifier == 'd')
+	//int nb;
+	/*if (flag->specifier == 'd')
 	{
 		nb = va_arg(ap, int);
 		if (flag->plus == TRUE && nb >= 0)
@@ -41,15 +41,15 @@ void	put_format(t_flag *flag, va_list ap)
 			ft_putchar('+');
 		}
 		put_fmt_nbr(nb);
-	}
-	else if (flag->specifier == 'c')
+	}*/
+	if (flag->specifier == 'c')
 		print_c(flag, ap);
 	else if (flag->specifier == 's')
 		print_s(flag, ap);
 	else if (flag->specifier == 'p')
 		print_p(flag, ap);
 	else if (flag->specifier == 'd' || flag->specifier == 'i')
-		print_d_i(flag, ap);
+		print_int(flag, ap);
 		
 }
 
@@ -68,15 +68,13 @@ int	print_c(t_flag *flag, va_list ap)
 	if (flag->dash == TRUE)
 	{
 		ft_putchar(c);
-		print_repeated(' ', flag->width - 1);
+		putchar_nbyte(' ', flag->width - 1);
 		return (1);
 	}
-	print_repeated(' ', flag->width - 1);
+	putchar_nbyte(' ', flag->width - 1);
 	ft_putchar(c);
 	return (1);
 }
-
-
 
 int	print_s(t_flag *flag, va_list ap)
 {
@@ -85,13 +83,13 @@ int	print_s(t_flag *flag, va_list ap)
 
 	s = va_arg(ap, char *);
 	len = ft_strlen(s);
-	if (flag->precision == TRUE && flag->precision > len)
+	if (flag->precision > 0 && flag->precision > len)
 		len = flag->precision;
 	if (flag->width <= len)
-		return (ft_putstr_nbyte(s, len));
+		return (putstr_nbyte(s, len));
 	if (flag->dash == TRUE) // width > len
-		return(ft_putstr_nbyte(s, len) + print_repeated(' ', flag->width - len));
-	return (print_repeated(' ', flag->width - len) + ft_putstr_nbyte(s, len));
+		return(putstr_nbyte(s, len) + putchar_nbyte(' ', flag->width - len));
+	return (putchar_nbyte(' ', flag->width - len) + putstr_nbyte(s, len));
 }
 
 int print_p(t_flag *flag, va_list ap)
@@ -119,42 +117,57 @@ int print_int(t_flag *flag, va_list ap)
 	nb = va_arg(ap, int);
 	str = ft_itoa(nb);
 	len  = ft_strlen(str);
-	if (flag->precision == TRUE && flag->precision > len) //if precision true ignore 0 flag
+	if (flag->precision > 0 && flag->precision > len) //if precision true ignore 0 flag
 	{
 		if (flag->width > flag->precision)
 		{
 			if (flag->dash == TRUE)
-			return (print_repeated('0', flag->width - len - 1) + ft_putstr_nbyte(str, len));
+			{
+				if (flag->plus == TRUE && str[0] != '-')
+					return (write(1, "+", 1) + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len) + putchar_nbyte(' ', flag->width - flag->precision));
+				if (flag->space == TRUE && str[0] != '-')
+					return (write(1, " ", 1) + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len) + putchar_nbyte(' ', flag->width - flag->precision));
+				return (putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len) + putchar_nbyte(' ', flag->width - flag->precision));
+			}
+			if (flag->plus == TRUE && str[0] != '-')
+				return (putchar_nbyte(' ', flag->width - flag->precision -1) + write(1, "+", 1) + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
+			if (flag->space == TRUE && str[0] != '-')
+				return (putchar_nbyte(' ', flag->width - flag->precision -1) + write(1, " ", 1) + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
+			return (putchar_nbyte(' ', flag->width - flag->precision) + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
 		}
 		if (flag->dash == TRUE)
-		
-
+			return (putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
+		if (flag->plus == TRUE && str[0] != '-')
+				return (write(1, "+", 1) + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
+		if (flag->space == TRUE && str[0] != '-')
+				return (write(1, " ", 1) + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
+		return (putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
 	}
 	if (flag->width > len)
 	{
 		if (flag->dash == TRUE)
 		{
 			if (str[0] != '-' && flag->plus == TRUE)
-				return (write(1, "+", 1) + ft_putstr_nbyte(str, len) + print_repeated(' ', flag->width - len - 1));
+				return (write(1, "+", 1) + putstr_nbyte(str, len) + putchar_nbyte(' ', flag->width - len - 1));
 			if (str[0] != '-' && flag->space == TRUE)
-				return (write(1, " ", 1) + ft_putstr_nbyte(str, len) + print_repeated(' ', flag->width - len - 1));
-			return (ft_putstr_nbyte(str, len) + print_repeated(' ', flag->width - len));
+				return (write(1, " ", 1) + putstr_nbyte(str, len) + putchar_nbyte(' ', flag->width - len - 1));
+			return (putstr_nbyte(str, len) + putchar_nbyte(' ', flag->width - len));
 		}
 		if (flag->zero == TRUE)
 		{
 			if (str[0] != '-' && flag->plus == TRUE)
-				return (write(1, "+", 1) + print_repeated('0', flag->width - len - 1) + ft_putstr_nbyte(str, len));
+				return (write(1, "+", 1) + putchar_nbyte('0', flag->width - len - 1) + putstr_nbyte(str, len));
 			if (str[0] != '-' && flag->space == TRUE)
-				return (write(1, " ", 1) +  print_repeated('0', flag->width - len - 1) + ft_putstr_nbyte(str, len));
-			return (print_repeated('0', flag->width - len) + ft_putstr_nbyte(str, len));
+				return (write(1, " ", 1) +  putchar_nbyte('0', flag->width - len - 1) + putstr_nbyte(str, len));
+			return (putchar_nbyte('0', flag->width - len) + putstr_nbyte(str, len));
 		}
 		if (str[0] != '-' && flag->plus == TRUE)
-			return (write(1, "+", 1) + print_repeated(' ', flag->width - len - 1) + ft_putstr_nbyte(str, len));
-		return (print_repeated(' ', flag->width - len) + ft_putstr_nbyte(str, len));
+			return (write(1, "+", 1) + putchar_nbyte(' ', flag->width - len - 1) + putstr_nbyte(str, len));
+		return (putchar_nbyte(' ', flag->width - len) + putstr_nbyte(str, len));
 	}
 	if (str[0] != '-' && flag->plus == TRUE)
-		return (write(1, "+", 1) + ft_putstr_nbyte(str, len));
+		return (write(1, "+", 1) + putstr_nbyte(str, len));
 	if (str[0] != '-' && flag->space == TRUE)
-		return (write(1, " ", 1) + ft_putstr_nbyte(str, len));
-	return (ft_putstr_nbyte(str, len));
+		return (write(1, " ", 1) + putstr_nbyte(str, len));
+	return (putstr_nbyte(str, len));
 }

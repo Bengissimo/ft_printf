@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/25 11:15:59 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/25 13:07:50 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,13 @@ void	reset(t_flag *flag);
 void	initiate(t_flag *flag);
 
 
+int	putchar_nbyte(char c, int n);
 int	putstr_nbyte(char const *s, int nbyte);
 int	print_c(t_flag *flag, va_list ap);
 int	print_s(t_flag *flag, va_list ap);
 int	print_p(t_flag *flag, va_list ap);
+int print_int(t_flag *flag, va_list ap);
+
 void	put_format(t_flag *flag, va_list ap);
 
 

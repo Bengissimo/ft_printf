@@ -6,7 +6,7 @@
 #    By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/31 11:00:37 by bkandemi          #+#    #+#              #
-#    Updated: 2022/02/16 15:08:27 by bkandemi         ###   ########.fr        #
+#    Updated: 2022/02/25 13:05:49 by bkandemi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME = libftprintf.a
 
 C_FILES = ft_printf.c\
 		get_conversion_specifiers.c\
-		print_functions.c
+		print_functions.c\
+		helper_print_functions.c
 
 O_FILES = $(C_FILES:.c=.o)
 
