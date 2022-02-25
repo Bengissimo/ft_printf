@@ -6,20 +6,20 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/22 13:12:26 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/25 10:38:32 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-/*static void	check_print(t_conv_spec *arg)
+/*static void	check_print(t_flag *flag)
 {
-	printf("str: %s\n", arg->str);
-	printf("dash: %d, hash: %d, plus: %d, space: %d, zero: %d\n", arg->dash_flag, arg->hash_flag, arg->plus_flag, arg->space_flag, arg->zero_flag);
-	printf("width: %d\n", arg->width);
-	printf("precision: %d\n", arg->precision);
-	printf("length[0]: %c, length[1]: %c\n", arg->length[0], arg->length[1]);
-	printf("specifier: %c\n", arg->specifier);
+	printf("str: %s\n", flag->str);
+	printf("dash: %d, hash: %d, plus: %d, space: %d, zero: %d\n", flag->dash, flag->hash, flag->plus, flag->space, flag->zero);
+	printf("width: %d\n", flag->width);
+	printf("precision: %d\n", flag->precision);
+	printf("length[0]: %c, length[1]: %c\n", flag->length[0], flag->length[1]);
+	printf("specifier: %c\n", flag->specifier);
 }*/
 
 static void	put_fmt_nbr(int nb)
@@ -28,28 +28,28 @@ static void	put_fmt_nbr(int nb)
 }
 
 
-void	ft_putarg(t_conv_spec *arg, va_list ap)
+void	put_format(t_flag *flag, va_list ap)
 {
-	fill(arg);
-	//check_print(arg);
+	fill(flag);
+	//check_print(flag);
 	int nb;
-	if (arg->specifier == 'd')
+	if (flag->specifier == 'd')
 	{
 		nb = va_arg(ap, int);
-		if (arg->plus_flag == TRUE && nb >= 0)
+		if (flag->plus == TRUE && nb >= 0)
 		{
 			ft_putchar('+');
 		}
 		put_fmt_nbr(nb);
 	}
-	else if (arg->specifier == 'c')
-		print_c(arg, ap);
-	else if (arg->specifier == 's')
-		print_s(arg, ap);
-	else if (arg->specifier == 'p')
-		print_p(arg, ap);
-	else if (arg->specifier == 'd' || arg->specifier == 'i')
-		print_d_i(arg, ap);
+	else if (flag->specifier == 'c')
+		print_c(flag, ap);
+	else if (flag->specifier == 's')
+		print_s(flag, ap);
+	else if (flag->specifier == 'p')
+		print_p(flag, ap);
+	else if (flag->specifier == 'd' || flag->specifier == 'i')
+		print_d_i(flag, ap);
 		
 }
 
@@ -64,23 +64,23 @@ static int	print_repeated(char c, int count)
 	return (i);
 }
 
-int	print_c(t_conv_spec *arg, va_list ap)
+int	print_c(t_flag *flag, va_list ap)
 {
 	char c;
 
 	c = va_arg(ap, int);
-	if (arg->width < 1)
+	if (flag->width < 1)
 	{
 		ft_putchar(c);
 		return (1);
 	}
-	if (arg->dash_flag == TRUE)
+	if (flag->dash == TRUE)
 	{
 		ft_putchar(c);
-		print_repeated(' ', arg->width - 1);
+		print_repeated(' ', flag->width - 1);
 		return (1);
 	}
-	print_repeated(' ', arg->width - 1);
+	print_repeated(' ', flag->width - 1);
 	ft_putchar(c);
 	return (1);
 }
@@ -98,23 +98,23 @@ static int	ft_putstr_nbyte(char const *s, int nbyte)
 	return (i);
 }
 
-int	print_s(t_conv_spec *arg, va_list ap)
+int	print_s(t_flag *flag, va_list ap)
 {
 	char	*s;
 	int		len;
 
 	s = va_arg(ap, char *);
 	len = ft_strlen(s);
-	if (arg->precision == TRUE && arg->precision > len)
-		len = arg->precision;
-	if (arg->width <= len)
+	if (flag->precision == TRUE && flag->precision > len)
+		len = flag->precision;
+	if (flag->width <= len)
 		return (ft_putstr_nbyte(s, len));
-	if (arg->dash_flag == TRUE) // width > len
-		return(ft_putstr_nbyte(s, len) + print_repeated(' ', arg->width - len));
-	return (print_repeated(' ', arg->width - len) + ft_putstr_nbyte(s, len));
+	if (flag->dash == TRUE) // width > len
+		return(ft_putstr_nbyte(s, len) + print_repeated(' ', flag->width - len));
+	return (print_repeated(' ', flag->width - len) + ft_putstr_nbyte(s, len));
 }
 
-int print_p(t_conv_spec *arg, va_list ap)
+int print_p(t_flag *flag, va_list ap)
 {
 	void	*ptr;
 	char	*str;
@@ -123,14 +123,14 @@ int print_p(t_conv_spec *arg, va_list ap)
 	ptr = va_arg(ap, void *);
 	str = ft_itoa_base((long)ptr, 16);
 	strlen = ft_strlen(str);
-	if (arg->width < strlen)
+	if (flag->width < strlen)
 	{
 		ft_putstr("0x");
 		ft_putstr(str);
 	}
 	return (ft_strlen(str) + 2);
 }
-int print_d_or_i(t_conv_spec *arg, va_list ap)
+int print_int(t_flag *flag, va_list ap)
 {
 	int		nb;
 	char	*str;
@@ -139,20 +139,42 @@ int print_d_or_i(t_conv_spec *arg, va_list ap)
 	nb = va_arg(ap, int);
 	str = ft_itoa(nb);
 	len  = ft_strlen(str);
-	if (arg->precision == TRUE && arg->precision > len) //if precision true ignore 0 flag
+	if (flag->precision == TRUE && flag->precision > len) //if precision true ignore 0 flag
 	{
-		if (arg->width > arg->precision && arg->dash_flag == FALSE && arg->space_flag == FALSE && arg->plus_flag == FALSE)
+		if (flag->width > flag->precision)
 		{
-			return (print_repeated(' ', arg->width - arg->precision - len) + print_repeated('0', arg->precision - len) + ft_putstr_nbyte(str, len));
+			if (flag->dash == TRUE)
+			return (print_repeated('0', flag->width - len - 1) + ft_putstr_nbyte(str, len));
 		}
-		if (arg->width > len && arg->dash_flag == TRUE)
-
-	}
-	if (arg->zero_flag == TRUE)
-	{
-
-	}
+		if (flag->dash == TRUE)
 		
 
-	
+	}
+	if (flag->width > len)
+	{
+		if (flag->dash == TRUE)
+		{
+			if (str[0] != '-' && flag->plus == TRUE)
+				return (write(1, "+", 1) + ft_putstr_nbyte(str, len) + print_repeated(' ', flag->width - len - 1));
+			if (str[0] != '-' && flag->space == TRUE)
+				return (write(1, " ", 1) + ft_putstr_nbyte(str, len) + print_repeated(' ', flag->width - len - 1));
+			return (ft_putstr_nbyte(str, len) + print_repeated(' ', flag->width - len));
+		}
+		if (flag->zero == TRUE)
+		{
+			if (str[0] != '-' && flag->plus == TRUE)
+				return (write(1, "+", 1) + print_repeated('0', flag->width - len - 1) + ft_putstr_nbyte(str, len));
+			if (str[0] != '-' && flag->space == TRUE)
+				return (write(1, " ", 1) +  print_repeated('0', flag->width - len - 1) + ft_putstr_nbyte(str, len));
+			return (print_repeated('0', flag->width - len) + ft_putstr_nbyte(str, len));
+		}
+		if (str[0] != '-' && flag->plus == TRUE)
+			return (write(1, "+", 1) + print_repeated(' ', flag->width - len - 1) + ft_putstr_nbyte(str, len));
+		return (print_repeated(' ', flag->width - len) + ft_putstr_nbyte(str, len));
+	}
+	if (str[0] != '-' && flag->plus == TRUE)
+		return (write(1, "+", 1) + ft_putstr_nbyte(str, len));
+	if (str[0] != '-' && flag->space == TRUE)
+		return (write(1, " ", 1) + ft_putstr_nbyte(str, len));
+	return (ft_putstr_nbyte(str, len));
 }

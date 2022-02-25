@@ -6,30 +6,30 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/17 09:28:48 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/25 10:33:34 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	reset(t_conv_spec *arg)
+void	reset(t_flag *flag)
 {
-	if (arg->str != NULL)
-		ft_strdel(&(arg->str));
-	initiate(arg);
+	if (flag->str != NULL)
+		ft_strdel(&(flag->str));
+	initiate(flag);
 }
 
-static void fill_specifier(t_conv_spec *arg)
+static void fill_specifier(t_flag *flag)
 {
 	char	*end;
 	int	i;
 
 	i = 0;
-	end = ft_strchr(arg->str, '\0');
+	end = ft_strchr(flag->str, '\0');
 	while (CONVERSIONS[i] != '\0')
 	{
 		if (*(end - 1) == CONVERSIONS[i])
-			arg->specifier = CONVERSIONS[i];
+			flag->specifier = CONVERSIONS[i];
 		i++;
 	}
 }
@@ -67,39 +67,39 @@ static int	is_flag(char c)
 	return (FALSE);
 }
 
-static void	fill_flags(t_conv_spec *arg)
+static void	fill_flags(t_flag *flag)
 {
 	int	i;
 
 	i = 0;
-	while (arg->str[i] != '\0' && is_flag(arg->str[i]) == TRUE)
+	while (flag->str[i] != '\0' && is_flag(flag->str[i]) == TRUE)
 	{
-		if (arg->str[i] == '-')
-			arg->dash_flag = TRUE;
-		else if (arg->str[i] == '+')
-			arg->plus_flag = TRUE;
-		else if (arg->str[i] == '#')
-			arg->hash_flag = TRUE;
-		else if (arg->str[i] == ' ' && arg->plus_flag == FALSE)
-			arg->space_flag = TRUE;
-		else if (arg->str[i] == '0' && arg->width > 0 && arg->dash_flag == FALSE)
-			arg->zero_flag = TRUE;
+		if (flag->str[i] == '-')
+			flag->dash = TRUE;
+		else if (flag->str[i] == '+')
+			flag->plus = TRUE;
+		else if (flag->str[i] == '#')
+			flag->hash = TRUE;
+		else if (flag->str[i] == ' ' && flag->plus == FALSE)
+			flag->space = TRUE;
+		else if (flag->str[i] == '0' && flag->width > 0 && flag->dash == FALSE)
+			flag->zero = TRUE;
 		i++;
 	}
 }
 
-static void fill_width(t_conv_spec *arg)
+static void fill_width(t_flag *flag)
 {
 	int		i;
 	long	width;
 
 	i = 0;
 	width = 0;
-	while (is_flag(arg->str[i]) == TRUE && arg->str[i] != '\0')
+	while (is_flag(flag->str[i]) == TRUE && flag->str[i] != '\0')
 		i++;
-	while (arg->str[i] != '\0' && ft_isdigit(arg->str[i]) == TRUE)
+	while (flag->str[i] != '\0' && ft_isdigit(flag->str[i]) == TRUE)
 	{
-		width = width * 10 + arg->str[i] - '0';
+		width = width * 10 + flag->str[i] - '0';
 		if (width > 2147483644)
 		{
 			width = -1;
@@ -107,10 +107,10 @@ static void fill_width(t_conv_spec *arg)
 		}
 		i++;
 	}
-	arg->width = width;
+	flag->width = width;
 }
 
-static void	fill_precision(t_conv_spec *arg)
+static void	fill_precision(t_flag *flag)
 {
 	char	*dot;
 	long	precision;
@@ -118,7 +118,7 @@ static void	fill_precision(t_conv_spec *arg)
 
 	precision = 0;
 	i = 1;
-	dot = ft_strchr(arg->str, '.');
+	dot = ft_strchr(flag->str, '.');
 	while (dot != NULL && dot[i] != '\0' && ft_isdigit(dot[i]) == TRUE)
 	{
 		precision = precision * 10 + dot[i] - '0';
@@ -129,7 +129,7 @@ static void	fill_precision(t_conv_spec *arg)
 		}
 		i++;
 	}
-	arg->precision = precision;
+	flag->precision = precision;
 }
 
 static int	is_int_or_octal(char c)
@@ -147,87 +147,87 @@ static int	is_int_or_octal(char c)
 }
 
 
-static int	fill_length_h(t_conv_spec *arg)
+static int	fill_length_h(t_flag *flag)
 {
 	char	*h;
 
-	h = ft_strchr(arg->str, 'h');
+	h = ft_strchr(flag->str, 'h');
 	if (h != NULL)
 	{
 		if (is_int_or_octal(*(h + 1)) == TRUE && *(h + 2) == '\0')
 		{
-			arg->length[0] = 'h';
+			flag->length[0] = 'h';
 			return (TRUE);
 		}
 		if (*(h + 1) == 'h' && is_int_or_octal(*(h + 2)) == TRUE && *(h + 3) == '\0')
 		{
-			arg->length[0] = 'h';
-			arg->length[1] = 'h';
+			flag->length[0] = 'h';
+			flag->length[1] = 'h';
 			return (TRUE);
 		}
 	}
 	return (FALSE);
 }
 
-static int	fill_length_l(t_conv_spec *arg)
+static int	fill_length_l(t_flag *flag)
 {
 	char	*lower_l;
 
-	lower_l = ft_strchr(arg->str, 'l');
+	lower_l = ft_strchr(flag->str, 'l');
 	if (lower_l != NULL)
 	{
 		if (is_int_or_octal(*(lower_l + 1)) == TRUE && *(lower_l + 2) == '\0')
 		{
-			arg->length[0] = 'l';
+			flag->length[0] = 'l';
 			return (TRUE);
 		}
 		if (*(lower_l + 1) == 'l' && is_int_or_octal(*(lower_l + 2)) == TRUE && *(lower_l + 3) == '\0')
 		{
-			arg->length[0] = 'l';
-			arg->length[1] = 'l';
+			flag->length[0] = 'l';
+			flag->length[1] = 'l';
 			return (TRUE);
 		}
 	}
 	return (FALSE);
 }
 
-static int	fill_length_upper_l(t_conv_spec *arg)
+static int	fill_length_upper_l(t_flag *flag)
 {
 	char	*upper_l;
 
-	upper_l = ft_strchr(arg->str, 'L');
+	upper_l = ft_strchr(flag->str, 'L');
 	if (upper_l != NULL && is_int_or_octal(*(upper_l + 1)) == TRUE)
 	{
-		arg->length[0] = 'L';
+		flag->length[0] = 'L';
 		return (TRUE);
 	}
 	return (FALSE);
 }
 
 
-void	fill(t_conv_spec *arg)
+void	fill(t_flag *flag)
 {
 	int	i;
 
 	i = 0;
-	while (arg->str[i] != '\0')
+	while (flag->str[i] != '\0')
 	{
-		if (is_char_in_str(arg->str[i], VALID_CHARS) == FALSE)
+		if (is_char_in_str(flag->str[i], VALID_CHARS) == FALSE)
 		{
 			ft_putendl("invalid format");
 			exit(-1);
 		}
 		i++;
 	}
-	fill_specifier(arg);
-	if (ft_strlen(arg->str) > 1)
+	fill_specifier(flag);
+	if (ft_strlen(flag->str) > 1)
 	{
-		fill_width(arg);
-		fill_flags(arg);
-		fill_length_h(arg);
-		fill_length_l(arg);
-		fill_length_upper_l(arg);
+		fill_width(flag);
+		fill_flags(flag);
+		fill_length_h(flag);
+		fill_length_l(flag);
+		fill_length_upper_l(flag);
 	}
-	if (ft_strlen(arg->str) > 2)
-		fill_precision(arg);
+	if (ft_strlen(flag->str) > 2)
+		fill_precision(flag);
 }

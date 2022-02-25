@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:51:31 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/17 10:07:15 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/25 10:31:40 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,18 @@ static void	realloc_before_append(char **str)
 	*str = new;
 }
 
-void	initiate(t_conv_spec *arg)
+void	initiate(t_flag *flag)
 {
-	arg->str = ft_memalloc(1);
-	arg->specifier = '\0';
-	arg->dash_flag= FALSE;
-	arg->hash_flag= FALSE;
-	arg->plus_flag= FALSE;
-	arg->space_flag = FALSE;
-	arg->zero_flag= FALSE;
-	arg->width = 0;
-	arg->precision = 0;
-	ft_bzero(arg->length, 2);
+	flag->str = ft_memalloc(1);
+	flag->specifier = '\0';
+	flag->dash= FALSE;
+	flag->hash= FALSE;
+	flag->plus= FALSE;
+	flag->space = FALSE;
+	flag->zero = FALSE;
+	flag->width = 0;
+	flag->precision = 0;
+	ft_bzero(flag->length, 2);
 }
 
 static void	clean_up(char **str, int *flag)
@@ -78,13 +78,13 @@ void	parse(const char *format, va_list ap)
 	int		j;
 	int		count;
 	int		specifier;
-	t_conv_spec arg;
+	t_flag flag;
 
 	i = 0;
 	j = 0;
 	count  = 0;
 	specifier = FALSE;
-	initiate(&arg);
+	initiate(&flag);
 	while (format[i] != '\0')
 	{
 		if (format[i] == '%')
@@ -96,7 +96,7 @@ void	parse(const char *format, va_list ap)
 				specifier = TRUE;
 				j = 0;
 				count++;
-				reset(&arg);
+				reset(&flag);
 			}
 		}
 		else
@@ -105,18 +105,18 @@ void	parse(const char *format, va_list ap)
 				ft_putchar(format[i]);
 			else
 			{
-				realloc_before_append(&(arg.str));
-				arg.str[j++] = format[i];
+				realloc_before_append(&(flag.str));
+				flag.str[j++] = format[i];
 				if (is_specifier(format[i]) == TRUE)
 				{
 					specifier = FALSE;
-					ft_putarg(&arg, ap);
+					ft_putflag(&flag, ap);
 				}
 			}
 		}
 		i++;
 	}
-	clean_up(&(arg.str), &specifier);
+	clean_up(&(flag.str), &specifier);
 }
 
 int	ft_printf(const char *format, ...)

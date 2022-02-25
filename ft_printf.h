@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/17 10:51:32 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/25 10:35:15 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,31 +28,31 @@
 #define FLAGS		"0# +-"
 
 
-typedef struct		s_conv_spec
+typedef struct		s_flag
 {
 	char			*str;
-	int				zero_flag;
-	int				hash_flag;
-	int				space_flag;
-	int				plus_flag;
-	int				dash_flag;
+	int				zero;
+	int				hash;
+	int				space;
+	int				plus;
+	int				dash;
 	int				width;
 	int				precision;
 	char			length[2];
 	char			specifier;
-}					t_conv_spec;
+}					t_flag;
 
 int		ft_printf(const char *format, ...);
 void	parse(const char *format, va_list ap);
-void	fill(t_conv_spec *arg);
-void	reset(t_conv_spec *arg);
-void	initiate(t_conv_spec *arg);
+void	fill(t_flag *flag);
+void	reset(t_flag *flag);
+void	initiate(t_flag *flag);
 
 
-int	print_c(t_conv_spec *arg, va_list ap);
-int	print_s(t_conv_spec *arg, va_list ap);
-int	print_p(t_conv_spec *arg, va_list ap);
-void	ft_putarg(t_conv_spec *arg, va_list ap);
+int	print_c(t_flag *flag, va_list ap);
+int	print_s(t_flag *flag, va_list ap);
+int	print_p(t_flag *flag, va_list ap);
+void	put_format(t_flag *flag, va_list ap);
 
 
 
