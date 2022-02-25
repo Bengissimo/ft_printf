@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/25 10:38:32 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/25 11:15:38 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,7 @@ void	put_format(t_flag *flag, va_list ap)
 		
 }
 
-static int	print_repeated(char c, int count)
-{
-	int i = 0;
-	while (i < count)
-	{
-		ft_putchar(c);
-		i++;
-	}
-	return (i);
-}
+
 
 int	print_c(t_flag *flag, va_list ap)
 {
@@ -85,18 +76,7 @@ int	print_c(t_flag *flag, va_list ap)
 	return (1);
 }
 
-static int	ft_putstr_nbyte(char const *s, int nbyte)
-{
-	int i;
 
-	i = 0;
-	while (s[i] != '\0' && i < nbyte)
-	{
-		ft_putchar(s[i]);
-		i++;
-	}
-	return (i);
-}
 
 int	print_s(t_flag *flag, va_list ap)
 {
