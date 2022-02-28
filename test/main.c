@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/25 13:53:52 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/02/25 14:27:57 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,37 @@
 
 int main(void)
 {
-	/*int nb = -8;
-	char c = 'c';
+	int nb = -8;
+	/*char c = 'c';
 	char *str = "abc";*/
 	
-	ft_printf("Hello (%d)\n", 8);
-	ft_printf("Hello (%.5d)\n", 8);
-	ft_printf("Hello (%5d)\n", 8);
-	ft_printf("Hello (%6.5d)\n", 8);
-	ft_printf("Hello (%-6.5d)\n", 8);
-	ft_printf("Hello (%+.5d)\n", 8);
+	ft_printf("1: Hello (%d)\n", nb);
+	/* is precision > 0 */
+	ft_printf("2: Hello (%.5d)\n", nb);
+	ft_printf("3: Hello (%6.5d)\n", nb); // is width > precision
+	ft_printf("4: Hello (% 6.5d)\n", nb);
+	ft_printf("5: Hello (%+6.5d)\n", nb);
+	ft_printf("6: Hello (%-+6.5d)\n", nb);
+	ft_printf("7: Hello (%- 6.5d)\n", nb);
+	ft_printf("8: Hello (%+.5d)\n", nb);
+	ft_printf("9: Hello (%-.5d)\n", nb);
+	ft_printf("10: Hello (% .5d)\n", nb);
+	ft_printf("11: Hello (%- .5d)\n", nb);
+	ft_printf("12: Hello (%-+.5d)\n", nb);
 
-	printf("\nHello (%d)\n", 8);
-	printf("Hello (%.5d)\n", 8);
-	printf("Hello (%5d)\n", 8);
-	printf("Hello (%6.5d)\n", 8);
-	printf("Hello (%-6.5d)\n", 8);
-	printf("Hello (%+.5d)\n", 8);
-	//printf("(%-05d)\n", nb);
-	//printf("(%-+5d)", 8);
-	//write(1, &c, 5);
+	printf("\n1: Hello (%d)\n", nb);
+	/* is precision > 0 */
+	printf("2: Hello (%.5d)\n", nb);
+	printf("3: Hello (%6.5d)\n", nb); // is width > precision
+	printf("4: Hello (% 6.5d)\n", nb);
+	printf("5: Hello (%+6.5d)\n", nb);
+	printf("6: Hello (%-+6.5d)\n", nb);
+	printf("7: Hello (%- 6.5d)\n", nb);
+	printf("8: Hello (%+.5d)\n", nb);
+	printf("9: Hello (%-.5d)\n", nb);
+	printf("10: Hello (% .5d)\n", nb);
+	printf("11: Hello (%- .5d)\n", nb);
+	printf("12: Hello (%-+.5d)\n", nb);
 	return (0);
 }
 
