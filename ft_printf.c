@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:51:31 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/25 13:07:23 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/01 14:20:39 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,19 @@ void	initiate(t_flag *flag)
 	ft_bzero(flag->length, 2);
 }
 
-static void	clean_up(char **str, int *flag)
+/*static void	clean_up(t_flag *flag)
 {
-	ft_strdel(str);
-	if (*flag == TRUE)
-		ft_putendl("specifier not found");
-}
+	flag->specifier = '\0';
+	flag->dash= FALSE;
+	flag->hash= FALSE;
+	flag->plus= FALSE;
+	flag->space = FALSE;
+	flag->zero = FALSE;
+	flag->width = 0;
+	flag->precision = 0;
+	ft_bzero(flag->length, 2);
+	ft_strdel(&(flag->str));
+}*/
 
 void	parse(const char *format, va_list ap)
 {
@@ -116,7 +123,10 @@ void	parse(const char *format, va_list ap)
 		}
 		i++;
 	}
-	clean_up(&(flag.str), &specifier);
+	//clean_up(&(flag.str), &specifier);
+	reset(&flag);
+	//free(flag.str); //FIX HERE 
+	//flag.str = NULL;
 }
 
 int	ft_printf(const char *format, ...)

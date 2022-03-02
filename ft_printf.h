@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/25 13:07:50 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/01 09:34:09 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ int	print_p(t_flag *flag, va_list ap);
 int print_int(t_flag *flag, va_list ap);
 
 void	put_format(t_flag *flag, va_list ap);
+
+void	check_print(t_flag *flag); //to be deleted
+
 
 
 

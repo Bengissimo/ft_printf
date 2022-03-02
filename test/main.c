@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/25 14:27:57 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/01 15:12:35 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,74 @@
 #include <unistd.h>
 #include <string.h>
 
+/* original printf result is in parenthesis */
+void	test_int(char *format, int nb)
+{
+	ft_printf(format, nb);
+	printf("(");
+	printf(format, nb);
+	printf(")\n\n");
+}
+
 int main(void)
 {
-	int nb = -8;
-	/*char c = 'c';
-	char *str = "abc";*/
-	
-	ft_printf("1: Hello (%d)\n", nb);
-	/* is precision > 0 */
-	ft_printf("2: Hello (%.5d)\n", nb);
-	ft_printf("3: Hello (%6.5d)\n", nb); // is width > precision
-	ft_printf("4: Hello (% 6.5d)\n", nb);
-	ft_printf("5: Hello (%+6.5d)\n", nb);
-	ft_printf("6: Hello (%-+6.5d)\n", nb);
-	ft_printf("7: Hello (%- 6.5d)\n", nb);
-	ft_printf("8: Hello (%+.5d)\n", nb);
-	ft_printf("9: Hello (%-.5d)\n", nb);
-	ft_printf("10: Hello (% .5d)\n", nb);
-	ft_printf("11: Hello (%- .5d)\n", nb);
-	ft_printf("12: Hello (%-+.5d)\n", nb);
+	int pos = 8;
+	int neg = -8;
 
-	printf("\n1: Hello (%d)\n", nb);
-	/* is precision > 0 */
-	printf("2: Hello (%.5d)\n", nb);
-	printf("3: Hello (%6.5d)\n", nb); // is width > precision
-	printf("4: Hello (% 6.5d)\n", nb);
-	printf("5: Hello (%+6.5d)\n", nb);
-	printf("6: Hello (%-+6.5d)\n", nb);
-	printf("7: Hello (%- 6.5d)\n", nb);
-	printf("8: Hello (%+.5d)\n", nb);
-	printf("9: Hello (%-.5d)\n", nb);
-	printf("10: Hello (% .5d)\n", nb);
-	printf("11: Hello (%- .5d)\n", nb);
-	printf("12: Hello (%-+.5d)\n", nb);
+	printf("test for positive integer:\n");
+
+	test_int("%d", pos);
+	test_int("%-d", pos);
+	test_int("%+d", pos);
+	test_int("% d", pos);
+	test_int("%---d", pos);
+	test_int("%+++d", pos);
+	test_int("%   d", pos);
+	test_int("%-+d", pos);
+	test_int("%- d", pos);
+	test_int("%5d", pos);
+	test_int("%-5d", pos);
+	test_int("%-+5d", pos);
+	test_int("%- 5d", pos);
+	test_int("%.3d", pos);
+	test_int("%-.3d", pos);
+	test_int("%-+.3d", pos);
+	test_int("%- .3d", pos);
+	test_int("%5.3d", pos);
+	test_int("%-5.3d", pos);
+	test_int("%-+5.3d", pos);
+	test_int("%- 5.3d", pos);
+	test_int("%05d", pos);
+	test_int("%0+5d", pos);
+	test_int("% 05d", pos);
+
+	printf("test for negative integer:\n");
+
+	test_int("%d", neg);
+	test_int("%-d", neg);
+	test_int("%+d", neg);
+	test_int("% d", neg);
+	test_int("%---d", neg);
+	test_int("%+++d", neg);
+	test_int("%   d", neg);
+	test_int("%-+d", neg);
+	test_int("%- d", neg);
+	test_int("%5d", neg);
+	test_int("%-5d", neg);
+	test_int("%-+5d", neg);
+	test_int("%- 5d", neg);
+	test_int("%.3d", neg);
+	test_int("%-.3d", neg);
+	test_int("%-+.3d", neg);
+	test_int("%- .3d", neg);
+	test_int("%5.3d", neg);
+	test_int("%-5.3d", neg);
+	test_int("%-+5.3d", neg);
+	test_int("%- 5.3d", neg);
+	test_int("%05d", neg);
+	test_int("%0+5d", neg);
+	test_int("% 05d", neg);
+	
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/02/25 10:33:34 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/01 14:14:13 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void	reset(t_flag *flag)
 {
-	if (flag->str != NULL)
-		ft_strdel(&(flag->str));
+	ft_strdel(&(flag->str));
 	initiate(flag);
 }
 
