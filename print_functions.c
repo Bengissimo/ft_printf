@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/03 10:09:40 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/03 10:33:56 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	check_print(t_flag *flag)
 	ft_putnbr(nb);
 }*/
 
-static int	abs_value(int nb, int *negative)
+static uintmax_t	abs_value(uintmax_t nb, int *negative)
 {
 	*negative = 0;
 
@@ -248,7 +248,7 @@ static int handle_width_dash(t_flag *flag, char *str, int len, int negative)
 	return (ret + putstr_nbyte(str, len) + putchar_nbyte(' ', n_space));
 }
 
-static void handle_length_mod(t_flag *flag, va_list ap, int *nb)
+static void handle_length_mod(t_flag *flag, va_list ap, uintmax_t *nb)
 {
 	
 	if (flag->length[0] == 'h')
@@ -271,7 +271,7 @@ static void handle_length_mod(t_flag *flag, va_list ap, int *nb)
 
 int print_int(t_flag *flag, va_list ap)
 {
-	int	nb;
+	uintmax_t	nb;
 	char		*str;
 	int			len;
 	int			negative;

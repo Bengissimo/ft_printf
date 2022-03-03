@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/03 10:07:35 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/03 10:40:32 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	test_int(char *format, int nb)
 
 int main(void)
 {
-	int pos = -2147483647;
+	//long pos = 0;
 	//int neg = -8;
 
 	printf("test for positive integer:\n");
@@ -58,10 +58,10 @@ int main(void)
 	test_int("%05d", pos);
 	test_int("%0+5d", pos);
 	test_int("% 05d", pos);*/
-	test_int("%hhd", pos);
-	test_int("%hd", pos);
+	test_int("%.0d", 0);
+	/*test_int("%hd", pos);
 	test_int("%ld", pos);
-	test_int("%lld", pos);
+	test_int("%lld", pos);*/
 
 	printf("test for negative integer:\n");
 
