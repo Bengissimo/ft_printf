@@ -3,8 +3,8 @@
 cd ..
 make re
 cd test/
-make -C ../libft/ fclean && make -C ../libft/
+make -C ../libft_hive/ fclean && make -C ../libft_hive/
 make -C ../ fclean && make -C ../
-gcc -Wall -Wextra -Werror -I../ -L../ -L../libft -lft -lftprintf main.c
-make -C ../libft/ fclean && make -C ../ fclean
+gcc -Wall -Wextra -Werror -I../ -L../ -L../libft_hive -lft -lftprintf main.c
+make -C ../libft_hive/ fclean && make -C ../ fclean
 

@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/03 10:33:56 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/03 14:44:53 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	check_print(t_flag *flag)
 	ft_putnbr(nb);
 }*/
 
-static uintmax_t	abs_value(uintmax_t nb, int *negative)
+static intmax_t	abs_value(intmax_t nb, int *negative)
 {
 	*negative = 0;
 
@@ -248,22 +248,22 @@ static int handle_width_dash(t_flag *flag, char *str, int len, int negative)
 	return (ret + putstr_nbyte(str, len) + putchar_nbyte(' ', n_space));
 }
 
-static void handle_length_mod(t_flag *flag, va_list ap, uintmax_t *nb)
+static void handle_length_mod(t_flag *flag, va_list ap, intmax_t *nb)
 {
 	
 	if (flag->length[0] == 'h')
 	{
 		if(flag->length[1] == 'h')
-			*nb = (char)va_arg(ap, int);
-		else
 			*nb = (short)va_arg(ap, int);
+		else
+			*nb = (signed char)va_arg(ap, int);
 	}
 	else if (flag->length[0] == 'l')
 	{
 		if(flag->length[1] == 'l')
-			*nb = va_arg(ap, long long);
+			*nb = (long long)va_arg(ap, long long);
 		else
-			*nb = va_arg(ap, long);
+			*nb = (long)va_arg(ap, long);
 	}
 	else
 		*nb = va_arg(ap, int);
@@ -271,7 +271,7 @@ static void handle_length_mod(t_flag *flag, va_list ap, uintmax_t *nb)
 
 int print_int(t_flag *flag, va_list ap)
 {
-	uintmax_t	nb;
+	intmax_t	nb;
 	char		*str;
 	int			len;
 	int			negative;
@@ -279,7 +279,7 @@ int print_int(t_flag *flag, va_list ap)
 	//nb = va_arg(ap, int);
 	handle_length_mod(flag, ap, &nb);
 	nb = abs_value(nb, &negative);
-	str = ft_itoa(nb);
+	str = ft_itoa_base(nb, 10);
 	len  = ft_strlen(str);
 	
 	if (flag->precision > len && flag->width > flag->precision && flag->dash == TRUE)
