@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:51:31 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/01 14:20:39 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/02 09:02:24 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ void	parse(const char *format, va_list ap)
 		i++;
 	}
 	//clean_up(&(flag.str), &specifier);
-	reset(&flag);
-	//free(flag.str); //FIX HERE 
+	reset(&flag); //fix the leak HERE
+	//free(flag.str);
 	//flag.str = NULL;
 }
 

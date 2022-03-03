@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/01 15:13:17 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/03 10:09:40 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	check_print(t_flag *flag)
 		printf("%d", flag->width);
 	if (flag->precision > 0)
 		printf(".%d", flag->precision);
+	printf("length[0]: %c, length[1]: %c", flag->length[0], flag->length[1]);
 	fflush(stdout);
 	printf(":\n");
 	/*printf("ft_str: %s	", flag->str);
@@ -130,83 +131,168 @@ int print_p(t_flag *flag, va_list ap)
 	}
 	return (ft_strlen(str) + 2);
 }
+
+static int	handle_precision(t_flag *flag, char *str, int len, int negative)
+{
+	int ret;
+
+	ret = 0;
+	if (negative == TRUE)
+		ret = write(1, "-", 1);
+	else if (flag->plus == TRUE)
+		ret = write(1, "+", 1);
+	else if (flag->space == TRUE)
+		ret = write(1, " ", 1);
+	return (ret + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
+}
+
+static int	handle_width_precision_dash(t_flag *flag, char *str, int len, int negative)
+{
+	int ret;
+	int space;
+
+	if (flag->plus == TRUE || flag->space == TRUE || negative == TRUE)
+		space = flag->width - flag->precision - 1;
+	else
+		space = flag->width - flag->precision;
+	ret = 0;
+	if (negative == TRUE)
+		ret = write(1, "-", 1);
+	else if (flag->plus == TRUE)
+		ret = write(1, "+", 1);
+	else if (flag->space == TRUE)
+		ret = write(1, " ", 1);
+	return (ret + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len) + putchar_nbyte(' ', space));
+}
+
+static int	handle_width_precision(t_flag *flag, char *str, int len, int negative)
+{
+	int ret;
+
+	if (flag->plus == TRUE || flag->space == TRUE || negative == TRUE)
+		ret = putchar_nbyte(' ', flag->width - flag->precision - 1);
+	else
+		ret = putchar_nbyte(' ', flag->width - flag->precision);
+	if (negative == TRUE)
+		ret += write(1, "-", 1);
+	else if (flag->plus == TRUE)
+		ret += write(1, "+", 1);
+	else if (flag->space == TRUE)
+		ret += write(1, " ", 1);
+	return (ret + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
+}
+
+static int	handle_plus_or_space(t_flag *flag, char *str, int len, int negative)
+{
+	int ret;
+
+	ret = 0;
+	if (negative == TRUE)
+		ret = write(1, "-", 1);
+	else if (flag->plus == TRUE)
+		ret = write(1, "+", 1);
+	else if (flag->space == TRUE)
+		ret = write(1, " ", 1);
+	return (ret + putstr_nbyte(str, len));
+}
+
+static int handle_width(t_flag *flag, char *str, int len, int negative)
+{
+	int ret;
+	
+	ret = 0;
+	if (negative == TRUE)
+		ret = putchar_nbyte(' ', flag->width - len - 1) + write(1, "-", 1);
+	else if (flag->plus == TRUE)
+		ret = write(1, "+", 1) + putchar_nbyte(' ', flag->width - len - 1);
+	else
+		ret = putchar_nbyte(' ', flag->width - len);
+	return (ret + putstr_nbyte(str, len));
+}
+
+static int handle_width_zero(t_flag *flag, char *str, int len, int negative)
+{
+	int ret;
+	int n_zero;
+	
+	ret = 0;
+	if (flag->plus == TRUE || flag->space == TRUE || negative == TRUE)
+		n_zero = flag->width - len - 1;
+	else
+		n_zero = flag->width - len;
+	if (negative == TRUE)
+		ret = write(1, "-", 1);
+	else if (flag->plus == TRUE)
+		ret = write(1, "+", 1);
+	else if (flag->space == TRUE)
+		ret = write(1, " ", 1);
+	return (ret + putchar_nbyte('0', n_zero)+ putstr_nbyte(str, len));
+}
+
+static int handle_width_dash(t_flag *flag, char *str, int len, int negative)
+{
+	int ret;
+	int n_space;
+	
+	ret = 0;
+	if (flag->plus == TRUE || flag->space == TRUE || negative == TRUE)
+		n_space = flag->width - len - 1;
+	else
+		n_space = flag->width - len;
+	if (negative == TRUE)
+		ret = write(1, "-", 1);
+	else if (flag->plus == TRUE)
+		ret = write(1, "+", 1);
+	else if (flag->space == TRUE)
+		ret = write(1, " ", 1);
+	return (ret + putstr_nbyte(str, len) + putchar_nbyte(' ', n_space));
+}
+
+static void handle_length_mod(t_flag *flag, va_list ap, int *nb)
+{
+	
+	if (flag->length[0] == 'h')
+	{
+		if(flag->length[1] == 'h')
+			*nb = (char)va_arg(ap, int);
+		else
+			*nb = (short)va_arg(ap, int);
+	}
+	else if (flag->length[0] == 'l')
+	{
+		if(flag->length[1] == 'l')
+			*nb = va_arg(ap, long long);
+		else
+			*nb = va_arg(ap, long);
+	}
+	else
+		*nb = va_arg(ap, int);
+}
+
 int print_int(t_flag *flag, va_list ap)
 {
-	int		nb;
-	char	*str;
-	int		len;
-	int		negative;
+	int	nb;
+	char		*str;
+	int			len;
+	int			negative;
 
-	nb = va_arg(ap, int);
+	//nb = va_arg(ap, int);
+	handle_length_mod(flag, ap, &nb);
 	nb = abs_value(nb, &negative);
 	str = ft_itoa(nb);
 	len  = ft_strlen(str);
 	
-	if (flag->precision > 0 && flag->precision > len) //if precision true ignore 0 flag
-	{
-		if (flag->width > flag->precision)
-		{
-			if (flag->dash == TRUE)
-			{
-				if (flag->plus == TRUE && negative == FALSE)
-					return (write(1, "+", 1) + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len) + putchar_nbyte(' ', flag->width - flag->precision - 1) + negative);
-				if (flag->space == TRUE && negative == FALSE)
-					return (write(1, " ", 1) + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len) + putchar_nbyte(' ', flag->width - flag->precision - 1));
-				if (negative == TRUE)
-					return (write(1, "-", 1) + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len) + putchar_nbyte(' ', flag->width - flag->precision - negative));
-				return (putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len) + putchar_nbyte(' ', flag->width - flag->precision - negative));
-			}
-			if (flag->plus == TRUE && negative == FALSE)
-				return (putchar_nbyte(' ', flag->width - flag->precision - 1) + write(1, "+", 1) + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
-			if (flag->space == TRUE && negative == FALSE)
-				return (putchar_nbyte(' ', flag->width - flag->precision - 1) + write(1, " ", 1) + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
-			if (negative == TRUE)
-				return (putchar_nbyte(' ', flag->width - flag->precision - negative) + write(1, "-", 1) + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
-			return (putchar_nbyte(' ', flag->width - flag->precision - negative) + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
-		}
-		if (flag->plus == TRUE && negative == FALSE)
-			return (write(1, "+", 1) + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
-		if (flag->space == TRUE && negative == FALSE)
-			return (write(1, " ", 1) + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
-		if (negative == TRUE)
-			return (write(1, "-", 1) + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
-		return (putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
-	}
-	
-			
+	if (flag->precision > len && flag->width > flag->precision && flag->dash == TRUE)
+		return (handle_width_precision_dash(flag, str, len, negative));
+	if (flag->precision > len && flag->width > flag->precision)
+		return (handle_width_precision(flag, str, len, negative));
+	if (flag->precision > len)
+		return (handle_precision(flag, str, len, negative));
+	if (flag->width > len && flag->dash == TRUE)
+		return (handle_width_dash(flag, str, len, negative));
+	if (flag->width > len && flag->zero == TRUE)
+		return (handle_width_zero(flag, str, len, negative));
 	if (flag->width > len)
-	{
-		if (flag->dash == TRUE)
-		{
-			if (negative == FALSE && flag->plus == TRUE)
-				return (write(1, "+", 1) + putstr_nbyte(str, len) + putchar_nbyte(' ', flag->width - len - 1));
-			if (negative == FALSE && flag->space == TRUE)
-				return (write(1, " ", 1) + putstr_nbyte(str, len) + putchar_nbyte(' ', flag->width - len - 1));
-			if (negative == TRUE)
-				return (write(1, "-", 1) + putstr_nbyte(str, len) + putchar_nbyte(' ', flag->width - len));
-			return (putstr_nbyte(str, len) + putchar_nbyte(' ', flag->width - len));
-		}
-		if (flag->zero == TRUE)
-		{
-			if (negative == FALSE && flag->plus == TRUE)
-				return (write(1, "+", 1) + putchar_nbyte('0', flag->width - len - 1) + putstr_nbyte(str, len));
-			if (negative == FALSE && flag->space == TRUE)
-				return (write(1, " ", 1) +  putchar_nbyte('0', flag->width - len - 1) + putstr_nbyte(str, len));
-			if (negative == TRUE)
-				return (write(1, "-", 1) + putchar_nbyte('0', flag->width - len - 1) + putstr_nbyte(str, len));
-			return (putchar_nbyte('0', flag->width - len) + putstr_nbyte(str, len));
-		}
-		if (negative == FALSE && flag->plus == TRUE)
-			return (write(1, "+", 1) + putchar_nbyte(' ', flag->width - len - 1) + putstr_nbyte(str, len));
-		if (negative == TRUE)
-			return (putchar_nbyte(' ', flag->width - len) + write(1, "-", 1) + putstr_nbyte(str, len));
-		return (putchar_nbyte(' ', flag->width - len) + putstr_nbyte(str, len));
-	}
-	if (negative == FALSE && flag->plus == TRUE)
-		return (write(1, "+", 1) + putstr_nbyte(str, len));
-	if (negative == FALSE && flag->space == TRUE)
-		return (write(1, " ", 1) + putstr_nbyte(str, len));
-	if (negative == TRUE)
-		return (write(1, "-", 1) + putstr_nbyte(str, len));
-	return (putstr_nbyte(str, len));
+		return (handle_width(flag, str, len, negative));
+	return (handle_plus_or_space(flag, str, len, negative));
 }

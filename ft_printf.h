@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/01 09:34:09 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/03 09:28:35 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <stdio.h> //dont forget to delete
 #include <wctype.h>
+#include <stdint.h>
 
 #define TRUE 1
 #define FALSE 0

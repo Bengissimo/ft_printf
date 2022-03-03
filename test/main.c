@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/01 15:12:35 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/03 10:07:35 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	test_int(char *format, int nb)
 
 int main(void)
 {
-	int pos = 8;
-	int neg = -8;
+	int pos = -2147483647;
+	//int neg = -8;
 
 	printf("test for positive integer:\n");
 
-	test_int("%d", pos);
+	/*test_int("%d", pos);
 	test_int("%-d", pos);
 	test_int("%+d", pos);
 	test_int("% d", pos);
@@ -41,6 +41,7 @@ int main(void)
 	test_int("%-+d", pos);
 	test_int("%- d", pos);
 	test_int("%5d", pos);
+	test_int("%+5d", pos);
 	test_int("%-5d", pos);
 	test_int("%-+5d", pos);
 	test_int("%- 5d", pos);
@@ -52,13 +53,19 @@ int main(void)
 	test_int("%-5.3d", pos);
 	test_int("%-+5.3d", pos);
 	test_int("%- 5.3d", pos);
+	test_int("% 6.3d", pos);
+	test_int("%+6.3d", pos);
 	test_int("%05d", pos);
 	test_int("%0+5d", pos);
-	test_int("% 05d", pos);
+	test_int("% 05d", pos);*/
+	test_int("%hhd", pos);
+	test_int("%hd", pos);
+	test_int("%ld", pos);
+	test_int("%lld", pos);
 
 	printf("test for negative integer:\n");
 
-	test_int("%d", neg);
+	/*test_int("%d", neg);
 	test_int("%-d", neg);
 	test_int("%+d", neg);
 	test_int("% d", neg);
@@ -68,6 +75,7 @@ int main(void)
 	test_int("%-+d", neg);
 	test_int("%- d", neg);
 	test_int("%5d", neg);
+	test_int("%+5d", neg);
 	test_int("%-5d", neg);
 	test_int("%-+5d", neg);
 	test_int("%- 5d", neg);
@@ -75,13 +83,15 @@ int main(void)
 	test_int("%-.3d", neg);
 	test_int("%-+.3d", neg);
 	test_int("%- .3d", neg);
-	test_int("%5.3d", neg);
-	test_int("%-5.3d", neg);
-	test_int("%-+5.3d", neg);
-	test_int("%- 5.3d", neg);
+	test_int("%6.3d", neg);
+	test_int("%-6.3d", neg);
+	test_int("%-+6.3d", neg);
+	test_int("%- 6.3d", neg);
+	test_int("% 6.3d", neg);
+	test_int("%+6.3d", neg);
 	test_int("%05d", neg);
 	test_int("%0+5d", neg);
-	test_int("% 05d", neg);
+	test_int("% 05d", neg);*/
 	
 	return (0);
 }
