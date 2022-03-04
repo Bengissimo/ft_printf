@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/03 14:46:03 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/04 13:57:56 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <string.h>
 
 /* original printf result is in parenthesis */
-void	test_int(char *format, int nb)
+void	test_int(char *format, intmax_t nb)
 {
 	ft_printf(format, nb);
 	printf("(");
@@ -64,12 +64,12 @@ int main(void)
 	test_int("%hhd", 'a');
 	test_int("%hd", -32768);
 	test_int("%hd", 32767);
-	//test_int("%lld", (long) 922337203685477580);
-	test_int("%lld", -2147483648);
+	test_int("%ld", 922337203685477580);
+	test_int("%ld", -2147483648);
 	//test_int("%lld", 9223372036854775807);
 	//test_int("%lld", -9223372036854775808);
 
-	printf("%lld", (long long) 9223372036854775807);
+	printf("%ld", 9223372036854775807);
 
 
 

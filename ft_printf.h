@@ -6,14 +6,14 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/03 13:57:39 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/04 13:18:06 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-#include "libft_hive/libft.h"
+#include "libft/libft.h"
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h> //dont forget to delete

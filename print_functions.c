@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/03 14:44:53 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/04 13:57:05 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,9 +261,9 @@ static void handle_length_mod(t_flag *flag, va_list ap, intmax_t *nb)
 	else if (flag->length[0] == 'l')
 	{
 		if(flag->length[1] == 'l')
-			*nb = (long long)va_arg(ap, long long);
+			*nb = va_arg(ap, long long);
 		else
-			*nb = (long)va_arg(ap, long);
+			*nb = va_arg(ap, long);
 	}
 	else
 		*nb = va_arg(ap, int);
@@ -276,7 +276,7 @@ int print_int(t_flag *flag, va_list ap)
 	int			len;
 	int			negative;
 
-	//nb = va_arg(ap, int);
+	//nb = va_arg(ap, long long);
 	handle_length_mod(flag, ap, &nb);
 	nb = abs_value(nb, &negative);
 	str = ft_itoa_base(nb, 10);
