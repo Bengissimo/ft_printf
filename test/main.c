@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/04 13:57:56 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/07 12:57:34 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,40 @@ int main(void)
 	test_int("%05d", pos);
 	test_int("%0+5d", pos);
 	test_int("% 05d", pos);*/
-	test_int("%.0d", 0);
+	//test_int("%hhd", 'a');
 	/*test_int("%hd", pos);
 	test_int("%ld", pos);
 	test_int("%lld", pos);*/
-	test_int("%hhd", 'a');
+	/*test_int("%hhd", 'a');
 	test_int("%hd", -32768);
 	test_int("%hd", 32767);
 	test_int("%ld", 922337203685477580);
-	test_int("%ld", -2147483648);
+	test_int("%ld", -922337203685477580);
+	test_int("%ld", -2147483648);*/
 	//test_int("%lld", 9223372036854775807);
 	//test_int("%lld", -9223372036854775808);
-
-	printf("%ld", 9223372036854775807);
+	ft_printf("%hd", (short)-6);
+	printf("\n");
+	printf("%hd", (short)-6);
+	printf("\n");
+	ft_printf("%hd", (short)5);
+	printf("\n");
+	printf("%hd", (short)5);
+	printf("\n");
+	ft_printf("%hd", (short)-32768);
+	printf("\n");
+	printf("%hd", (short)-32768);
+	printf("\n");
+	ft_printf("%hd", (short)32764);
+	printf("\n");
+	printf("%hd", (short)32764);
+	printf("\n");
+	ft_printf("%hhd", (char)97);
+	printf("\n");
+	printf("%hhd", (char)97);
+	printf("\n");
+	
+	
 
 
 

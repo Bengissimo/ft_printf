@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/04 13:57:05 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/07 13:05:25 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,26 +248,27 @@ static int handle_width_dash(t_flag *flag, char *str, int len, int negative)
 	return (ret + putstr_nbyte(str, len) + putchar_nbyte(' ', n_space));
 }
 
-static void handle_length_mod(t_flag *flag, va_list ap, intmax_t *nb)
+static intmax_t handle_length_mod(t_flag *flag, va_list ap)
 {
+	intmax_t nb;
 	
 	if (flag->length[0] == 'h')
 	{
 		if(flag->length[1] == 'h')
-			*nb = (short)va_arg(ap, int);
+			return (nb = (signed char)va_arg(ap, int));
 		else
-			*nb = (signed char)va_arg(ap, int);
+			return (nb = (short)va_arg(ap, int));
 	}
 	else if (flag->length[0] == 'l')
 	{
 		if(flag->length[1] == 'l')
-			*nb = va_arg(ap, long long);
+			return (nb = va_arg(ap, long long));
 		else
-			*nb = va_arg(ap, long);
+			return (nb = va_arg(ap, long));
 	}
-	else
-		*nb = va_arg(ap, int);
+	return (nb = va_arg(ap, int));
 }
+
 
 int print_int(t_flag *flag, va_list ap)
 {
@@ -276,8 +277,7 @@ int print_int(t_flag *flag, va_list ap)
 	int			len;
 	int			negative;
 
-	//nb = va_arg(ap, long long);
-	handle_length_mod(flag, ap, &nb);
+	nb = handle_length_mod(flag, ap);
 	nb = abs_value(nb, &negative);
 	str = ft_itoa_base(nb, 10);
 	len  = ft_strlen(str);
