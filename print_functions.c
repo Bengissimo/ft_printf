@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/07 13:05:25 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/07 13:35:01 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,8 +269,7 @@ static intmax_t handle_length_mod(t_flag *flag, va_list ap)
 	return (nb = va_arg(ap, int));
 }
 
-
-int print_int(t_flag *flag, va_list ap)
+int	print_int(t_flag *flag, va_list ap)
 {
 	intmax_t	nb;
 	char		*str;
@@ -280,9 +279,11 @@ int print_int(t_flag *flag, va_list ap)
 	nb = handle_length_mod(flag, ap);
 	nb = abs_value(nb, &negative);
 	str = ft_itoa_base(nb, 10);
-	len  = ft_strlen(str);
-	
-	if (flag->precision > len && flag->width > flag->precision && flag->dash == TRUE)
+	len = ft_strlen(str);
+	if (flag->dot == TRUE && flag->precision == 0 && nb == 0)
+		return (0);
+	if (flag->precision > len && flag->width > flag->precision
+		&& flag->dash == TRUE)
 		return (handle_width_precision_dash(flag, str, len, negative));
 	if (flag->precision > len && flag->width > flag->precision)
 		return (handle_width_precision(flag, str, len, negative));

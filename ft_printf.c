@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:51:31 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/02 09:02:24 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/07 13:26:28 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,15 @@ void	initiate(t_flag *flag)
 {
 	flag->str = ft_memalloc(1);
 	flag->specifier = '\0';
-	flag->dash= FALSE;
-	flag->hash= FALSE;
-	flag->plus= FALSE;
+	flag->dash = FALSE;
+	flag->hash = FALSE;
+	flag->plus = FALSE;
 	flag->space = FALSE;
 	flag->zero = FALSE;
 	flag->width = 0;
 	flag->precision = 0;
 	ft_bzero(flag->length, 2);
+	flag->dot = FALSE;
 }
 
 /*static void	clean_up(t_flag *flag)

@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/07 12:57:34 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/07 13:30:06 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int main(void)
 	test_int("%05d", pos);
 	test_int("%0+5d", pos);
 	test_int("% 05d", pos);*/
-	//test_int("%hhd", 'a');
+	test_int("%0.0d", 0);
 	/*test_int("%hd", pos);
 	test_int("%ld", pos);
 	test_int("%lld", pos);*/
@@ -89,6 +89,8 @@ int main(void)
 	printf("\n");
 	printf("%hhd", (char)97);
 	printf("\n");
+	printf("%.0d\n", 0);
+	ft_printf("%.0d", 0);
 	
 	
 

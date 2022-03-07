@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/04 13:18:06 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/07 13:25:40 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct		s_flag
 	int				precision;
 	char			length[2];
 	char			specifier;
+	int				dot;
 }					t_flag;
 
 int		ft_printf(const char *format, ...);

@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/01 14:14:13 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/07 13:27:15 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ static void	fill_precision(t_flag *flag)
 	dot = ft_strchr(flag->str, '.');
 	while (dot != NULL && dot[i] != '\0' && ft_isdigit(dot[i]) == TRUE)
 	{
+		
+		flag->dot = TRUE;
 		precision = precision * 10 + dot[i] - '0';
 		if (precision > 2147483646)
 		{
