@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/08 10:58:05 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/08 15:32:58 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static intmax_t	abs_value(intmax_t nb, int *negative)
 }
 
 
-void	put_format(t_flag *flag, va_list ap)
+int	put_format(t_flag *flag, va_list ap)
 {
 	fill(flag);
 	check_print(flag);
@@ -68,15 +68,16 @@ void	put_format(t_flag *flag, va_list ap)
 		put_fmt_nbr(nb);
 	}*/
 	if (flag->specifier == 'c')
-		print_c(flag, ap);
+		return (print_c(flag, ap));
 	else if (flag->specifier == 's')
-		print_s(flag, ap);
+		return (print_s(flag, ap));
 	else if (flag->specifier == 'p')
-		print_p(flag, ap);
+		return (print_p(flag, ap));
 	else if (flag->specifier == 'd' || flag->specifier == 'i')
-		print_int(flag, ap);
-	else if (flag->specifier == 'u')
-		print_unsigned(flag, ap);
+		return (print_signed_int(flag, ap));
+	else if (flag->specifier == 'u' || flag->specifier == 'o' || flag->specifier == 'x' || flag->specifier == 'X')
+		return (print_unsigned_int(flag, ap));
+	return (0); //to be deleted
 		
 }
 
@@ -271,7 +272,7 @@ static intmax_t handle_length_mod(t_flag *flag, va_list ap)
 	return (nb = va_arg(ap, int));
 }
 
-static intmax_t handle_u_length_mod(t_flag *flag, va_list ap)
+static intmax_t handle_unsigned_length_mod(t_flag *flag, va_list ap)
 {
 	uintmax_t nb;
 	
@@ -291,20 +292,8 @@ static intmax_t handle_u_length_mod(t_flag *flag, va_list ap)
 	}
 	return (nb = va_arg(ap, unsigned int));
 }
-
-int	print_int(t_flag *flag, va_list ap)
+int	print_int(t_flag *flag, char *str, int len, int negative)
 {
-	intmax_t	nb;
-	char		*str;
-	int			len;
-	int			negative;
-
-	nb = handle_length_mod(flag, ap);
-	nb = abs_value(nb, &negative);
-	str = ft_itoa_base(nb, 10);
-	len = ft_strlen(str);
-	if (flag->dot == TRUE && flag->precision == 0 && nb == 0)
-		return (0);
 	if (flag->precision > len && flag->width > flag->precision
 		&& flag->dash == TRUE)
 		return (handle_width_precision_dash(flag, str, len, negative));
@@ -320,23 +309,21 @@ int	print_int(t_flag *flag, va_list ap)
 		return (handle_width(flag, str, len, negative));
 	return (handle_plus_or_space(flag, str, len, negative));
 }
-
-int	print_unsigned(t_flag *flag, va_list ap)
+int	print_signed_int(t_flag *flag, va_list ap)
 {
-	uintmax_t	nb;
+	intmax_t	nb;
 	char		*str;
 	int			len;
 	int			negative;
 
-	nb = handle_u_length_mod(flag, ap);
+	nb = handle_length_mod(flag, ap);
+	nb = abs_value(nb, &negative);
 	str = ft_itoa_base(nb, 10);
 	len = ft_strlen(str);
-	negative = FALSE;
-	flag->plus = FALSE;
-	flag->space = FALSE;
 	if (flag->dot == TRUE && flag->precision == 0 && nb == 0)
 		return (0);
-	if (flag->precision > len && flag->width > flag->precision
+	return (print_int(flag, str, len, negative));
+	/*if (flag->precision > len && flag->width > flag->precision
 		&& flag->dash == TRUE)
 		return (handle_width_precision_dash(flag, str, len, negative));
 	if (flag->precision > len && flag->width > flag->precision)
@@ -349,5 +336,42 @@ int	print_unsigned(t_flag *flag, va_list ap)
 		return (handle_width_zero(flag, str, len, negative));
 	if (flag->width > len)
 		return (handle_width(flag, str, len, negative));
-	return (handle_plus_or_space(flag, str, len, negative));
+	return (handle_plus_or_space(flag, str, len, negative));*/
+}
+
+int	print_unsigned_int(t_flag *flag, va_list ap)
+{
+	uintmax_t	nb;
+	char		*str;
+	int			len;
+	int			negative;
+
+	nb = handle_unsigned_length_mod(flag, ap);
+	if (flag->specifier == 'o')
+		str = ft_itoa_base(nb, 8);
+	else if (flag->specifier == 'x')
+		str = ft_itoa_base(nb, 16);
+	else if (flag->specifier == 'X')
+		str = ft_itoa_base_case(nb, 16, TRUE);
+	else
+		str = ft_itoa_base(nb, 10);
+	len = ft_strlen(str);
+	negative = FALSE;
+	flag->plus = FALSE;
+	flag->space = FALSE;
+	if (flag->specifier == 'o')
+	{
+		if (flag->dot == TRUE && flag->precision == 0 && nb == 0 && flag->hash == FALSE)
+			return (0);
+		if (flag->hash == TRUE && nb != 0)
+			return (write(1, "0", 1) + print_int(flag, str, len, negative));
+		return (print_int(flag, str, len, negative));
+	}
+	if (flag->dot == TRUE && flag->precision == 0 && nb == 0)
+		return (0);
+	if (flag->hash == TRUE && flag->specifier == 'x' && nb != 0)
+		return (write(1, "0x", 2) + print_int(flag, str, len, negative));
+	if (flag->hash == TRUE && flag->specifier == 'X' && nb != 0)
+		return (write(1, "0X", 2) + print_int(flag, str, len, negative));
+	return (print_int(flag, str, len, negative));
 }

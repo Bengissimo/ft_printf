@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:51:31 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/07 13:26:28 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/08 14:04:32 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,25 +80,30 @@ void	initiate(t_flag *flag)
 	ft_strdel(&(flag->str));
 }*/
 
-void	parse(const char *format, va_list ap)
+int	parse(const char *format, va_list ap)
 {
 	int		i;
 	int		j;
 	int		count;
 	int		specifier;
 	t_flag flag;
+	int ret;
 
 	i = 0;
 	j = 0;
 	count  = 0;
 	specifier = FALSE;
+	ret = 0;
 	initiate(&flag);
 	while (format[i] != '\0')
 	{
 		if (format[i] == '%')
 		{
 			if (specifier == TRUE)
+			{
 				ft_putchar('%');
+				ret++;
+			}
 			else
 			{
 				specifier = TRUE;
@@ -110,7 +115,10 @@ void	parse(const char *format, va_list ap)
 		else
 		{
 			if (specifier == FALSE)
+			{
 				ft_putchar(format[i]);
+				ret++;
+			}
 			else
 			{
 				realloc_before_append(&(flag.str));
@@ -118,7 +126,7 @@ void	parse(const char *format, va_list ap)
 				if (is_specifier(format[i]) == TRUE)
 				{
 					specifier = FALSE;
-					put_format(&flag, ap);
+					ret = ret + put_format(&flag, ap);
 				}
 			}
 		}
@@ -128,14 +136,16 @@ void	parse(const char *format, va_list ap)
 	reset(&flag); //fix the leak HERE
 	//free(flag.str);
 	//flag.str = NULL;
+	return (ret);
 }
 
 int	ft_printf(const char *format, ...)
 {
 	va_list ap;
+	int ret;
 
 	va_start(ap, format);
-	parse(format, ap);
+	ret = parse(format, ap);
 	va_end(ap);
-	return (0);
+	return (ret);
 }
