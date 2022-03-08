@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/07 13:30:06 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/08 11:00:31 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <string.h>
 
 /* original printf result is in parenthesis */
-void	test_int(char *format, intmax_t nb)
+void	test_int(char *format, uintmax_t nb)
 {
 	ft_printf(format, nb);
 	printf("(");
@@ -27,106 +27,109 @@ void	test_int(char *format, intmax_t nb)
 int main(void)
 {
 	//int neg = -8;
+	uintmax_t pos = 100;
 
 	printf("test for positive integer:\n");
 
-	/*test_int("%d", pos);
-	test_int("%-d", pos);
-	test_int("%+d", pos);
-	test_int("% d", pos);
-	test_int("%---d", pos);
-	test_int("%+++d", pos);
-	test_int("%   d", pos);
-	test_int("%-+d", pos);
-	test_int("%- d", pos);
-	test_int("%5d", pos);
-	test_int("%+5d", pos);
-	test_int("%-5d", pos);
-	test_int("%-+5d", pos);
-	test_int("%- 5d", pos);
-	test_int("%.3d", pos);
-	test_int("%-.3d", pos);
-	test_int("%-+.3d", pos);
-	test_int("%- .3d", pos);
-	test_int("%5.3d", pos);
-	test_int("%-5.3d", pos);
-	test_int("%-+5.3d", pos);
-	test_int("%- 5.3d", pos);
-	test_int("% 6.3d", pos);
-	test_int("%+6.3d", pos);
-	test_int("%05d", pos);
-	test_int("%0+5d", pos);
-	test_int("% 05d", pos);*/
-	test_int("%0.0d", 0);
-	/*test_int("%hd", pos);
-	test_int("%ld", pos);
-	test_int("%lld", pos);*/
-	/*test_int("%hhd", 'a');
-	test_int("%hd", -32768);
-	test_int("%hd", 32767);
-	test_int("%ld", 922337203685477580);
-	test_int("%ld", -922337203685477580);
-	test_int("%ld", -2147483648);*/
-	//test_int("%lld", 9223372036854775807);
-	//test_int("%lld", -9223372036854775808);
-	ft_printf("%hd", (short)-6);
+	test_int("%u", 4294967295);
+	test_int("%-u", pos);
+	test_int("%+u", pos);
+	test_int("% u", pos);
+	test_int("%---u", pos);
+	test_int("%+++u", pos);
+	test_int("%   u", pos);
+	test_int("%-+u", pos);
+	test_int("%- u", pos);
+	test_int("%5u", pos);
+	test_int("%+5u", pos);
+	test_int("%-5u", pos);
+	test_int("%-+5u", pos);
+	test_int("%- 5u", pos);
+	test_int("%.3u", pos);
+	test_int("%-.3u", pos);
+	test_int("%-+.3u", pos);
+	test_int("%- .3u", pos);
+	test_int("%5.3u", pos);
+	test_int("%-5.3u", pos);
+	test_int("%-+5.3u", pos);
+	test_int("%- 5.3u", pos);
+	test_int("% 6.3u", pos);
+	test_int("%+6.3u", pos);
+	test_int("%05u", pos);
+	test_int("%0+5u", pos);
+	test_int("% 05u", pos);
+	test_int("%0.0u", pos);
+	/*test_int("%hu", pos);
+	test_int("%lu", pos);
+	test_int("%llu", pos);*/
+	/*test_int("%hhu", 'a');
+	test_int("%hu", -32768);
+	test_int("%hu", 32767);
+	test_int("%lu", 922337203685477580);
+	test_int("%lu", -922337203685477580);
+	test_int("%lu", -2147483648);*/
+	//test_int("%llu", 9223372036854775807);
+	//test_int("%llu", -9223372036854775808);
+	/*ft_printf("%hu", (short)-6);
 	printf("\n");
-	printf("%hd", (short)-6);
+	printf("%hu", (short)-6);
 	printf("\n");
-	ft_printf("%hd", (short)5);
+	ft_printf("%hu", (short)5);
 	printf("\n");
-	printf("%hd", (short)5);
+	printf("%hu", (short)5);
 	printf("\n");
-	ft_printf("%hd", (short)-32768);
+	ft_printf("%hu", (short)-32768);
 	printf("\n");
-	printf("%hd", (short)-32768);
+	printf("%hu", (short)-32768);
 	printf("\n");
-	ft_printf("%hd", (short)32764);
+	ft_printf("%hu", (short)32764);
 	printf("\n");
-	printf("%hd", (short)32764);
+	printf("%hu", (short)32764);
 	printf("\n");
-	ft_printf("%hhd", (char)97);
+	ft_printf("%hhu", (char)97);
 	printf("\n");
-	printf("%hhd", (char)97);
+	printf("%hhu", (char)97);
 	printf("\n");
 	printf("%.0d\n", 0);
-	ft_printf("%.0d", 0);
+	ft_printf("%.0u", 0);*/
 	
-	
+	ft_printf("%llu", 18446744073709551615ULL);
+	printf("\n");
+	printf("%llu", 18446744073709551615ULL);
 
 
 
 
 
-	printf("test for negative integer:\n");
+	//printf("test for negative integer:\n");
 
-	/*test_int("%d", neg);
-	test_int("%-d", neg);
-	test_int("%+d", neg);
-	test_int("% d", neg);
-	test_int("%---d", neg);
-	test_int("%+++d", neg);
-	test_int("%   d", neg);
-	test_int("%-+d", neg);
-	test_int("%- d", neg);
-	test_int("%5d", neg);
-	test_int("%+5d", neg);
-	test_int("%-5d", neg);
-	test_int("%-+5d", neg);
-	test_int("%- 5d", neg);
-	test_int("%.3d", neg);
-	test_int("%-.3d", neg);
-	test_int("%-+.3d", neg);
-	test_int("%- .3d", neg);
-	test_int("%6.3d", neg);
-	test_int("%-6.3d", neg);
-	test_int("%-+6.3d", neg);
-	test_int("%- 6.3d", neg);
-	test_int("% 6.3d", neg);
-	test_int("%+6.3d", neg);
-	test_int("%05d", neg);
-	test_int("%0+5d", neg);
-	test_int("% 05d", neg);*/
+	/*test_int("%u", neg);
+	test_int("%-u", neg);
+	test_int("%+u", neg);
+	test_int("% u", neg);
+	test_int("%---u", neg);
+	test_int("%+++u", neg);
+	test_int("%   u", neg);
+	test_int("%-+u", neg);
+	test_int("%- u", neg);
+	test_int("%5u", neg);
+	test_int("%+5u", neg);
+	test_int("%-5u", neg);
+	test_int("%-+5u", neg);
+	test_int("%- 5u", neg);
+	test_int("%.3u", neg);
+	test_int("%-.3u", neg);
+	test_int("%-+.3u", neg);
+	test_int("%- .3u", neg);
+	test_int("%6.3u", neg);
+	test_int("%-6.3u", neg);
+	test_int("%-+6.3u", neg);
+	test_int("%- 6.3u", neg);
+	test_int("% 6.3u", neg);
+	test_int("%+6.3u", neg);
+	test_int("%05u", neg);
+	test_int("%0+5u", neg);
+	test_int("% 05u", neg);*/
 	
 	return (0);
 }

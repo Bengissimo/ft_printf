@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/07 13:35:01 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/08 10:58:05 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void	put_format(t_flag *flag, va_list ap)
 		print_p(flag, ap);
 	else if (flag->specifier == 'd' || flag->specifier == 'i')
 		print_int(flag, ap);
+	else if (flag->specifier == 'u')
+		print_unsigned(flag, ap);
 		
 }
 
@@ -269,6 +271,27 @@ static intmax_t handle_length_mod(t_flag *flag, va_list ap)
 	return (nb = va_arg(ap, int));
 }
 
+static intmax_t handle_u_length_mod(t_flag *flag, va_list ap)
+{
+	uintmax_t nb;
+	
+	if (flag->length[0] == 'h')
+	{
+		if(flag->length[1] == 'h')
+			return (nb = (unsigned char)va_arg(ap, int));
+		else
+			return (nb = (unsigned short)va_arg(ap, int));
+	}
+	else if (flag->length[0] == 'l')
+	{
+		if(flag->length[1] == 'l')
+			return (nb = va_arg(ap, unsigned long long));
+		else
+			return (nb = va_arg(ap, unsigned long));
+	}
+	return (nb = va_arg(ap, unsigned int));
+}
+
 int	print_int(t_flag *flag, va_list ap)
 {
 	intmax_t	nb;
@@ -280,6 +303,37 @@ int	print_int(t_flag *flag, va_list ap)
 	nb = abs_value(nb, &negative);
 	str = ft_itoa_base(nb, 10);
 	len = ft_strlen(str);
+	if (flag->dot == TRUE && flag->precision == 0 && nb == 0)
+		return (0);
+	if (flag->precision > len && flag->width > flag->precision
+		&& flag->dash == TRUE)
+		return (handle_width_precision_dash(flag, str, len, negative));
+	if (flag->precision > len && flag->width > flag->precision)
+		return (handle_width_precision(flag, str, len, negative));
+	if (flag->precision > len)
+		return (handle_precision(flag, str, len, negative));
+	if (flag->width > len && flag->dash == TRUE)
+		return (handle_width_dash(flag, str, len, negative));
+	if (flag->width > len && flag->zero == TRUE)
+		return (handle_width_zero(flag, str, len, negative));
+	if (flag->width > len)
+		return (handle_width(flag, str, len, negative));
+	return (handle_plus_or_space(flag, str, len, negative));
+}
+
+int	print_unsigned(t_flag *flag, va_list ap)
+{
+	uintmax_t	nb;
+	char		*str;
+	int			len;
+	int			negative;
+
+	nb = handle_u_length_mod(flag, ap);
+	str = ft_itoa_base(nb, 10);
+	len = ft_strlen(str);
+	negative = FALSE;
+	flag->plus = FALSE;
+	flag->space = FALSE;
 	if (flag->dot == TRUE && flag->precision == 0 && nb == 0)
 		return (0);
 	if (flag->precision > len && flag->width > flag->precision
