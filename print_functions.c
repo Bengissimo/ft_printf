@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/08 15:32:58 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/08 15:41:23 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -352,7 +352,7 @@ int	print_unsigned_int(t_flag *flag, va_list ap)
 	else if (flag->specifier == 'x')
 		str = ft_itoa_base(nb, 16);
 	else if (flag->specifier == 'X')
-		str = ft_itoa_base_case(nb, 16, TRUE);
+		str = ft_itoa_base_upper(nb, 16);
 	else
 		str = ft_itoa_base(nb, 10);
 	len = ft_strlen(str);
