@@ -1,4 +1,4 @@
 a.out
 test/a.out
 a.out.dSYM
-libft_hive/*
+libft_hive/**
