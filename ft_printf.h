@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/08 12:27:56 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/10 11:42:33 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	print_p(t_flag *flag, va_list ap);
 int	print_int(t_flag *flag, char *str, int len, int negative);
 int	print_signed_int(t_flag *flag, va_list ap);
 int	print_unsigned_int(t_flag *flag, va_list ap);
+int	print_double(t_flag *flag, va_list ap);
+
 
 
 int	put_format(t_flag *flag, va_list ap);

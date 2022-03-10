@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/08 15:46:42 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/10 14:12:35 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ void	test_int(char *format, uintmax_t nb)
 int main(void)
 {
 	//int neg = -8;
-	uintmax_t pos = 0;
+	//uintmax_t pos = 0;
 
 	printf("test for positive integer:\n");
 
-	test_int("%X", pos);
+	/*test_int("%X", pos);
 	test_int("%#X", pos);
 	test_int("%#.0X", pos);
-	test_int("%.0X", pos);
+	test_int("%.0X", pos);*/
 	/*test_int("%---X", pos);
 	test_int("%+++X", pos);
 	test_int("%   X", pos);
@@ -93,12 +93,17 @@ int main(void)
 	printf("%.0d\n", 0);
 	ft_printf("%.0X", 0);*/
 	
-	printf("(%d)", ft_printf("%#llX", 18446744073709551615ULL));
+	/*printf("(%d)", ft_printf("%#llX", 18446744073709551615ULL));
 	printf("\n");
-	printf("(%d)", printf("%#llX", 18446744073709551615ULL));
+	printf("(%d)", printf("%#llX", 18446744073709551615ULL));*/
 
 
+	ft_printf("%f", 0.5445477777);
+	printf(" <- ft_printf\n");
+	printf("%f", 0.5445477777);
+	printf(" <- original\n");
 
+	
 
 
 	//printf("test for negative integer:\n");

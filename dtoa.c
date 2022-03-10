@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helper_print_functions.c                           :+:      :+:    :+:   */
+/*   dtoa.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/25 11:11:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/10 11:07:56 by bkandemi         ###   ########.fr       */
+/*   Created: 2022/03/10 10:36:08 by bkandemi          #+#    #+#             */
+/*   Updated: 2022/03/10 11:30:46 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	putchar_nbyte(char c, int n)
+char *dtoa(long double nb)
 {
-	int	i = 0;
+	int exp;
+	int len_first;
+	int len_second;
+	char *str1;
+	char *str2;
 
-	while (i < n)
+	if (nb < 0)
+		nb = -nb;
+	exp = 0;
+	while ((int)(nb * 10) % 10)
 	{
-		write(1, &c, 1);
-		i++;
+		nb *= 10;
+		exp++;
 	}
-	return (n);
+	len_first = intlen((int)nb);
+	str1 = ft_itoa_base((uintmax_t)nb, 10);
+	
+	
+	
+	
+		
 }
-
-int	putstr_nbyte(char const *s, int nbyte)
-{
-	return (write(1, s, nbyte));
-}
-
-
