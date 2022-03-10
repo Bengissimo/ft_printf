@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/10 11:42:33 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/10 16:20:51 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 
 #define TRUE 1
 #define FALSE 0
+
+#define LIMIT 10000000000000000
 
 #define VALID_CHARS "#0-+ 123456789.hlLcspdiouxXf"
 #define CONVERSIONS "cspdiouxXf"

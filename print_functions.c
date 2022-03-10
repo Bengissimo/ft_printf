@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/10 14:38:01 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/10 16:21:04 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -386,7 +386,7 @@ int	print_double(t_flag *flag, va_list ap)
 	uintmax_t int_nb;
 	uintmax_t decimal;
 	double dec_nb;
-	int i;
+	unsigned long i;
 
 	i = 1;
 
@@ -401,15 +401,16 @@ int	print_double(t_flag *flag, va_list ap)
 	int_nb = (uintmax_t)nb;
 	dec_nb = nb - int_nb;
 	decimal = (uintmax_t)(dec_nb * i * 10);
-	while (decimal % 10 != 0 && decimal < UINT32_MAX)
+	while (decimal % 10 != 0 && i < LIMIT)
 	{
 		i = i * 10;
 		decimal = (uintmax_t)(dec_nb * i * 10);
+		printf("i: %lu, decimal: %ju\n", i, decimal);
 	}
 	str1 = ft_itoa_base(int_nb, 10);
 	putstr_nbyte(str1, ft_strlen(str1));
 	write(1, ".", 1);
-	str2 = (ft_itoa_base(decimal, 10));
+	str2 = (ft_itoa_base(decimal/10, 10));
 	putstr_nbyte(str2, ft_strlen(str2));
 	return (0);
 	
