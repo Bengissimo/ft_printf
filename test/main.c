@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/10 16:19:27 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/11 15:57:46 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+ #include <stdlib.h>
 
 /* return values are in parenthesis */
 void	test_int(char *format, uintmax_t nb)
@@ -22,6 +23,27 @@ void	test_int(char *format, uintmax_t nb)
 	printf(" <- ft_printf\n");
 	printf("(%d)", printf(format, nb));
 	printf(" <- original\n");
+}
+
+void	test_double(char *format, double nb)
+{
+	ft_printf("%f", nb);
+	printf(" <- ft_printf\n");
+	printf(format, nb);
+	printf(" <- original\n");
+}
+
+double db_random(int low, int high)
+{
+	return (high - low + 1) * rand() / (double) INT32_MAX + low;	
+}
+
+void random_double_test(int low, int high)
+{
+	for (int i = 0; i < 100; i++)
+	{
+		test_double("%.10f", db_random(low, high));
+	}
 }
 
 int main(void)
@@ -98,10 +120,13 @@ int main(void)
 	printf("(%d)", printf("%#llX", 18446744073709551615ULL));*/
 
 
-	ft_printf("%f", 0.54454123456789123);
+	/*ft_printf("%f", 0.005);
 	printf(" <- ft_printf\n");
-	printf("%.15f",  0.54454777777777777);
-	printf(" <- original\n");
+	printf("%f",  0.005);
+	printf(" <- original\n");*/
+
+	random_double_test(0, 20);
+
 
 	
 

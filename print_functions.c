@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/10 16:21:04 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/11 15:57:56 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -384,13 +384,15 @@ int	print_double(t_flag *flag, va_list ap)
 	char *str1;
 	char *str2;
 	uintmax_t int_nb;
-	uintmax_t decimal;
 	double dec_nb;
-	unsigned long i;
-
-	i = 1;
+	
+	
+	uintmax_t precision;
+	
+	//unsigned long i;
 
 	flag->precision = 0;
+	flag->dot = FALSE;
 	nb = va_arg(ap, double);
 
 	if (nb < 0)
@@ -400,18 +402,51 @@ int	print_double(t_flag *flag, va_list ap)
 	}
 	int_nb = (uintmax_t)nb;
 	dec_nb = nb - int_nb;
-	decimal = (uintmax_t)(dec_nb * i * 10);
-	while (decimal % 10 != 0 && i < LIMIT)
+	int i = 0;
+	while (dec_nb < 0.1)
 	{
-		i = i * 10;
-		decimal = (uintmax_t)(dec_nb * i * 10);
-		printf("i: %lu, decimal: %ju\n", i, decimal);
+		dec_nb = dec_nb * 10;
+		i++;
 	}
+	
+	
+	//printf("dec_nb: %f\n", dec_nb);
+	
+	precision = ft_power(10, 10 - i);
+	
+	
+	uintmax_t less = (uintmax_t)(dec_nb * precision);
+	uintmax_t more = (uintmax_t)(dec_nb * precision + 1);
+	/*printf("dec_nb * precision: %f\n", dec_nb * precision);
+	printf("int more: %ju\n", more);
+	printf("int less: %ju\n", less);
+	printf("%f\n", more - (dec_nb * precision));
+	printf("%f\n", (dec_nb * precision) - less);
+	printf("int_nb: %ju\n", int_nb);*/
+	if (((dec_nb * precision) - less) > (more - (dec_nb * precision)))
+	{
+		dec_nb = more;
+		//printf("more: %f\n", dec_nb);
+		if (flag->dot == TRUE && flag->precision == 0)
+			int_nb += more;
+	}
+	else if (((dec_nb * precision) - less) == (more - (dec_nb * precision)))
+	{
+		if ((int_nb + 1) % 2 == 0)
+			int_nb++;
+	}
+	else
+	{
+		dec_nb = less;
+		//printf("less: %f\n", dec_nb);
+	}
+	
 	str1 = ft_itoa_base(int_nb, 10);
 	putstr_nbyte(str1, ft_strlen(str1));
-	write(1, ".", 1);
-	str2 = (ft_itoa_base(decimal/10, 10));
-	putstr_nbyte(str2, ft_strlen(str2));
+	write(1, ".", 1); 						//if precision > 0
+	putchar_nbyte('0', i);
+	str2 = (ft_itoa_base((uintmax_t)(dec_nb), 10)); 	//if precision > 0
+	putstr_nbyte(str2, ft_strlen(str2)); 	//if precision > 0
 	return (0);
 	
 }
