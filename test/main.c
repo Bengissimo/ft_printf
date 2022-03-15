@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/11 15:57:46 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/15 10:23:47 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void random_double_test(int low, int high)
 {
 	for (int i = 0; i < 100; i++)
 	{
-		test_double("%.10f", db_random(low, high));
+		test_double("%.100f", db_random(low, high));
 	}
 }
 
@@ -120,12 +120,12 @@ int main(void)
 	printf("(%d)", printf("%#llX", 18446744073709551615ULL));*/
 
 
-	/*ft_printf("%f", 0.005);
+	/*ft_printf("%f", 0.7);
 	printf(" <- ft_printf\n");
-	printf("%f",  0.005);
+	printf("%.3f",  0.7);
 	printf(" <- original\n");*/
 
-	random_double_test(0, 20);
+	random_double_test(0, 1);
 
 
 	
