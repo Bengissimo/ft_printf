@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/15 20:09:45 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/15 20:31:39 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -537,12 +537,11 @@ static	void	round_to_precision(t_flag *flag, uintmax_t *nb_int, double *nb_dec, 
 		*nb_dec = round_up;
 		printf("nb_dec: %f\n", *nb_dec);
 		if (flag->dot == TRUE && flag->precision == 0)
-		{
 				(*nb_int)++;
-		}
 	}
 	else if (((*nb_dec) - round_down) == (round_up - (*nb_dec)))
 	{
+		*nb_dec = round_up;
 		if (flag->dot == TRUE && flag->precision == 0)
 		{
 			if (((*nb_int) + 1) % 2 == 0)
@@ -565,7 +564,7 @@ int	print_double(t_flag *flag, va_list ap)
 	int zeroes;
 
 	negative = 0;
-	flag->precision = 5;
+	flag->precision = 0;
 	flag->dot = TRUE;
 	nb_dbl = va_arg(ap, double);
 	nb_dbl = abs_value_dbl(nb_dbl, &negative);
