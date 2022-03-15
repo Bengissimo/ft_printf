@@ -6,7 +6,7 @@ static double power(int nb, int power)
 	double	result;
 	
 	result = 1.0;
-	if (power == 1)
+	if (power == 0)
 		return (1.0);
 	if (power < 0)
 	{
@@ -39,7 +39,7 @@ int main(void)
 	printf("%f\n", 912.9 / 10000.0);
 	printf("%d\n",(int)912.9);*/
 
-	printf("%f\n", power(2, 3));
+	printf("%f\n", power(10, 0));
 	printf("%f\n", power(10, -1));
 	printf("%f\n", power(10, -2));
 	printf("%f\n", power(10, -3));

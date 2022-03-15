@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/15 10:29:34 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/15 20:09:45 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	check_print(t_flag *flag)
 	ft_putnbr(nb);
 }*/
 
-static intmax_t	abs_value(intmax_t nb, int *negative)
+static intmax_t	abs_value_int(intmax_t nb, int *negative)
 {
 	*negative = 0;
 
@@ -319,7 +319,7 @@ int	print_signed_int(t_flag *flag, va_list ap)
 	int			negative;
 
 	nb = handle_length_mod(flag, ap);
-	nb = abs_value(nb, &negative);
+	nb = abs_value_int(nb, &negative);
 	str = ft_itoa_base(nb, 10);
 	len = ft_strlen(str);
 	if (flag->dot == TRUE && flag->precision == 0 && nb == 0)
@@ -378,7 +378,7 @@ int	print_unsigned_int(t_flag *flag, va_list ap)
 	return (print_int(flag, str, len, negative));
 }
 
-int	print_double(t_flag *flag, va_list ap)
+/*int	print_double(t_flag *flag, va_list ap)
 {
 	double nb;
 	char *str1;
@@ -391,7 +391,7 @@ int	print_double(t_flag *flag, va_list ap)
 	
 	//unsigned long i;
 
-	flag->precision = 10;
+	flag->precision = 2;
 	flag->dot = TRUE;
 	nb = va_arg(ap, double);
 
@@ -409,31 +409,41 @@ int	print_double(t_flag *flag, va_list ap)
 		i++;
 	}
 	if (flag->precision == i)
+	{
 		i--;
+		flag->precision--;
+	}
 	if (flag->precision < i)
 		i = flag->precision;
+	
+	//if (flag->precision <= i)
+	//	i = 0;
 	
 	
 	
 	//printf("dec_nb: %f\n", dec_nb);
 	
-	precision = ft_power(10, 10 - i);
+	precision = ft_power(10, 2 - i);
 	
 	double raw = dec_nb * precision;
 	uintmax_t less = (uintmax_t)(raw);
 	uintmax_t more = (uintmax_t)(raw + 1);
-	/*printf("dec_nb * precision: %f\n", dec_nb * precision);
+	printf("dec_nb * precision: %f\n", dec_nb * precision);
 	printf("int more: %ju\n", more);
 	printf("int less: %ju\n", less);
 	printf("%f\n", more - (dec_nb * precision));
 	printf("%f\n", (dec_nb * precision) - less);
-	printf("int_nb: %ju\n", int_nb);*/
-	if (((raw) - less) > (more - (raw)))
+	printf("int_nb: %ju\n", int_nb);
+	if (((raw) - less) >= (more - (raw)))
 	{
 		raw = more;
-		//printf("more: %f\n", dec_nb);
+		printf("more: %f\n", dec_nb);
 		if (flag->dot == TRUE && flag->precision == 0)
-			int_nb += more;
+		{
+			if ((int_nb + 1) % 2 == 0)
+				int_nb++;
+		}
+			//int_nb += more;
 	}
 	else if (((raw) - less) == (more - (raw)))
 	{
@@ -450,10 +460,131 @@ int	print_double(t_flag *flag, va_list ap)
 	putstr_nbyte(str1, ft_strlen(str1));
 	if (flag->precision != 0)
 		write(1, ".", 1);
-	if (flag->precision >= i)	 						//if precision > 0
+	if (flag->precision >= i && flag->dot == TRUE && flag->precision != 0)	 						//if precision > 0
 		putchar_nbyte('0', i);   //if precision >= zeroes
-	if (flag->precision != i){
+	if (flag->precision != i && flag->dot == TRUE && flag->precision != 0){
 		str2 = (ft_itoa_base((uintmax_t)(raw), 10)); 	////if precision > 0 && precision > i
+		putstr_nbyte(str2, ft_strlen(str2)); 	//if precision > 0 && precision > i
+	}
+	return (0);
+	
+}*/
+
+static double	abs_value_dbl(double nb_dbl, int *negative)
+{
+	*negative = FALSE;
+
+	if (nb_dbl < 0)
+	{
+		nb_dbl = -nb_dbl;
+		*negative = TRUE;
+	}
+	return (nb_dbl);
+}
+
+static	int	get_zeroes_after_point(double nb_dec)
+{
+	int	zeroes;
+
+	zeroes = 0;
+	while (nb_dec < 0.1)
+	{
+		nb_dec = nb_dec * 10.0;
+		zeroes++;
+	}
+	//if (flag->precision > zeroes)
+	//if (flag->precision == zeroes)
+	//{
+		//zeroes--;;
+	//	flag->precision++;
+	//}
+	//if (flag->precision <= zeroes)
+		//zeroes = 0;
+	return (zeroes);
+}
+
+static	void	round_to_precision(t_flag *flag, uintmax_t *nb_int, double *nb_dec, int *zeroes)
+{
+	uintmax_t	round_down;
+	uintmax_t	round_up;
+	uintmax_t	rounding_coeff;
+
+	if (flag->dot == FALSE)
+		flag->precision = 6;
+	if (flag->precision > *zeroes)
+		rounding_coeff = ft_power(10, flag->precision);
+	else if (flag->precision == *zeroes)
+	{
+		rounding_coeff = ft_power(10, flag->precision);
+		(*zeroes)--;
+	}
+	else
+	{
+		rounding_coeff = 0;
+		*zeroes = flag->precision;
+	}
+		//default precision of printf
+	*nb_dec = (*nb_dec) * rounding_coeff;
+	//printf("raw: %f\n", raw);
+	printf("coeff: %ju  prec:%d, dot: %d\n", rounding_coeff, flag->precision, flag->dot);
+	round_down = (uintmax_t)*nb_dec;
+	round_up  = (uintmax_t)(*nb_dec + 1);
+	printf("*nb_dec- down: %f\n", *nb_dec - round_down);
+	printf("up- *nb_dec: %f\n", round_up - *nb_dec);
+
+	if (((*nb_dec) - round_down) > (round_up - (*nb_dec)))
+	{
+		*nb_dec = round_up;
+		printf("nb_dec: %f\n", *nb_dec);
+		if (flag->dot == TRUE && flag->precision == 0)
+		{
+				(*nb_int)++;
+		}
+	}
+	else if (((*nb_dec) - round_down) == (round_up - (*nb_dec)))
+	{
+		if (flag->dot == TRUE && flag->precision == 0)
+		{
+			if (((*nb_int) + 1) % 2 == 0)
+				(*nb_int)++;
+		}
+	}
+	else{
+		*nb_dec = round_down;
+	}
+}
+
+int	print_double(t_flag *flag, va_list ap)
+{
+	double nb_dbl;
+	char *str1;
+	char *str2;
+	uintmax_t nb_int;
+	double nb_dec;
+	int negative;
+	int zeroes;
+
+	negative = 0;
+	flag->precision = 5;
+	flag->dot = TRUE;
+	nb_dbl = va_arg(ap, double);
+	nb_dbl = abs_value_dbl(nb_dbl, &negative);
+	nb_int = (uintmax_t)nb_dbl;
+	nb_dec = nb_dbl - nb_int;
+	zeroes = get_zeroes_after_point(nb_dec);
+	
+	
+	round_to_precision(flag, &nb_int, &nb_dec, &zeroes);
+	printf("zeroes: %d\n", zeroes);
+	str1 = ft_itoa_base(nb_int, 10);
+	putstr_nbyte(str1, ft_strlen(str1));
+	if (!(flag->precision == 0 && flag->dot == TRUE))
+		write(1, ".", 1);
+	//if (flag->precision <= zeroes && flag->dot == TRUE && flag->precision != 0)	 						//if precision > 0
+	putchar_nbyte('0', zeroes);   //if precision >= zeroes
+	if (flag->precision > zeroes && flag->precision != 0)
+	{
+		str2 = (ft_itoa_base((uintmax_t)(nb_dec), 10)); 	////if precision > 0 && precision > i
 		putstr_nbyte(str2, ft_strlen(str2)); 	//if precision > 0 && precision > i
 	}
 	return (0);
