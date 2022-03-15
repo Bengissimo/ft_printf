@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/15 20:18:51 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/15 20:53:42 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,9 @@ int main(void)
 	printf("(%d)", printf("%#llX", 18446744073709551615ULL));*/
 
 
-	ft_printf("%f", 2.5555525);
+	ft_printf("%f", 2.0000005555525);
 	printf(" <- ft_printf\n");
-	printf("%.0f",  2.5555525);
+	printf("%.5f",  2.0000005555525);
 	printf(" <- original\n");
 
 	//random_double_test(0, 1);

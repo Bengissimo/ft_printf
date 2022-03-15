@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/15 20:31:39 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/15 20:53:44 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -492,14 +492,6 @@ static	int	get_zeroes_after_point(double nb_dec)
 		nb_dec = nb_dec * 10.0;
 		zeroes++;
 	}
-	//if (flag->precision > zeroes)
-	//if (flag->precision == zeroes)
-	//{
-		//zeroes--;;
-	//	flag->precision++;
-	//}
-	//if (flag->precision <= zeroes)
-		//zeroes = 0;
 	return (zeroes);
 }
 
@@ -511,27 +503,14 @@ static	void	round_to_precision(t_flag *flag, uintmax_t *nb_int, double *nb_dec, 
 
 	if (flag->dot == FALSE)
 		flag->precision = 6;
-	if (flag->precision > *zeroes)
-		rounding_coeff = ft_power(10, flag->precision);
-	else if (flag->precision == *zeroes)
-	{
-		rounding_coeff = ft_power(10, flag->precision);
+	if (flag->precision == *zeroes)
 		(*zeroes)--;
-	}
-	else
-	{
-		rounding_coeff = 0;
+	else if (flag->precision < *zeroes)
 		*zeroes = flag->precision;
-	}
-		//default precision of printf
+	rounding_coeff = ft_power(10, flag->precision);
 	*nb_dec = (*nb_dec) * rounding_coeff;
-	//printf("raw: %f\n", raw);
-	printf("coeff: %ju  prec:%d, dot: %d\n", rounding_coeff, flag->precision, flag->dot);
 	round_down = (uintmax_t)*nb_dec;
 	round_up  = (uintmax_t)(*nb_dec + 1);
-	printf("*nb_dec- down: %f\n", *nb_dec - round_down);
-	printf("up- *nb_dec: %f\n", round_up - *nb_dec);
-
 	if (((*nb_dec) - round_down) > (round_up - (*nb_dec)))
 	{
 		*nb_dec = round_up;
@@ -564,7 +543,7 @@ int	print_double(t_flag *flag, va_list ap)
 	int zeroes;
 
 	negative = 0;
-	flag->precision = 0;
+	flag->precision = 5;
 	flag->dot = TRUE;
 	nb_dbl = va_arg(ap, double);
 	nb_dbl = abs_value_dbl(nb_dbl, &negative);
@@ -579,7 +558,6 @@ int	print_double(t_flag *flag, va_list ap)
 	putstr_nbyte(str1, ft_strlen(str1));
 	if (!(flag->precision == 0 && flag->dot == TRUE))
 		write(1, ".", 1);
-	//if (flag->precision <= zeroes && flag->dot == TRUE && flag->precision != 0)	 						//if precision > 0
 	putchar_nbyte('0', zeroes);   //if precision >= zeroes
 	if (flag->precision > zeroes && flag->precision != 0)
 	{
