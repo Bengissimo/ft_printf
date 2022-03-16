@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/15 20:53:42 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/16 14:27:28 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	test_int(char *format, uintmax_t nb)
 
 void	test_double(char *format, double nb)
 {
-	ft_printf("%f", nb);
+	ft_printf(format, nb);
 	printf(" <- ft_printf\n");
 	printf(format, nb);
 	printf(" <- original\n");
@@ -42,8 +42,10 @@ void random_double_test(int low, int high)
 {
 	for (int i = 0; i < 100; i++)
 	{
-		test_double("%.10f", db_random(low, high));
+		test_double("%f", db_random(low, high));
+		printf("\n");
 	}
+	
 }
 
 int main(void)
@@ -51,7 +53,7 @@ int main(void)
 	//int neg = -8;
 	//uintmax_t pos = 0;
 
-	printf("test for positive integer:\n");
+	//printf("test for positive integer:\n");
 
 	/*test_int("%X", pos);
 	test_int("%#X", pos);
@@ -120,11 +122,48 @@ int main(void)
 	printf("(%d)", printf("%#llX", 18446744073709551615ULL));*/
 
 
-	ft_printf("%f", 2.0000005555525);
+	ft_printf("%.3f", 0.0005);
 	printf(" <- ft_printf\n");
-	printf("%.5f",  2.0000005555525);
-	printf(" <- original\n");
+	printf("%.3f",  0.0005);
+	printf(" <- original\n\n");
 
+	ft_printf("%.4f", 0.0004);
+	printf(" <- ft_printf\n");
+	printf("%.4f",  0.0004);
+	printf(" <- original\n\n");
+
+	ft_printf("%.4f", 0.00015);
+	printf(" <- ft_printf\n");
+	printf("%.4f",  0.00015);
+	printf(" <- original\n\n");
+
+	ft_printf("%.4f", 0.00025);
+	printf(" <- ft_printf\n");
+	printf("%.4f",  0.00025);
+	printf(" <- original\n\n");
+
+	ft_printf("%.4f", 0.00035);
+	printf(" <- ft_printf\n");
+	printf("%.4f",  0.00035);
+	printf(" <- original\n\n");
+
+	ft_printf("%.4f", 0.00045);
+	printf(" <- ft_printf\n");
+	printf("%.4f",  0.00045);
+	printf(" <- original\n\n");
+
+	ft_printf("%.4f", 0.00055);
+	printf(" <- ft_printf\n");
+	printf("%.4f",  0.00055);
+	printf(" <- original\n\n");
+
+	ft_printf("%f", 2.5555545);
+	printf(" <- ft_printf\n");
+	printf("%f",  2.5555545);
+	printf(" <- original\n\n");
+
+	//printf("%.30f\n", 1.0);
+	//printf("%f\n", 0.5555545 * 1000000.0);
 	//random_double_test(0, 1);
 
 

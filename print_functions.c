@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/15 20:53:44 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/16 14:29:40 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	check_print(t_flag *flag)
 		printf("sp");
 	if (flag->width > 0)
 		printf("%d", flag->width);
-	if (flag->precision > 0)
-		printf(".%d", flag->precision);
-	printf("length[0]: %c, length[1]: %c", flag->length[0], flag->length[1]);
+	//if (flag->precision > 0)
+		//printf(".%d", flag->precision);
+	//printf("length[0]: %c, length[1]: %c", flag->length[0], flag->length[1]);
 	fflush(stdout);
-	printf(":\n");
+	//printf(":\n");
 	/*printf("ft_str: %s	", flag->str);
 	printf("dash: %d, hash: %d, plus: %d, space: %d, zero: %d	", flag->dash, flag->hash, flag->plus, flag->space, flag->zero);
 	printf("width: %d	", flag->width);
@@ -380,11 +380,11 @@ int	print_unsigned_int(t_flag *flag, va_list ap)
 
 /*int	print_double(t_flag *flag, va_list ap)
 {
-	double nb;
+	long double nb;
 	char *str1;
 	char *str2;
 	uintmax_t int_nb;
-	double dec_nb;
+	long double dec_nb;
 	
 	
 	uintmax_t precision;
@@ -393,7 +393,7 @@ int	print_unsigned_int(t_flag *flag, va_list ap)
 
 	flag->precision = 2;
 	flag->dot = TRUE;
-	nb = va_arg(ap, double);
+	nb = va_arg(ap, long double);
 
 	if (nb < 0)
 	{
@@ -425,7 +425,7 @@ int	print_unsigned_int(t_flag *flag, va_list ap)
 	
 	precision = ft_power(10, 2 - i);
 	
-	double raw = dec_nb * precision;
+	long double raw = dec_nb * precision;
 	uintmax_t less = (uintmax_t)(raw);
 	uintmax_t more = (uintmax_t)(raw + 1);
 	printf("dec_nb * precision: %f\n", dec_nb * precision);
@@ -470,7 +470,14 @@ int	print_unsigned_int(t_flag *flag, va_list ap)
 	
 }*/
 
-static double	abs_value_dbl(double nb_dbl, int *negative)
+static	int	put_neg_sign(int negative)
+{
+	if (negative == TRUE)
+		return (write(1, "-", 1));
+	return (0);
+}
+
+static long double	abs_value_dbl(long double nb_dbl, int *negative)
 {
 	*negative = FALSE;
 
@@ -482,45 +489,71 @@ static double	abs_value_dbl(double nb_dbl, int *negative)
 	return (nb_dbl);
 }
 
-static	int	get_zeroes_after_point(double nb_dec)
+static	int	get_zeroes_after_point(t_flag *flag, long double nb_dec)
 {
 	int	zeroes;
 
+	if (flag->dot == FALSE)
+		flag->precision = 6;
 	zeroes = 0;
 	while (nb_dec < 0.1)
 	{
 		nb_dec = nb_dec * 10.0;
 		zeroes++;
 	}
+	if (flag->precision == zeroes)
+		(zeroes)--;
+	if (flag->precision < zeroes)
+		zeroes = flag->precision;
 	return (zeroes);
 }
 
-static	void	round_to_precision(t_flag *flag, uintmax_t *nb_int, double *nb_dec, int *zeroes)
+static	void	round_to_precision(t_flag *flag, uintmax_t *nb_int, long double *nb_dec, int zeroes)  //remove zeroes 
 {
 	uintmax_t	round_down;
 	uintmax_t	round_up;
-	uintmax_t	rounding_coeff;
+	long double	rounding_coeff;
+	//uintmax_t x;
 
-	if (flag->dot == FALSE)
-		flag->precision = 6;
-	if (flag->precision == *zeroes)
-		(*zeroes)--;
-	else if (flag->precision < *zeroes)
-		*zeroes = flag->precision;
-	rounding_coeff = ft_power(10, flag->precision);
+	//printf("decnb: %.15f\n", *nb_dec);
+	rounding_coeff = ft_power(10.0, flag->precision);
+	/*for (int i = 0; i < 20; i++)
+	{
+		*nb_dec = (*nb_dec) * 10;
+		x = (uintmax_t)(*nb_dec);
+		*nb_dec = *nb_dec - x;
+		printf("dec: %.30Lf\n", *nb_dec);
+	}*/
+	
 	*nb_dec = (*nb_dec) * rounding_coeff;
+	
+	printf("decnb: %Lf\n", *nb_dec);
+	//printf("decimal: %ju\n", decimal);
+
 	round_down = (uintmax_t)*nb_dec;
 	round_up  = (uintmax_t)(*nb_dec + 1);
+	printf("%.30Lf\n", (*nb_dec) - round_down);
+	printf("%.30Lf\n", round_up - (*nb_dec));
+	//printf("%ju\n", decimal - 0);
+	//printf("%ju\n", 1000000 - decimal);
 	if (((*nb_dec) - round_down) > (round_up - (*nb_dec)))
 	{
 		*nb_dec = round_up;
-		printf("nb_dec: %f\n", *nb_dec);
+		//printf("nb_dec: %f\n", *nb_dec);
 		if (flag->dot == TRUE && flag->precision == 0)
 				(*nb_int)++;
 	}
 	else if (((*nb_dec) - round_down) == (round_up - (*nb_dec)))
 	{
-		*nb_dec = round_up;
+		if (zeroes == 0)
+		{
+			if (round_up % 2 == 0)
+				*nb_dec = round_up;
+			else
+				*nb_dec = round_down;
+		}
+		else
+			*nb_dec = round_up;
 		if (flag->dot == TRUE && flag->precision == 0)
 		{
 			if (((*nb_int) + 1) % 2 == 0)
@@ -534,26 +567,37 @@ static	void	round_to_precision(t_flag *flag, uintmax_t *nb_int, double *nb_dec, 
 
 int	print_double(t_flag *flag, va_list ap)
 {
-	double nb_dbl;
-	char *str1;
-	char *str2;
-	uintmax_t nb_int;
-	double nb_dec;
-	int negative;
-	int zeroes;
+	long double		nb_dbl;
+	char		*str1;
+	char		*str2;
+	uintmax_t	nb_int;
+	long double		nb_dec;
+	int			negative;
+	int			zeroes;
+	//uintmax_t	x = 0;;
 
 	negative = 0;
-	flag->precision = 5;
-	flag->dot = TRUE;
+	//flag->precision = 5;
+	//flag->dot = TRUE;
 	nb_dbl = va_arg(ap, double);
+	printf("nb_dbl: %.30Lf\n", nb_dbl);
 	nb_dbl = abs_value_dbl(nb_dbl, &negative);
+	//printf("dblnb: %.15f\n", nb_dbl);
+
 	nb_int = (uintmax_t)nb_dbl;
 	nb_dec = nb_dbl - nb_int;
-	zeroes = get_zeroes_after_point(nb_dec);
+	printf("nb_dec: %.30Lf\n", nb_dec);
+
 	
 	
-	round_to_precision(flag, &nb_int, &nb_dec, &zeroes);
-	printf("zeroes: %d\n", zeroes);
+	zeroes = get_zeroes_after_point(flag, nb_dec);
+	//if (zeroes != 0)
+		//x = ((uintmax_t)(nb_dbl * 1000000000000000000)%1000000000000000000);
+	//printf("x: %ju\n", x);
+	round_to_precision(flag, &nb_int, &nb_dec, zeroes);
+	printf("nb_dec: %.30Lf\n", nb_dec);
+
+	put_neg_sign(negative);
 	str1 = ft_itoa_base(nb_int, 10);
 	putstr_nbyte(str1, ft_strlen(str1));
 	if (!(flag->precision == 0 && flag->dot == TRUE))
