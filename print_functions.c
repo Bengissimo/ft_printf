@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/17 09:55:57 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/17 15:08:25 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	check_print(t_flag *flag)
 		//printf(".%d", flag->precision);
 	//printf("length[0]: %c, length[1]: %c", flag->length[0], flag->length[1]);
 	fflush(stdout);
-	//printf(":\n");
+	printf(":\n");
 	/*printf("ft_str: %s	", flag->str);
 	printf("dash: %d, hash: %d, plus: %d, space: %d, zero: %d	", flag->dash, flag->hash, flag->plus, flag->space, flag->zero);
 	printf("width: %d	", flag->width);
@@ -209,7 +209,7 @@ static int handle_width(t_flag *flag, char *str, int len, int negative)
 	if (negative == TRUE)
 		ret = putchar_nbyte(' ', flag->width - len - 1) + write(1, "-", 1);
 	else if (flag->plus == TRUE)
-		ret = write(1, "+", 1) + putchar_nbyte(' ', flag->width - len - 1);
+		ret = putchar_nbyte(' ', flag->width - len - 1) + write(1, "+", 1); //TO DO: check the order of + with print_int!!!
 	else
 		ret = putchar_nbyte(' ', flag->width - len);
 	return (ret + putstr_nbyte(str, len));
@@ -378,12 +378,12 @@ int	print_unsigned_int(t_flag *flag, va_list ap)
 	return (print_int(flag, str, len, negative));
 }
 
-static	int	put_neg_sign(int negative)
+/*static	int	put_neg_sign(int negative)
 {
 	if (negative == TRUE)
 		return (write(1, "-", 1));
 	return (0);
-}
+}*/
 
 static long double	abs_value_dbl(long double nb_dbl, int *negative)
 {
@@ -442,33 +442,72 @@ static	void	round_to_precision(t_flag *flag, uintmax_t *nb_int, long double *nb_
 		*nb_dec = round_down;
 }
 
+static char *join_and_free_str(char *dst, char *str)
+{
+	char	*temp;
+
+	temp = dst;
+	dst = ft_strjoin(dst, str);
+	ft_strdel(&temp);
+	return (dst);
+}
+
+static char *join_float_str(t_flag *flag, uintmax_t nb_int, uintmax_t nb_dec, int zeroes)
+{
+	char	*str_dec;
+	char	*str_float;
+	int		i;
+	
+	str_float = ft_itoa_base(nb_int, 10);
+	
+	if (!(flag->precision == 0 && flag->dot == TRUE))
+		str_float = join_and_free_str(str_float, ".");
+	if (zeroes > 0)
+	{
+		i = 0;
+		while (i < zeroes)
+		{
+			str_float = join_and_free_str(str_float, "0");
+			i++;
+		}
+	}
+	if (flag->precision > zeroes && flag->precision != 0)
+	{
+		str_dec = ft_itoa_base((uintmax_t)(nb_dec), 10);
+		str_float = join_and_free_str(str_float, str_dec);
+		ft_strdel(&str_dec);
+	}
+	return (str_float);
+}
+
 int	print_double(t_flag *flag, va_list ap)
 {
 	long double	nb_dbl;
-	char		*str1;
-	char		*str2;
 	uintmax_t	nb_int;
 	long double	nb_dec;
 	int			negative;
 	int			zeroes;
+	char 	*str_float;
+	int		len;
 
 	negative = 0;
-	nb_dbl = va_arg(ap, double);
+	if (flag->length[0] == 'L')
+		nb_dbl = va_arg(ap, long double);
+	else
+		nb_dbl = va_arg(ap, double);
 	nb_dbl = abs_value_dbl(nb_dbl, &negative);
 	nb_int = (uintmax_t)nb_dbl;
 	nb_dec = nb_dbl - nb_int;
 	zeroes = get_mantissa_zeroes(flag, nb_dec);
 	round_to_precision(flag, &nb_int, &nb_dec);
-	put_neg_sign(negative);
-	str1 = ft_itoa_base(nb_int, 10);
-	putstr_nbyte(str1, ft_strlen(str1));
-	if (!(flag->precision == 0 && flag->dot == TRUE))
-		write(1, ".", 1);
-	putchar_nbyte('0', zeroes);
-	if (flag->precision > zeroes && flag->precision != 0)
-	{
-		str2 = (ft_itoa_base((uintmax_t)(nb_dec), 10));
-		putstr_nbyte(str2, ft_strlen(str2));
-	}
-	return (0);
+	//put_neg_sign(negative);
+	str_float = join_float_str(flag, nb_int, (uintmax_t)(nb_dec), zeroes);
+	len = ft_strlen(str_float);
+	if (flag->width > len && flag->dash == TRUE)
+		return (handle_width_dash(flag, str_float, len, negative));
+	if (flag->width > len && flag->zero == TRUE)
+		return (handle_width_zero(flag, str_float, len, negative));
+	if (flag->width > len)
+		return (handle_width(flag, str_float, len, negative));
+	return (handle_plus_or_space(flag, str_float, len, negative));
 }

@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/17 09:44:52 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/17 15:09:37 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,26 @@ void	test_int(char *format, uintmax_t nb)
 
 void	test_double(char *format, double nb)
 {
-	ft_printf(format, nb);
+	int ft_ret;
+	int pf_ret;
+	ft_ret = ft_printf(format, nb);
 	printf(" <- ft_printf\n");
-	printf(format, nb);
+	pf_ret = printf(format, nb);
 	printf(" <- original\n");
+	if (ft_ret != pf_ret)
+		printf("return values are different");
 }
 
-double db_random(int low, int high)
+long double db_random(int low, int high)
 {
-	return (high - low + 1) * rand() / (double) INT32_MAX + low;	
+	return (high - low + 1) * rand() / (long double) INT32_MAX + low;	
 }
 
 void random_double_test(int low, int high)
 {
 	for (int i = 0; i < 100; i++)
 	{
-		test_double("%.18f", db_random(low, high));
+		test_double("%Lf", db_random(low, high));
 		printf("\n");
 	}
 	
@@ -214,7 +218,7 @@ int main(void)
 
 	//printf("%.30f\n", 1.0);
 	//printf("%f\n", 0.5555545 * 1000000.0);
-	//random_double_test(0, 1);
+	random_double_test(0, 1);
 
 
 	
