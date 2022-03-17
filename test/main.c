@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/16 14:27:28 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/17 09:44:52 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void random_double_test(int low, int high)
 {
 	for (int i = 0; i < 100; i++)
 	{
-		test_double("%f", db_random(low, high));
+		test_double("%.18f", db_random(low, high));
 		printf("\n");
 	}
 	
@@ -160,6 +160,56 @@ int main(void)
 	ft_printf("%f", 2.5555545);
 	printf(" <- ft_printf\n");
 	printf("%f",  2.5555545);
+	printf(" <- original\n\n");
+
+	ft_printf("%.0f", 0.5);
+	printf(" <- ft_printf\n");
+	printf("%.0f",  0.5);
+	printf(" <- original\n\n");
+
+	ft_printf("%.0f", 1.5);
+	printf(" <- ft_printf\n");
+	printf("%.0f",  1.5);
+	printf(" <- original\n\n");
+
+	ft_printf("%.0f", 2.5);
+	printf(" <- ft_printf\n");
+	printf("%.0f",  2.5);
+	printf(" <- original\n\n");
+
+	ft_printf("%.0f", 3.5);
+	printf(" <- ft_printf\n");
+	printf("%.0f",  3.5);
+	printf(" <- original\n\n");
+
+	ft_printf("%.0f", 3.5);
+	printf(" <- ft_printf\n");
+	printf("%.0f",  3.5);
+	printf(" <- original\n\n");
+
+	ft_printf("%.0f", 4.5);
+	printf(" <- ft_printf\n");
+	printf("%.0f",  4.5);
+	printf(" <- original\n\n");
+
+	ft_printf("%.0f", 5.5);
+	printf(" <- ft_printf\n");
+	printf("%.0f",  5.5);
+	printf(" <- original\n\n");
+
+	ft_printf("%.0f", 6.5);
+	printf(" <- ft_printf\n");
+	printf("%.0f",  6.5);
+	printf(" <- original\n\n");
+
+	ft_printf("%.0f", 7.5);
+	printf(" <- ft_printf\n");
+	printf("%.0f",  7.5);
+	printf(" <- original\n\n");
+
+	ft_printf("%.0f", 2.55);
+	printf(" <- ft_printf\n");
+	printf("%.0f",  2.55);
 	printf(" <- original\n\n");
 
 	//printf("%.30f\n", 1.0);
