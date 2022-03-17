@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/07 13:27:15 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/17 15:54:58 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,7 @@ static int	fill_length_upper_l(t_flag *flag)
 	char	*upper_l;
 
 	upper_l = ft_strchr(flag->str, 'L');
-	if (upper_l != NULL && is_int_or_octal(*(upper_l + 1)) == TRUE)
+	if (upper_l != NULL && (*(upper_l + 1)) == 'f')
 	{
 		flag->length[0] = 'L';
 		return (TRUE);

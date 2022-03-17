@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/10 16:20:51 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/17 17:00:51 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ typedef struct		s_flag
 	int				space;
 	int				plus;
 	int				dash;
-	int				width;
-	int				precision;
+	uintmax_t		width;
+	uintmax_t		precision;
 	char			length[2];
 	char			specifier;
 	int				dot;
@@ -58,7 +58,7 @@ int	putstr_nbyte(char const *s, int nbyte);
 int	print_c(t_flag *flag, va_list ap);
 int	print_s(t_flag *flag, va_list ap);
 int	print_p(t_flag *flag, va_list ap);
-int	print_int(t_flag *flag, char *str, int len, int negative);
+int	print_int(t_flag *flag, char *str, uintmax_t len, int negative);
 int	print_signed_int(t_flag *flag, va_list ap);
 int	print_unsigned_int(t_flag *flag, va_list ap);
 int	print_double(t_flag *flag, va_list ap);

@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/17 15:09:37 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/17 17:18:28 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int main(void)
 	printf("(%d)", printf("%#llX", 18446744073709551615ULL));*/
 
 
-	ft_printf("%.3f", 0.0005);
+	/*ft_printf("%.3f", 0.0005);
 	printf(" <- ft_printf\n");
 	printf("%.3f",  0.0005);
 	printf(" <- original\n\n");
@@ -209,16 +209,16 @@ int main(void)
 	ft_printf("%.0f", 7.5);
 	printf(" <- ft_printf\n");
 	printf("%.0f",  7.5);
-	printf(" <- original\n\n");
+	printf(" <- original\n\n");*/
 
-	ft_printf("%.0f", 2.55);
+	ft_printf("%    -30.20Lf", 314.01L);
 	printf(" <- ft_printf\n");
-	printf("%.0f",  2.55);
+	printf("%    -30.20Lf",  314.01L);
 	printf(" <- original\n\n");
 
 	//printf("%.30f\n", 1.0);
 	//printf("%f\n", 0.5555545 * 1000000.0);
-	random_double_test(0, 1);
+	//random_double_test(0, 1);
 
 
 	

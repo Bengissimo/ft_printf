@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/17 15:08:25 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/17 19:08:50 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	check_print(t_flag *flag)
 	if(flag->space)
 		printf("sp");
 	if (flag->width > 0)
-		printf("%d", flag->width);
-	//if (flag->precision > 0)
-		//printf(".%d", flag->precision);
-	//printf("length[0]: %c, length[1]: %c", flag->length[0], flag->length[1]);
+		printf("%ju", flag->width);
+	if (flag->precision > 0)
+		printf(".%ju", flag->precision);
+	printf("length[0]: %c, length[1]: %c", flag->length[0], flag->length[1]);
 	fflush(stdout);
 	printf(":\n");
 	/*printf("ft_str: %s	", flag->str);
@@ -107,7 +107,7 @@ int	print_c(t_flag *flag, va_list ap)
 int	print_s(t_flag *flag, va_list ap)
 {
 	char	*s;
-	int		len;
+	uintmax_t len;
 
 	s = va_arg(ap, char *);
 	len = ft_strlen(s);
@@ -129,7 +129,7 @@ int print_p(t_flag *flag, va_list ap)
 	ptr = va_arg(ap, void *);
 	str = ft_itoa_base((long)ptr, 16);
 	strlen = ft_strlen(str);
-	if (flag->width < strlen)
+	if ((int)flag->width < strlen)
 	{
 		ft_putstr("0x");
 		ft_putstr(str);
@@ -137,7 +137,7 @@ int print_p(t_flag *flag, va_list ap)
 	return (ft_strlen(str) + 2);
 }
 
-static int	handle_precision(t_flag *flag, char *str, int len, int negative)
+static int	handle_precision(t_flag *flag, char *str, uintmax_t len, int negative)
 {
 	int ret;
 
@@ -151,7 +151,7 @@ static int	handle_precision(t_flag *flag, char *str, int len, int negative)
 	return (ret + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
 }
 
-static int	handle_width_precision_dash(t_flag *flag, char *str, int len, int negative)
+static int	handle_width_precision_dash(t_flag *flag, char *str, uintmax_t len, int negative)
 {
 	int ret;
 	int space;
@@ -170,7 +170,7 @@ static int	handle_width_precision_dash(t_flag *flag, char *str, int len, int neg
 	return (ret + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len) + putchar_nbyte(' ', space));
 }
 
-static int	handle_width_precision(t_flag *flag, char *str, int len, int negative)
+static int	handle_width_precision(t_flag *flag, char *str, uintmax_t len, int negative)
 {
 	int ret;
 
@@ -187,7 +187,7 @@ static int	handle_width_precision(t_flag *flag, char *str, int len, int negative
 	return (ret + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
 }
 
-static int	handle_plus_or_space(t_flag *flag, char *str, int len, int negative)
+static int	handle_plus_or_space(t_flag *flag, char *str, uintmax_t len, int negative)
 {
 	int ret;
 
@@ -201,7 +201,7 @@ static int	handle_plus_or_space(t_flag *flag, char *str, int len, int negative)
 	return (ret + putstr_nbyte(str, len));
 }
 
-static int handle_width(t_flag *flag, char *str, int len, int negative)
+static int handle_width(t_flag *flag, char *str, uintmax_t len, int negative)
 {
 	int ret;
 	
@@ -215,7 +215,7 @@ static int handle_width(t_flag *flag, char *str, int len, int negative)
 	return (ret + putstr_nbyte(str, len));
 }
 
-static int handle_width_zero(t_flag *flag, char *str, int len, int negative)
+static int handle_width_zero(t_flag *flag, char *str, uintmax_t len, int negative)
 {
 	int ret;
 	int n_zero;
@@ -234,7 +234,7 @@ static int handle_width_zero(t_flag *flag, char *str, int len, int negative)
 	return (ret + putchar_nbyte('0', n_zero)+ putstr_nbyte(str, len));
 }
 
-static int handle_width_dash(t_flag *flag, char *str, int len, int negative)
+static int handle_width_dash(t_flag *flag, char *str, uintmax_t len, int negative)
 {
 	int ret;
 	int n_space;
@@ -294,7 +294,7 @@ static intmax_t handle_unsigned_length_mod(t_flag *flag, va_list ap)
 	}
 	return (nb = va_arg(ap, unsigned int));
 }
-int	print_int(t_flag *flag, char *str, int len, int negative)
+int	print_int(t_flag *flag, char *str, uintmax_t len, int negative)
 {
 	if (flag->precision > len && flag->width > flag->precision
 		&& flag->dash == TRUE)
@@ -399,12 +399,12 @@ static long double	abs_value_dbl(long double nb_dbl, int *negative)
 
 static	int	get_mantissa_zeroes(t_flag *flag, long double nb_dec)
 {
-	int	zeroes;
+	uintmax_t zeroes;
 
 	if (flag->dot == FALSE)
 		flag->precision = 6;
 	zeroes = 0;
-	while (nb_dec < 0.1)
+	while (nb_dec < 0.1 && zeroes < flag->precision)
 	{
 		nb_dec *= 10.0;
 		zeroes++;
@@ -452,11 +452,11 @@ static char *join_and_free_str(char *dst, char *str)
 	return (dst);
 }
 
-static char *join_float_str(t_flag *flag, uintmax_t nb_int, uintmax_t nb_dec, int zeroes)
+static char *join_float_str(t_flag *flag, uintmax_t nb_int, uintmax_t nb_dec, uintmax_t zeroes)
 {
 	char	*str_dec;
 	char	*str_float;
-	int		i;
+	uintmax_t		i;
 	
 	str_float = ft_itoa_base(nb_int, 10);
 	
@@ -488,19 +488,19 @@ int	print_double(t_flag *flag, va_list ap)
 	int			negative;
 	int			zeroes;
 	char 	*str_float;
-	int		len;
+	uintmax_t len;
 
 	negative = 0;
 	if (flag->length[0] == 'L')
 		nb_dbl = va_arg(ap, long double);
 	else
 		nb_dbl = va_arg(ap, double);
+	
 	nb_dbl = abs_value_dbl(nb_dbl, &negative);
 	nb_int = (uintmax_t)nb_dbl;
 	nb_dec = nb_dbl - nb_int;
 	zeroes = get_mantissa_zeroes(flag, nb_dec);
 	round_to_precision(flag, &nb_int, &nb_dec);
-	//put_neg_sign(negative);
 	str_float = join_float_str(flag, nb_int, (uintmax_t)(nb_dec), zeroes);
 	len = ft_strlen(str_float);
 	if (flag->width > len && flag->dash == TRUE)
