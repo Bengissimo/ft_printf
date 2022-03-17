@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/17 19:08:50 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/17 21:34:55 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,11 +137,13 @@ int print_p(t_flag *flag, va_list ap)
 	return (ft_strlen(str) + 2);
 }
 
-static int	handle_precision(t_flag *flag, char *str, uintmax_t len, int negative)
+static int	handle_precision(t_flag *flag, char *str, int negative)
 {
-	int ret;
+	int			ret;
+	uintmax_t	len;
 
 	ret = 0;
+	len = ft_strlen(str);
 	if (negative == TRUE)
 		ret = write(1, "-", 1);
 	else if (flag->plus == TRUE)
@@ -151,11 +153,13 @@ static int	handle_precision(t_flag *flag, char *str, uintmax_t len, int negative
 	return (ret + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
 }
 
-static int	handle_width_precision_dash(t_flag *flag, char *str, uintmax_t len, int negative)
+static int	handle_width_precision_dash(t_flag *flag, char *str, int negative)
 {
-	int ret;
-	int space;
+	int			ret;
+	int			space;
+	uintmax_t	len;
 
+	len = ft_strlen(str);
 	if (flag->plus == TRUE || flag->space == TRUE || negative == TRUE)
 		space = flag->width - flag->precision - 1;
 	else
@@ -170,10 +174,13 @@ static int	handle_width_precision_dash(t_flag *flag, char *str, uintmax_t len, i
 	return (ret + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len) + putchar_nbyte(' ', space));
 }
 
-static int	handle_width_precision(t_flag *flag, char *str, uintmax_t len, int negative)
+static int	handle_width_precision(t_flag *flag, char *str, int negative)
 {
 	int ret;
+	uintmax_t	len;
 
+	ret = 0;
+	len = ft_strlen(str);
 	if (flag->plus == TRUE || flag->space == TRUE || negative == TRUE)
 		ret = putchar_nbyte(' ', flag->width - flag->precision - 1);
 	else
@@ -187,10 +194,12 @@ static int	handle_width_precision(t_flag *flag, char *str, uintmax_t len, int ne
 	return (ret + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
 }
 
-static int	handle_plus_or_space(t_flag *flag, char *str, uintmax_t len, int negative)
+static int	handle_plus_or_space(t_flag *flag, char *str, int negative)
 {
-	int ret;
+	int			ret;
+	uintmax_t	len;
 
+	len = ft_strlen(str);
 	ret = 0;
 	if (negative == TRUE)
 		ret = write(1, "-", 1);
@@ -201,11 +210,13 @@ static int	handle_plus_or_space(t_flag *flag, char *str, uintmax_t len, int nega
 	return (ret + putstr_nbyte(str, len));
 }
 
-static int handle_width(t_flag *flag, char *str, uintmax_t len, int negative)
+static int handle_width(t_flag *flag, char *str, int negative)
 {
-	int ret;
-	
+	int			ret;
+	uintmax_t	len;
+
 	ret = 0;
+	len = ft_strlen(str);
 	if (negative == TRUE)
 		ret = putchar_nbyte(' ', flag->width - len - 1) + write(1, "-", 1);
 	else if (flag->plus == TRUE)
@@ -215,12 +226,14 @@ static int handle_width(t_flag *flag, char *str, uintmax_t len, int negative)
 	return (ret + putstr_nbyte(str, len));
 }
 
-static int handle_width_zero(t_flag *flag, char *str, uintmax_t len, int negative)
+static int handle_width_zero(t_flag *flag, char *str, int negative)
 {
-	int ret;
-	int n_zero;
-	
+	int			ret;
+	int			n_zero;
+	uintmax_t	len;
+
 	ret = 0;
+	len = ft_strlen(str);
 	if (flag->plus == TRUE || flag->space == TRUE || negative == TRUE)
 		n_zero = flag->width - len - 1;
 	else
@@ -234,12 +247,14 @@ static int handle_width_zero(t_flag *flag, char *str, uintmax_t len, int negativ
 	return (ret + putchar_nbyte('0', n_zero)+ putstr_nbyte(str, len));
 }
 
-static int handle_width_dash(t_flag *flag, char *str, uintmax_t len, int negative)
+static int handle_width_dash(t_flag *flag, char *str, int negative)
 {
-	int ret;
-	int n_space;
-	
+	int			ret;
+	int			n_space;
+	uintmax_t	len;
+
 	ret = 0;
+	len = ft_strlen(str);
 	if (flag->plus == TRUE || flag->space == TRUE || negative == TRUE)
 		n_space = flag->width - len - 1;
 	else
@@ -294,22 +309,26 @@ static intmax_t handle_unsigned_length_mod(t_flag *flag, va_list ap)
 	}
 	return (nb = va_arg(ap, unsigned int));
 }
-int	print_int(t_flag *flag, char *str, uintmax_t len, int negative)
+
+int	print_int(t_flag *flag, char *str, int negative)
 {
+	uintmax_t	len;
+
+	len = ft_strlen(str);
 	if (flag->precision > len && flag->width > flag->precision
 		&& flag->dash == TRUE)
-		return (handle_width_precision_dash(flag, str, len, negative));
+		return (handle_width_precision_dash(flag, str, negative));
 	if (flag->precision > len && flag->width > flag->precision)
-		return (handle_width_precision(flag, str, len, negative));
+		return (handle_width_precision(flag, str, negative));
 	if (flag->precision > len)
-		return (handle_precision(flag, str, len, negative));
+		return (handle_precision(flag, str, negative));
 	if (flag->width > len && flag->dash == TRUE)
-		return (handle_width_dash(flag, str, len, negative));
+		return (handle_width_dash(flag, str, negative));
 	if (flag->width > len && flag->zero == TRUE)
-		return (handle_width_zero(flag, str, len, negative));
+		return (handle_width_zero(flag, str, negative));
 	if (flag->width > len)
-		return (handle_width(flag, str, len, negative));
-	return (handle_plus_or_space(flag, str, len, negative));
+		return (handle_width(flag, str, negative));
+	return (handle_plus_or_space(flag, str, negative));
 }
 int	print_signed_int(t_flag *flag, va_list ap)
 {
@@ -324,21 +343,7 @@ int	print_signed_int(t_flag *flag, va_list ap)
 	len = ft_strlen(str);
 	if (flag->dot == TRUE && flag->precision == 0 && nb == 0)
 		return (0);
-	return (print_int(flag, str, len, negative));
-	/*if (flag->precision > len && flag->width > flag->precision
-		&& flag->dash == TRUE)
-		return (handle_width_precision_dash(flag, str, len, negative));
-	if (flag->precision > len && flag->width > flag->precision)
-		return (handle_width_precision(flag, str, len, negative));
-	if (flag->precision > len)
-		return (handle_precision(flag, str, len, negative));
-	if (flag->width > len && flag->dash == TRUE)
-		return (handle_width_dash(flag, str, len, negative));
-	if (flag->width > len && flag->zero == TRUE)
-		return (handle_width_zero(flag, str, len, negative));
-	if (flag->width > len)
-		return (handle_width(flag, str, len, negative));
-	return (handle_plus_or_space(flag, str, len, negative));*/
+	return (print_int(flag, str, negative));
 }
 
 int	print_unsigned_int(t_flag *flag, va_list ap)
@@ -366,24 +371,17 @@ int	print_unsigned_int(t_flag *flag, va_list ap)
 		if (flag->dot == TRUE && flag->precision == 0 && nb == 0 && flag->hash == FALSE)
 			return (0);
 		if (flag->hash == TRUE && nb != 0)
-			return (write(1, "0", 1) + print_int(flag, str, len, negative));
-		return (print_int(flag, str, len, negative));
+			return (write(1, "0", 1) + print_int(flag, str, negative));
+		return (print_int(flag, str, negative));
 	}
 	if (flag->dot == TRUE && flag->precision == 0 && nb == 0)
 		return (0);
 	if (flag->hash == TRUE && flag->specifier == 'x' && nb != 0)
-		return (write(1, "0x", 2) + print_int(flag, str, len, negative));
+		return (write(1, "0x", 2) + print_int(flag, str, negative));
 	if (flag->hash == TRUE && flag->specifier == 'X' && nb != 0)
-		return (write(1, "0X", 2) + print_int(flag, str, len, negative));
-	return (print_int(flag, str, len, negative));
+		return (write(1, "0X", 2) + print_int(flag, str, negative));
+	return (print_int(flag, str, negative));
 }
-
-/*static	int	put_neg_sign(int negative)
-{
-	if (negative == TRUE)
-		return (write(1, "-", 1));
-	return (0);
-}*/
 
 static long double	abs_value_dbl(long double nb_dbl, int *negative)
 {
@@ -504,10 +502,10 @@ int	print_double(t_flag *flag, va_list ap)
 	str_float = join_float_str(flag, nb_int, (uintmax_t)(nb_dec), zeroes);
 	len = ft_strlen(str_float);
 	if (flag->width > len && flag->dash == TRUE)
-		return (handle_width_dash(flag, str_float, len, negative));
+		return (handle_width_dash(flag, str_float, negative));
 	if (flag->width > len && flag->zero == TRUE)
-		return (handle_width_zero(flag, str_float, len, negative));
+		return (handle_width_zero(flag, str_float, negative));
 	if (flag->width > len)
-		return (handle_width(flag, str_float, len, negative));
-	return (handle_plus_or_space(flag, str_float, len, negative));
+		return (handle_width(flag, str_float, negative));
+	return (handle_plus_or_space(flag, str_float, negative));
 }

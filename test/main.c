@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/17 17:18:28 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/17 21:35:48 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,12 +121,12 @@ int main(void)
 	printf("%.0d\n", 0);
 	ft_printf("%.0X", 0);*/
 	
-	/*printf("(%d)", ft_printf("%#llX", 18446744073709551615ULL));
+	printf("(%d)", ft_printf("%#llX", 18446744073709551615ULL));
 	printf("\n");
-	printf("(%d)", printf("%#llX", 18446744073709551615ULL));*/
+	printf("(%d)", printf("%#llX", 18446744073709551615ULL));
 
 
-	/*ft_printf("%.3f", 0.0005);
+	ft_printf("%.3f", 0.0005);
 	printf(" <- ft_printf\n");
 	printf("%.3f",  0.0005);
 	printf(" <- original\n\n");
@@ -209,7 +209,7 @@ int main(void)
 	ft_printf("%.0f", 7.5);
 	printf(" <- ft_printf\n");
 	printf("%.0f",  7.5);
-	printf(" <- original\n\n");*/
+	printf(" <- original\n\n");
 
 	ft_printf("%    -30.20Lf", 314.01L);
 	printf(" <- ft_printf\n");
