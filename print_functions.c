@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/18 13:24:27 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/18 14:00:51 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,6 @@ void	check_print(t_flag *flag)
 	fflush(stdout);
 	printf(":\n");
 }
-
-static intmax_t	abs_value_int(intmax_t nb, int *negative)
-{
-	*negative = 0;
-	if (nb < 0)
-	{
-		nb = -nb;
-		*negative = 1;
-	}
-	return (nb);
-}
-
 
 int	put_format(t_flag *flag, va_list ap)
 {
@@ -101,22 +89,22 @@ int	print_s(t_flag *flag, va_list ap)
 
 /*int print_p(t_flag *flag, va_list ap)
 {
-	//void	*ptr;
+	void	*ptr;
 	uintptr_t arg;
 	char	*str;
 	int		strlen;
 	int negative;
 	negative = FALSE;
 
-	//ptr = va_arg(ap, void *);
+	ptr = va_arg(ap, void *);
 	arg = (uintptr_t)va_arg(ap, void *);
 	str = ft_itoa_base((uintmax_t)arg, 16);
 	strlen = ft_strlen(str);
-	/*if ((int)flag->width < strlen)
+	if ((int)flag->width < strlen)
 	{
 		ft_putstr("0x");
 		ft_putstr(str);
-	}*/
+	}
 	return (write(1, "0x", 2) + handle_int(flag, str, negative));
 }*/
 
@@ -327,7 +315,7 @@ int	print_signed_int(t_flag *flag, va_list ap)
 	int			ret;
 
 	nb = handle_length_mod(flag, ap);
-	nb = abs_value_int(nb, &negative);
+	nb = (intmax_t)abs_value((intmax_t)nb, &negative);
 	if (flag->dot == TRUE && flag->precision == 0 && nb == 0)
 		return (0);
 	str = ft_itoa_base(nb, 10);
@@ -369,18 +357,6 @@ int	print_unsigned_int(t_flag *flag, va_list ap)
 	if (flag->hash == TRUE && flag->specifier == 'X' && nb != 0)
 		return (write(1, "0X", 2) + handle_int(flag, str, negative));
 	return (handle_int(flag, str, negative));
-}
-
-static long double	abs_value_dbl(long double nb_dbl, int *negative)
-{
-	*negative = FALSE;
-
-	if (nb_dbl < 0)
-	{
-		nb_dbl = -nb_dbl;
-		*negative = TRUE;
-	}
-	return (nb_dbl);
 }
 
 static	int	get_mantissa_zeroes(t_flag *flag, long double nb_dec)
@@ -494,7 +470,7 @@ int	print_double(t_flag *flag, va_list ap)
 		nb_dbl = va_arg(ap, long double);
 	else
 		nb_dbl = va_arg(ap, double);
-	nb_dbl = abs_value_dbl(nb_dbl, &negative);
+	nb_dbl = abs_value(nb_dbl, &negative);
 	nb_int = (uintmax_t)nb_dbl;
 	nb_dec = nb_dbl - (uintmax_t)nb_dbl;
 	zeroes = get_mantissa_zeroes(flag, nb_dec);
