@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/17 21:35:48 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/18 11:34:08 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@ void random_double_test(int low, int high)
 		test_double("%Lf", db_random(low, high));
 		printf("\n");
 	}
+}
+
+void random_int_test()
+{
 	
 }
 
@@ -121,10 +125,14 @@ int main(void)
 	printf("%.0d\n", 0);
 	ft_printf("%.0X", 0);*/
 	
-	printf("(%d)", ft_printf("%#llX", 18446744073709551615ULL));
-	printf("\n");
-	printf("(%d)", printf("%#llX", 18446744073709551615ULL));
+	int nb = 8;
+	int *p_nb;
+	p_nb = &nb;
 
+	ft_printf("%p", p_nb);
+	printf(" <- ft_printf\n");
+	printf("%p", p_nb);
+	printf(" <- original\n\n");
 
 	ft_printf("%.3f", 0.0005);
 	printf(" <- ft_printf\n");
