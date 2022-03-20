@@ -6,13 +6,13 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/18 14:00:51 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/20 11:34:27 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	check_print(t_flag *flag)
+void	check_print(t_flag *flag) //to be deleted just for checking
 {
 	if (flag->dash)
 		printf("-");
@@ -34,7 +34,7 @@ void	check_print(t_flag *flag)
 int	put_format(t_flag *flag, va_list ap)
 {
 	fill(flag);
-	check_print(flag);
+	check_print(flag); //to be deleted 
 	if (flag->specifier == 'c')
 		return (print_c(flag, ap));
 	else if (flag->specifier == 's')
@@ -324,6 +324,25 @@ int	print_signed_int(t_flag *flag, va_list ap)
 	return (ret);
 }
 
+static int handle_uint(t_flag *flag, char *str, int negative)
+{
+	if (flag->specifier == 'o')
+	{
+		if (flag->dot == TRUE && flag->precision == 0 && *str == '0' && flag->hash == FALSE)
+			return (0);
+		if (flag->hash == TRUE && *str != '0')
+			return (write(1, "0", 1) + handle_int(flag, str, negative));
+		return (handle_int(flag, str, negative));
+	}
+	if (flag->dot == TRUE && flag->precision == 0 && *str == '0')
+		return (0);
+	if (flag->hash == TRUE && flag->specifier == 'x' && *str != '0')
+		return (write(1, "0x", 2) + handle_int(flag, str, negative));
+	if (flag->hash == TRUE && flag->specifier == 'X' && *str != '0')
+		return (write(1, "0X", 2) + handle_int(flag, str, negative));
+	return (handle_int(flag, str, negative));
+}
+
 int	print_unsigned_int(t_flag *flag, va_list ap)
 {
 	uintmax_t	nb;
@@ -342,21 +361,7 @@ int	print_unsigned_int(t_flag *flag, va_list ap)
 	negative = FALSE;
 	flag->plus = FALSE;
 	flag->space = FALSE;
-	if (flag->specifier == 'o')
-	{
-		if (flag->dot == TRUE && flag->precision == 0 && nb == 0 && flag->hash == FALSE)
-			return (0);
-		if (flag->hash == TRUE && nb != 0)
-			return (write(1, "0", 1) + handle_int(flag, str, negative));
-		return (handle_int(flag, str, negative));
-	}
-	if (flag->dot == TRUE && flag->precision == 0 && nb == 0)
-		return (0);
-	if (flag->hash == TRUE && flag->specifier == 'x' && nb != 0)
-		return (write(1, "0x", 2) + handle_int(flag, str, negative));
-	if (flag->hash == TRUE && flag->specifier == 'X' && nb != 0)
-		return (write(1, "0X", 2) + handle_int(flag, str, negative));
-	return (handle_int(flag, str, negative));
+	return (handle_uint(flag, str, negative));
 }
 
 static	int	get_mantissa_zeroes(t_flag *flag, long double nb_dec)

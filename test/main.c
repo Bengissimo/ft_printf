@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/18 11:34:08 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/20 11:28:55 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	test_int(char *format, uintmax_t nb)
 	printf("(%d)", printf(format, nb));
 	printf(" <- original\n");
 }
+
 
 void	test_double(char *format, double nb)
 {
@@ -125,7 +126,7 @@ int main(void)
 	printf("%.0d\n", 0);
 	ft_printf("%.0X", 0);*/
 	
-	int nb = 8;
+	/*int nb = 8;
 	int *p_nb;
 	p_nb = &nb;
 
@@ -222,13 +223,20 @@ int main(void)
 	ft_printf("%    -30.20Lf", 314.01L);
 	printf(" <- ft_printf\n");
 	printf("%    -30.20Lf",  314.01L);
-	printf(" <- original\n\n");
+	printf(" <- original\n\n");*/
 
 	//printf("%.30f\n", 1.0);
 	//printf("%f\n", 0.5555545 * 1000000.0);
 	//random_double_test(0, 1);
 
-
+	test_int("%u", 0);
+	test_int("%o", 0);
+	test_int("%x", 0);
+	test_int("%X", 0);
+	test_int("%#o", 0);
+	test_int("%#x", 0);
+	test_int("%#X", 0);
+	
 	
 
 
