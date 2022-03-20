@@ -39,7 +39,7 @@ int main(void)
 	printf("%f\n", 912.9 / 10000.0);
 	printf("%d\n",(int)912.9);*/
 
-	printf("%f\n", power(10, 0));
+	/*printf("%f\n", power(10, 0));
 	printf("%f\n", power(10, -1));
 	printf("%f\n", power(10, -2));
 	printf("%f\n", power(10, -3));
@@ -60,7 +60,11 @@ int main(void)
 	printf("%f\n", power(10, 17));
 	printf("%f\n", power(10, 18));
 	printf("%f\n", power(10, 19));
-	printf("%f\n", power(10, 20));
+	printf("%f\n", power(10, 20));*/
+
+	
+	printf("expect: [%5%]\n");
+	printf("expect: [% z5%]\n");
 
 
 

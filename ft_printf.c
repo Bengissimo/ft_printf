@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:51:31 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/17 14:56:23 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/20 12:56:51 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,66 @@ int	parse(const char *format, va_list ap)
 	int		j;
 	int		count;
 	int		specifier;
-	t_flag flag;
+	t_flag	flag;
+	int ret;
+
+	i = 0;
+	j = 0;
+	count  = 0;
+	specifier = FALSE;
+	ret = 0;
+	initiate(&flag);
+	while (format[i] != '\0')
+	{
+		if (format[i] == '%')
+		{
+			if (specifier == TRUE)
+			{
+				ft_putchar('%');
+				ret++;
+			}
+			else
+			{
+				specifier = TRUE;
+				j = 0;
+				count++;
+				reset(&flag);
+			}
+		}
+		else
+		{
+			if (specifier == FALSE)
+			{
+				ft_putchar(format[i]);
+				ret++;
+			}
+			else
+			{
+				realloc_before_append(&(flag.str));
+				flag.str[j++] = format[i];
+				if (is_specifier(format[i]) == TRUE)
+				{
+					specifier = FALSE;
+					ret = ret + put_format(&flag, ap);
+				}
+			}
+		}
+		i++;
+	}
+	//clean_up(&(flag.str), &specifier);
+	reset(&flag); //TO DO: fix the leak HERE
+	//free(flag.str);
+	//flag.str = NULL;
+	return (ret);
+}
+
+int	parse(const char *format, va_list ap)
+{
+	int		i;
+	int		j;
+	int		count;
+	int		specifier;
+	t_flag	flag;
 	int ret;
 
 	i = 0;

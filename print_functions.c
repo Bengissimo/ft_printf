@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/20 11:34:27 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/20 12:35:06 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	put_format(t_flag *flag, va_list ap)
 		return (print_unsigned_int(flag, ap));
 	else if (flag->specifier == 'f')
 		return (print_double(flag, ap));
+	else if (flag->specifier == '%')
+		return (write(1, ));
 	return (0); //to be deleted
 }
 

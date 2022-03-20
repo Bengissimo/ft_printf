@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/18 11:20:51 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/20 12:32:03 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 
 #define LIMIT 10000000000000000
 
-#define VALID_CHARS "#0-+ 123456789.hlLcspdiouxXf"
-#define CONVERSIONS "cspdiouxXf"
+#define VALID_CHARS "#0-+ 123456789.hlLcspdiouxXf%"
+#define CONVERSIONS "cspdiouxXf%"
 #define INT_OR_OCTAL	"diouxX"
 #define FLAGS		"0# +-"
 
