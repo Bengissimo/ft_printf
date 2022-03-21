@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:51:31 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/21 12:18:19 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/21 12:38:29 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 	return (count);	
 }*/
 
-static int	is_specifier(char c)
+/*static int	is_specifier(char c)
 {
 	int	i;
 
@@ -39,7 +39,7 @@ static int	is_specifier(char c)
 		i++;
 	}
 	return (FALSE);
-}
+}*/
 
 static void	realloc_before_append(char **str)
 {
@@ -66,7 +66,7 @@ void	initiate(t_flag *flag)
 	ft_bzero(flag->length, 2);
 }
 
-/*static void	clean_up(t_flag *flag)
+static void	clean_up(t_flag *flag)
 {
 	flag->specifier = '\0';
 	flag->dash= FALSE;
@@ -79,9 +79,9 @@ void	initiate(t_flag *flag)
 	flag->dot = 0;
 	ft_bzero(flag->length, 2);
 	ft_strdel(&(flag->str));
-}*/
+}
 
-int	parse(const char *format, va_list ap)
+/*int	parse(const char *format, va_list ap)
 {
 	int		i;
 	int		j;
@@ -138,9 +138,9 @@ int	parse(const char *format, va_list ap)
 	//free(flag.str);
 	//flag.str = NULL;
 	return (ret);
-}
+}*/
 
-/*static int	is_valid_char(char c)
+static int	is_valid_char(char c)
 {
 	int i;
 
@@ -195,15 +195,18 @@ int	parse(const char *format, va_list ap)
 				if (is_valid_char(format[i]) == FALSE)
 					break;
 				realloc_before_append(&(flag.str));
-				flag.str[j++] = format[i++];
+				flag.str[j++] = format[i];
 				if (is_char_in_str(format[i], CONVERSIONS) == TRUE)
 				{
 					ret = ret + put_format(&flag, ap);
 					reset(&flag);
 					break;
 				}
+				i++;
 			}
+			i++;
 		}
+		
 		else
 		{
 			ft_putchar(format[i]);
@@ -214,7 +217,7 @@ int	parse(const char *format, va_list ap)
 	}
 	clean_up(&flag);
 	return (ret);
-}*/
+}
 
 int	ft_printf(const char *format, ...)
 {
