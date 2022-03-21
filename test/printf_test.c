@@ -63,8 +63,8 @@ int main(void)
 	printf("%f\n", power(10, 20));*/
 
 	
-	printf("expect: [%5%]\n");
-	printf("expect: [% z5%]\n");
+	printf("expect: %123w %d\n", 1, 5);
+	//printf("expect: [% z5%]\n");
 
 
 

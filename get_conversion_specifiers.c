@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/17 15:54:58 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/21 11:24:05 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ void	fill(t_flag *flag)
 	i = 0;
 	while (flag->str[i] != '\0')
 	{
-		if (is_char_in_str(flag->str[i], VALID_CHARS) == FALSE)
+		if (is_char_in_str(flag->str[i], VALID_CHARS) == FALSE) //TO DO
 		{
 			ft_putendl("invalid format");
 			exit(-1);
@@ -224,7 +224,7 @@ void	fill(t_flag *flag)
 	if (ft_strlen(flag->str) > 1)
 	{
 		fill_width(flag);
-		fill_flags(flag);
+		fill_flags(flag); //to do change the name
 		fill_length_h(flag);
 		fill_length_l(flag);
 		fill_length_upper_l(flag);

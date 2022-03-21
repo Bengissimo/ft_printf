@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/20 12:28:32 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/21 11:55:20 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,8 +225,6 @@ int main(void)
 	printf("%    -30.20Lf",  314.01L);
 	printf(" <- original\n\n");*/
 
-	//printf("%.30f\n", 1.0);
-	//printf("%f\n", 0.5555545 * 1000000.0);
 	//random_double_test(0, 1);
 
 	test_int("%u", 4294967295);
@@ -236,51 +234,6 @@ int main(void)
 	test_int("%#o", 4294967295);
 	test_int("%#x", 4294967295);
 	test_int("%#X", 4294967295);
-	
-	
 
-
-	//printf("test for negative integer:\n");
-
-	/*test_int("%X", neg);
-	test_int("%-X", neg);
-	test_int("%+X", neg);
-	test_int("% X", neg);
-	test_int("%---X", neg);
-	test_int("%+++X", neg);
-	test_int("%   X", neg);
-	test_int("%-+X", neg);
-	test_int("%- X", neg);
-	test_int("%5X", neg);
-	test_int("%+5X", neg);
-	test_int("%-5X", neg);
-	test_int("%-+5X", neg);
-	test_int("%- 5X", neg);
-	test_int("%.3X", neg);
-	test_int("%-.3X", neg);
-	test_int("%-+.3X", neg);
-	test_int("%- .3X", neg);
-	test_int("%6.3X", neg);
-	test_int("%-6.3X", neg);
-	test_int("%-+6.3X", neg);
-	test_int("%- 6.3X", neg);
-	test_int("% 6.3X", neg);
-	test_int("%+6.3X", neg);
-	test_int("%05X", neg);
-	test_int("%0+5X", neg);
-	test_int("% 05X", neg);*/
-	
 	return (0);
 }
-
-
-/*
-for d or i
-.  if precision > strlen, add leading (precision - strlen) zeros {
-		if width > (precision) and no dash_flag, add (width - precision - strlen) leading space  
-		if there is dash_flag add (width - precision - strlen) trailing space}
-	else if precision <= strlen, print str.
-
-
-
-*/

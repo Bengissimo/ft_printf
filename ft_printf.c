@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:51:31 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/20 12:56:51 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/21 12:18:19 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ void	initiate(t_flag *flag)
 	flag->space = FALSE;
 	flag->zero = FALSE;
 	flag->width = 0;
+	flag->dot = FALSE;
 	flag->precision = 0;
 	ft_bzero(flag->length, 2);
-	flag->dot = FALSE;
 }
 
 /*static void	clean_up(t_flag *flag)
@@ -76,6 +76,7 @@ void	initiate(t_flag *flag)
 	flag->zero = FALSE;
 	flag->width = 0;
 	flag->precision = 0;
+	flag->dot = 0;
 	ft_bzero(flag->length, 2);
 	ft_strdel(&(flag->str));
 }*/
@@ -139,64 +140,81 @@ int	parse(const char *format, va_list ap)
 	return (ret);
 }
 
+/*static int	is_valid_char(char c)
+{
+	int i;
+
+	i = 0;
+	while (VALID_CHARS[i] != '\0')
+	{
+		if (c == VALID_CHARS[i])
+			return (TRUE);
+		i++;
+	}
+	return (FALSE);
+}
+
+static int	is_char_in_str(char c, char *str)  //copy of the fn in get_conv_spec.c va_stare
+{
+	int	i;
+	int found;
+
+	found = FALSE;
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (c == str[i])
+		{
+			found = TRUE;
+			break ;
+		}
+		i++;
+	}
+	return (found);
+}
+
 int	parse(const char *format, va_list ap)
 {
+	t_flag	flag;
+	int		ret;
 	int		i;
 	int		j;
-	int		count;
-	int		specifier;
-	t_flag	flag;
-	int ret;
 
 	i = 0;
 	j = 0;
-	count  = 0;
-	specifier = FALSE;
 	ret = 0;
 	initiate(&flag);
 	while (format[i] != '\0')
 	{
 		if (format[i] == '%')
 		{
-			if (specifier == TRUE)
+			i++;
+			j = 0;
+			while (TRUE)
 			{
-				ft_putchar('%');
-				ret++;
-			}
-			else
-			{
-				specifier = TRUE;
-				j = 0;
-				count++;
-				reset(&flag);
+				if (is_valid_char(format[i]) == FALSE)
+					break;
+				realloc_before_append(&(flag.str));
+				flag.str[j++] = format[i++];
+				if (is_char_in_str(format[i], CONVERSIONS) == TRUE)
+				{
+					ret = ret + put_format(&flag, ap);
+					reset(&flag);
+					break;
+				}
 			}
 		}
 		else
 		{
-			if (specifier == FALSE)
-			{
-				ft_putchar(format[i]);
-				ret++;
-			}
-			else
-			{
-				realloc_before_append(&(flag.str));
-				flag.str[j++] = format[i];
-				if (is_specifier(format[i]) == TRUE)
-				{
-					specifier = FALSE;
-					ret = ret + put_format(&flag, ap);
-				}
-			}
+			ft_putchar(format[i]);
+			ret++;
+			i++;
 		}
-		i++;
+		
 	}
-	//clean_up(&(flag.str), &specifier);
-	reset(&flag); //TO DO: fix the leak HERE
-	//free(flag.str);
-	//flag.str = NULL;
+	clean_up(&flag);
 	return (ret);
-}
+}*/
 
 int	ft_printf(const char *format, ...)
 {

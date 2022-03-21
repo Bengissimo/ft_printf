@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/20 12:35:06 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/21 11:37:09 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ int	put_format(t_flag *flag, va_list ap)
 	else if (flag->specifier == 'u' || flag->specifier == 'o' || flag->specifier == 'x' || flag->specifier == 'X' || flag->specifier == 'p')
 		return (print_unsigned_int(flag, ap));
 	else if (flag->specifier == 'f')
-		return (print_double(flag, ap));
-	else if (flag->specifier == '%')
-		return (write(1, ));
+		return (print_double(flag, ap)); //TO DO change double name to float
+	//else if (flag->specifier == '%') // TO DO
+		//return (write(1, ));
 	return (0); //to be deleted
 }
 
@@ -292,38 +292,39 @@ static intmax_t handle_unsigned_length_mod(t_flag *flag, va_list ap) //p'yi ekle
 int	handle_int(t_flag *flag, char *str, int negative)
 {
 	uintmax_t	len;
+	int			ret;
 
 	len = ft_strlen(str);
 	if (flag->precision > len && flag->width > flag->precision
 		&& flag->dash == TRUE)
-		return (handle_width_precision_dash(flag, str, negative));
+		ret = handle_width_precision_dash(flag, str, negative);
 	if (flag->precision > len && flag->width > flag->precision)
-		return (handle_width_precision(flag, str, negative));
+		ret = handle_width_precision(flag, str, negative);
 	if (flag->precision > len)
-		return (handle_precision(flag, str, negative));
+		ret = handle_precision(flag, str, negative);
 	if (flag->width > len && flag->dash == TRUE)
-		return (handle_width_dash(flag, str, negative));
+		ret = handle_width_dash(flag, str, negative);
 	if (flag->width > len && flag->zero == TRUE)
-		return (handle_width_zero(flag, str, negative));
+		ret = handle_width_zero(flag, str, negative);
 	if (flag->width > len)
-		return (handle_width(flag, str, negative));
-	return (handle_plus_or_space(flag, str, negative));
+		ret = handle_width(flag, str, negative);
+	else
+		ret = handle_plus_or_space(flag, str, negative);
+	ft_strdel(&str);
+	return (ret);
 }
 int	print_signed_int(t_flag *flag, va_list ap)
 {
 	intmax_t	nb;
 	char		*str;
 	int			negative;
-	int			ret;
 
 	nb = handle_length_mod(flag, ap);
 	nb = (intmax_t)abs_value((intmax_t)nb, &negative);
 	if (flag->dot == TRUE && flag->precision == 0 && nb == 0)
 		return (0);
 	str = ft_itoa_base(nb, 10);
-	ret = handle_int(flag, str, negative);
-	ft_strdel(&str);
-	return (ret);
+	return (handle_int(flag, str, negative));
 }
 
 static int handle_uint(t_flag *flag, char *str, int negative)
@@ -331,13 +332,19 @@ static int handle_uint(t_flag *flag, char *str, int negative)
 	if (flag->specifier == 'o')
 	{
 		if (flag->dot == TRUE && flag->precision == 0 && *str == '0' && flag->hash == FALSE)
+		{
+			ft_strdel(&str);
 			return (0);
+		}
 		if (flag->hash == TRUE && *str != '0')
 			return (write(1, "0", 1) + handle_int(flag, str, negative));
 		return (handle_int(flag, str, negative));
 	}
 	if (flag->dot == TRUE && flag->precision == 0 && *str == '0')
+	{
+		ft_strdel(&str);
 		return (0);
+	}
 	if (flag->hash == TRUE && flag->specifier == 'x' && *str != '0')
 		return (write(1, "0x", 2) + handle_int(flag, str, negative));
 	if (flag->hash == TRUE && flag->specifier == 'X' && *str != '0')
