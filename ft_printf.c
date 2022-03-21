@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:51:31 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/21 12:38:29 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/21 15:48:58 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,14 +186,12 @@ int	parse(const char *format, va_list ap)
 	initiate(&flag);
 	while (format[i] != '\0')
 	{
-		if (format[i] == '%')
+		//handle_format(format, flag, )
+		if (format[i++] == '%')
 		{
-			i++;
 			j = 0;
-			while (TRUE)
+			while (is_valid_char(format[i]) == TRUE)
 			{
-				if (is_valid_char(format[i]) == FALSE)
-					break;
 				realloc_before_append(&(flag.str));
 				flag.str[j++] = format[i];
 				if (is_char_in_str(format[i], CONVERSIONS) == TRUE)
@@ -204,16 +202,13 @@ int	parse(const char *format, va_list ap)
 				}
 				i++;
 			}
-			i++;
 		}
-		
 		else
 		{
 			ft_putchar(format[i]);
 			ret++;
-			i++;
 		}
-		
+		i++;
 	}
 	clean_up(&flag);
 	return (ret);
