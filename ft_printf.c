@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:51:31 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 09:11:41 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 09:23:50 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,38 +72,6 @@ void	reset(t_flag *flag)
 	ft_strdel(&(flag->str));
 }*/
 
-static int	is_valid_char(char c)
-{
-	int i;
-
-	i = 0;
-	while (VALID_CHARS[i] != '\0')
-	{
-		if (c == VALID_CHARS[i])
-			return (TRUE);
-		i++;
-	}
-	return (FALSE);
-}
-
-static int	is_char_in_str(char c, char *str)  //copy of the fn in get_conv_spec.c va_stare
-{
-	int	i;
-	int found;
-
-	found = FALSE;
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (c == str[i])
-		{
-			found = TRUE;
-			break ;
-		}
-		i++;
-	}
-	return (found);
-}
 
 static int handle_format(const char *format, t_flag *flag, int *i, va_list ap)
 {
@@ -112,7 +80,7 @@ static int handle_format(const char *format, t_flag *flag, int *i, va_list ap)
 
 	j = 0;
 	ret = 0;
-	while (is_valid_char(format[*i]) == TRUE)
+	while (is_char_in_str(format[*i], VALID_CHARS) == TRUE)
 	{
 		realloc_before_append(&(flag->str));
 		flag->str[j++] = format[*i];

@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/21 21:35:48 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 09:22:45 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,8 @@ static void fill_specifier(t_flag *flag)
 	}
 }
 
-static int	is_char_in_str(char c, char *str)
-{
-	int	i;
-	int found;
 
-	found = FALSE;
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (c == str[i])
-		{
-			found = TRUE;
-			break ;
-		}
-		i++;
-	}
-	return (found);
-}
-
-static int	is_flag(char c)
+/*static int	is_flag(char c)
 {
 	int i;
 
@@ -60,14 +42,16 @@ static int	is_flag(char c)
 		i++;
 	}
 	return (FALSE);
-}
+}*/
+
+
 
 static void	fill_flags(t_flag *flag)
 {
 	int	i;
 
 	i = 0;
-	while (flag->str[i] != '\0' && is_flag(flag->str[i]) == TRUE)
+	while (flag->str[i] != '\0' && is_char_in_str(flag->str[i], FLAGS) == TRUE)
 	{
 		if (flag->str[i] == '-')
 			flag->dash = TRUE;
@@ -90,7 +74,7 @@ static void fill_width(t_flag *flag)
 
 	i = 0;
 	width = 0;
-	while (is_flag(flag->str[i]) == TRUE && flag->str[i] != '\0')
+	while (is_char_in_str(flag->str[i], FLAGS) == TRUE && flag->str[i] != '\0')
 		i++;
 	while (flag->str[i] != '\0' && ft_isdigit(flag->str[i]) == TRUE)
 	{

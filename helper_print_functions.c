@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:11:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/10 11:07:56 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 09:19:57 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,22 @@ int	putstr_nbyte(char const *s, int nbyte)
 	return (write(1, s, nbyte));
 }
 
+int	is_char_in_str(char c, char *str)
+{
+	int	i;
+	int	found;
+
+	found = FALSE;
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (c == str[i])
+		{
+			found = TRUE;
+			break ;
+		}
+		i++;
+	}
+	return (found);
+}
 
