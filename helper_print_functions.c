@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:11:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 14:08:44 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 17:30:20 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	putchar_nbyte(char c, int n)
 	int	i;
 
 	i = 0;
+	if (n < 0)
+		n = 0;
 	while (i < n)
 	{
 		write(1, &c, 1);

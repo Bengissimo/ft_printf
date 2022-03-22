@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:50:25 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 15:45:43 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 17:37:55 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ int	handle_int(t_flag *flag, char *str, int negative)
 	int			ret;
 
 	len = ft_strlen(str);
-	if (flag->prec > len && flag->width > flag->prec
-		&& flag->dash == TRUE)
+	if (flag->prec > len && flag->width > flag->prec && flag->dash == TRUE)
 		ret = handle_width_precision_dash(flag, str, negative);
 	else if (flag->prec > len && flag->width > flag->prec)
 		ret = handle_width_precision(flag, str, negative);
@@ -67,13 +66,14 @@ static int	handle_uint(t_flag *flag, char *str, int negative)
 	}
 	if (flag->dot == TRUE && flag->prec == 0 && *str == '0')
 	{
+		if (flag->width > 0)
+		{
+			ft_strdel(&str);
+			return (putchar_nbyte(' ', flag->width));
+		}
 		ft_strdel(&str);
 		return (0);
 	}
-	/*if (flag->hash == TRUE && flag->spec == 'x' && *str != '0')
-		return (write(1, "0x", 2) + handle_int(flag, str, negative));
-	if (flag->hash == TRUE && flag->spec == 'X' && *str != '0')
-		return (write(1, "0X", 2) + handle_int(flag, str, negative));*/
 	return (handle_int(flag, str, negative));
 }
 
@@ -82,7 +82,7 @@ int	print_unsigned_int(t_flag *flag, va_list ap)
 	uintmax_t	nb;
 	char		*str;
 	int			negative;
-
+	
 	nb = handle_unsigned_length_mod(flag, ap);
 	if (flag->spec == 'o')
 		str = ft_itoa_base(nb, 8);

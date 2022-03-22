@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 15:54:12 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 17:17:49 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,9 +248,9 @@ int main(void)
 	if (ft_ret != pf_ret)
 		printf("return values are different\n\n");*/
 
-	ft_printf("%#-08x", 42);
+	ft_printf("@moulitest: %5.x %5.0x", 0, 0);
 	printf(" <- ft_printf\n");
-	printf("%#-08x", 42);
+	printf("@moulitest: %5.x %5.0x", 0, 0);
 	printf(" <- original\n\n");
 	return (0);
 }
