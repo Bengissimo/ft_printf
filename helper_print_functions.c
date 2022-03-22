@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:11:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 09:19:57 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 09:40:47 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,3 +48,23 @@ int	is_char_in_str(char c, char *str)
 	return (found);
 }
 
+void	initiate(t_flag *flag)
+{
+	flag->str = ft_memalloc(1);
+	flag->specifier = '\0';
+	flag->dash = FALSE;
+	flag->hash = FALSE;
+	flag->plus = FALSE;
+	flag->space = FALSE;
+	flag->zero = FALSE;
+	flag->width = 0;
+	flag->dot = FALSE;
+	flag->precision = 0;
+	ft_bzero(flag->length, 2);
+}
+
+void	reset(t_flag *flag)
+{
+	ft_strdel(&(flag->str));
+	initiate(flag);
+}

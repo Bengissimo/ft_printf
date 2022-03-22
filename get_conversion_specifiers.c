@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 09:38:12 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 09:38:46 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,6 @@ static int	fill_length_upper_l(t_flag *flag)
 	}
 	return (FALSE);
 }
-
 
 void	fill(t_flag *flag)
 {

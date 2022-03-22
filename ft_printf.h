@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 09:20:14 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 09:42:15 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ typedef struct		s_flag
 }					t_flag;
 
 int		ft_printf(const char *format, ...);
-int		parse(const char *format, va_list ap);
 void	fill(t_flag *flag);
 void	reset(t_flag *flag);
 void	initiate(t_flag *flag);

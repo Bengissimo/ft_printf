@@ -6,26 +6,11 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:51:31 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 09:23:50 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 09:41:35 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-
-/*static int	is_specifier(char c)
-{
-	int	i;
-
-	i = 0;
-	while (CONVERSIONS[i] != '\0')
-	{
-		if (c == CONVERSIONS[i])
-			return (TRUE);
-		i++;
-	}
-	return (FALSE);
-}*/
 
 static void	realloc_before_append(char **str)
 {
@@ -35,43 +20,6 @@ static void	realloc_before_append(char **str)
 	ft_strdel(str);
 	*str = new;
 }
-
-void	initiate(t_flag *flag)
-{
-	flag->str = ft_memalloc(1);
-	flag->specifier = '\0';
-	flag->dash = FALSE;
-	flag->hash = FALSE;
-	flag->plus = FALSE;
-	flag->space = FALSE;
-	flag->zero = FALSE;
-	flag->width = 0;
-	flag->dot = FALSE;
-	flag->precision = 0;
-	ft_bzero(flag->length, 2);
-}
-
-void	reset(t_flag *flag)
-{
-	ft_strdel(&(flag->str));
-	initiate(flag);
-}
-
-/*static void	clean_up(t_flag *flag)
-{
-	flag->specifier = '\0';
-	flag->dash= FALSE;
-	flag->hash= FALSE;
-	flag->plus= FALSE;
-	flag->space = FALSE;
-	flag->zero = FALSE;
-	flag->width = 0;
-	flag->precision = 0;
-	flag->dot = 0;
-	ft_bzero(flag->length, 2);
-	ft_strdel(&(flag->str));
-}*/
-
 
 static int handle_format(const char *format, t_flag *flag, int *i, va_list ap)
 {
@@ -95,7 +43,7 @@ static int handle_format(const char *format, t_flag *flag, int *i, va_list ap)
 	return (ret);
 }
 
-int	parse(const char *format, va_list ap)
+static int	parse(const char *format, va_list ap)
 {
 	t_flag	flag;
 	int		ret;
