@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 11:22:42 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 11:27:26 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct		s_flag
 	int				dash;
 	uintmax_t		width;
 	uintmax_t		prec;
-	char			length[2];
+	char			len[2];
 	char			spec;
 	int				dot;
 }					t_flag;

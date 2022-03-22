@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 11:24:43 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 11:27:52 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,13 @@ static int	fill_length_h(t_flag *flag)
 	{
 		if (is_char_in_str(*(h + 1), INT) == TRUE && *(h + 2) == '\0')
 		{
-			flag->length[0] = 'h';
+			flag->len[0] = 'h';
 			return (TRUE);
 		}
 		if (*(h + 1) == 'h' && is_char_in_str(*(h + 1), INT) == TRUE && *(h + 3) == '\0')
 		{
-			flag->length[0] = 'h';
-			flag->length[1] = 'h';
+			flag->len[0] = 'h';
+			flag->len[1] = 'h';
 			return (TRUE);
 		}
 	}
@@ -125,13 +125,13 @@ static int	fill_length_l(t_flag *flag)
 	{
 		if (is_char_in_str(*(lower_l + 1), INT) == TRUE && *(lower_l + 2) == '\0')
 		{
-			flag->length[0] = 'l';
+			flag->len[0] = 'l';
 			return (TRUE);
 		}
 		if (*(lower_l + 1) == 'l' && is_char_in_str(*(lower_l + 1), INT) == TRUE && *(lower_l + 3) == '\0')
 		{
-			flag->length[0] = 'l';
-			flag->length[1] = 'l';
+			flag->len[0] = 'l';
+			flag->len[1] = 'l';
 			return (TRUE);
 		}
 	}
@@ -145,7 +145,7 @@ static int	fill_length_upper_l(t_flag *flag)
 	upper_l = ft_strchr(flag->str, 'L');
 	if (upper_l != NULL && (*(upper_l + 1)) == 'f')
 	{
-		flag->length[0] = 'L';
+		flag->len[0] = 'L';
 		return (TRUE);
 	}
 	return (FALSE);

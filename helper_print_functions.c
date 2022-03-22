@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:11:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 11:24:15 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 11:28:02 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	initiate(t_flag *flag)
 	flag->width = 0;
 	flag->dot = FALSE;
 	flag->prec = 0;
-	ft_bzero(flag->length, 2);
+	ft_bzero(flag->len, 2);
 }
 
 void	reset(t_flag *flag)

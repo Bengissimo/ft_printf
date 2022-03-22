@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 11:23:34 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 11:28:28 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 		printf("0");
 	if (flag->prec > 0)
 		printf(".%ju", flag->prec);
-	printf("length[0]: %c, length[1]: %c", flag->length[0], flag->length[1]);
+	printf("len[0]: %c, len[1]: %c", flag->len[0], flag->len[1]);
 	fflush(stdout);
 	printf(":\n");
 	//printf("flag->str: %s\n", flag->str);
@@ -219,16 +219,16 @@ static intmax_t handle_length_mod(t_flag *flag, va_list ap)
 {
 	intmax_t nb;
 
-	if (flag->length[0] == 'h')
+	if (flag->len[0] == 'h')
 	{
-		if(flag->length[1] == 'h')
+		if(flag->len[1] == 'h')
 			return (nb = (signed char)va_arg(ap, int));
 		else
 			return (nb = (short)va_arg(ap, int));
 	}
-	else if (flag->length[0] == 'l')
+	else if (flag->len[0] == 'l')
 	{
-		if(flag->length[1] == 'l')
+		if(flag->len[1] == 'l')
 			return (nb = va_arg(ap, long long));
 		else
 			return (nb = va_arg(ap, long));
@@ -246,16 +246,16 @@ static intmax_t handle_unsigned_length_mod(t_flag *flag, va_list ap) //p'yi ekle
 		flag->hash = TRUE;
 		return (nb = (uintptr_t)va_arg(ap, void *));
 	}	
-	if (flag->length[0] == 'h')
+	if (flag->len[0] == 'h')
 	{
-		if(flag->length[1] == 'h')
+		if(flag->len[1] == 'h')
 			return (nb = (unsigned char)va_arg(ap, int));
 		else
 			return (nb = (unsigned short)va_arg(ap, int));
 	}
-	if (flag->length[0] == 'l')
+	if (flag->len[0] == 'l')
 	{
-		if(flag->length[1] == 'l')
+		if(flag->len[1] == 'l')
 			return (nb = va_arg(ap, unsigned long long));
 		else
 			return (nb = va_arg(ap, unsigned long));
@@ -454,7 +454,7 @@ int	print_double(t_flag *flag, va_list ap)
 	int			ret;
 
 	negative = FALSE;
-	if (flag->length[0] == 'L')
+	if (flag->len[0] == 'L')
 		nb_dbl = va_arg(ap, long double);
 	else
 		nb_dbl = va_arg(ap, double);
