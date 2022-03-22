@@ -6,26 +6,12 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:51:31 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/21 15:48:58 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 09:11:41 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-/*static int	arg_count(const char *format)
-{
-	int	count;
-	
-	count = 0;
-
-	while (*format != '\0')
-	{
-		if (*format == '%')
-			count ++;
-		format++;
-	}
-	return (count);	
-}*/
 
 /*static int	is_specifier(char c)
 {
@@ -44,9 +30,8 @@
 static void	realloc_before_append(char **str)
 {
 	char	*new;
-//think about if malloc fails
-	new = (char *)malloc(sizeof(char) * (ft_strlen(*str) + 2));
-	ft_strcpy(new, *str);
+	new = (char *)ft_memalloc(ft_strlen(*str) + 2);
+	new = ft_strcpy(new, *str);
 	ft_strdel(str);
 	*str = new;
 }
@@ -66,7 +51,13 @@ void	initiate(t_flag *flag)
 	ft_bzero(flag->length, 2);
 }
 
-static void	clean_up(t_flag *flag)
+void	reset(t_flag *flag)
+{
+	ft_strdel(&(flag->str));
+	initiate(flag);
+}
+
+/*static void	clean_up(t_flag *flag)
 {
 	flag->specifier = '\0';
 	flag->dash= FALSE;
@@ -79,65 +70,6 @@ static void	clean_up(t_flag *flag)
 	flag->dot = 0;
 	ft_bzero(flag->length, 2);
 	ft_strdel(&(flag->str));
-}
-
-/*int	parse(const char *format, va_list ap)
-{
-	int		i;
-	int		j;
-	int		count;
-	int		specifier;
-	t_flag	flag;
-	int ret;
-
-	i = 0;
-	j = 0;
-	count  = 0;
-	specifier = FALSE;
-	ret = 0;
-	initiate(&flag);
-	while (format[i] != '\0')
-	{
-		if (format[i] == '%')
-		{
-			if (specifier == TRUE)
-			{
-				ft_putchar('%');
-				ret++;
-			}
-			else
-			{
-				specifier = TRUE;
-				j = 0;
-				count++;
-				reset(&flag);
-			}
-		}
-		else
-		{
-			if (specifier == FALSE)
-			{
-				ft_putchar(format[i]);
-				ret++;
-			}
-			else
-			{
-				realloc_before_append(&(flag.str));
-				flag.str[j++] = format[i];
-				if (is_specifier(format[i]) == TRUE)
-				{
-					specifier = FALSE;
-					ret = ret + put_format(&flag, ap);
-				}
-			}
-		}
-		i++;
-	}
-	//clean_up(&(flag.str), &specifier);
-	reset(&flag); //TO DO: fix the leak HERE
-	//free(flag.str);
-	//flag.str = NULL;
-	return (ret);
 }*/
 
 static int	is_valid_char(char c)
@@ -173,6 +105,28 @@ static int	is_char_in_str(char c, char *str)  //copy of the fn in get_conv_spec.
 	return (found);
 }
 
+static int handle_format(const char *format, t_flag *flag, int *i, va_list ap)
+{
+	int j;
+	int ret;
+
+	j = 0;
+	ret = 0;
+	while (is_valid_char(format[*i]) == TRUE)
+	{
+		realloc_before_append(&(flag->str));
+		flag->str[j++] = format[*i];
+		if (is_char_in_str(format[*i], CONVERSIONS) == TRUE)
+		{
+			ret = put_format(flag, ap);
+			reset(flag);
+			break;
+		}
+		*i = *i + 1;
+	}
+	return (ret);
+}
+
 int	parse(const char *format, va_list ap)
 {
 	t_flag	flag;
@@ -186,23 +140,8 @@ int	parse(const char *format, va_list ap)
 	initiate(&flag);
 	while (format[i] != '\0')
 	{
-		//handle_format(format, flag, )
 		if (format[i++] == '%')
-		{
-			j = 0;
-			while (is_valid_char(format[i]) == TRUE)
-			{
-				realloc_before_append(&(flag.str));
-				flag.str[j++] = format[i];
-				if (is_char_in_str(format[i], CONVERSIONS) == TRUE)
-				{
-					ret = ret + put_format(&flag, ap);
-					reset(&flag);
-					break;
-				}
-				i++;
-			}
-		}
+			ret = ret + handle_format(format, &flag, &i, ap);
 		else
 		{
 			ft_putchar(format[i]);
@@ -210,7 +149,7 @@ int	parse(const char *format, va_list ap)
 		}
 		i++;
 	}
-	clean_up(&flag);
+	ft_strdel(&(flag.str));
 	return (ret);
 }
 

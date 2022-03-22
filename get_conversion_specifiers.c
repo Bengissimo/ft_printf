@@ -6,17 +6,13 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/21 11:24:05 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/21 21:35:48 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	reset(t_flag *flag)
-{
-	ft_strdel(&(flag->str));
-	initiate(flag);
-}
+
 
 static void fill_specifier(t_flag *flag)
 {

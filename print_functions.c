@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/21 11:37:09 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 08:55:00 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	check_print(t_flag *flag) //to be deleted just for checking
 {
-	if (flag->dash)
+	/*if (flag->dash)
 		printf("-");
 	if (flag->plus)
 		printf("+");
@@ -28,7 +28,8 @@ void	check_print(t_flag *flag) //to be deleted just for checking
 		printf(".%ju", flag->precision);
 	printf("length[0]: %c, length[1]: %c", flag->length[0], flag->length[1]);
 	fflush(stdout);
-	printf(":\n");
+	printf(":\n");*/
+	printf("flag->str: %s\n", flag->str);
 }
 
 int	put_format(t_flag *flag, va_list ap)
@@ -43,7 +44,8 @@ int	put_format(t_flag *flag, va_list ap)
 		return (print_p(flag, ap));*/
 	else if (flag->specifier == 'd' || flag->specifier == 'i')
 		return (print_signed_int(flag, ap));
-	else if (flag->specifier == 'u' || flag->specifier == 'o' || flag->specifier == 'x' || flag->specifier == 'X' || flag->specifier == 'p')
+	else if (flag->specifier == 'u' || flag->specifier == 'o' || flag->specifier == 'x' 
+		|| flag->specifier == 'X' || flag->specifier == 'p')
 		return (print_unsigned_int(flag, ap));
 	else if (flag->specifier == 'f')
 		return (print_double(flag, ap)); //TO DO change double name to float
@@ -58,19 +60,10 @@ int	print_c(t_flag *flag, va_list ap)
 
 	c = va_arg(ap, int);
 	if (flag->width < 1)
-	{
-		ft_putchar(c);
-		return (1);
-	}
+		return (write(1, &c, 1));
 	if (flag->dash == TRUE)
-	{
-		ft_putchar(c);
-		putchar_nbyte(' ', flag->width - 1);
-		return (1);
-	}
-	putchar_nbyte(' ', flag->width - 1);
-	ft_putchar(c);
-	return (1);
+		return (write(1, &c, 1) + putchar_nbyte(' ', flag->width - 1));
+	return (putchar_nbyte(' ', flag->width - 1) + write(1, &c, 1));
 }
 
 int	print_s(t_flag *flag, va_list ap)

@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/21 11:55:20 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 09:01:41 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,21 @@ void	test_double(char *format, double nb)
 	ft_ret = ft_printf(format, nb);
 	printf(" <- ft_printf\n");
 	pf_ret = printf(format, nb);
-	printf(" <- original\n");
+	printf(" <- original\n\n");
 	if (ft_ret != pf_ret)
-		printf("return values are different");
+		printf("return values are different\n\n");
 }
 
-long double db_random(int low, int high)
+double db_random(int low, int high)
 {
-	return (high - low + 1) * rand() / (long double) INT32_MAX + low;	
+	return (high - low + 1) * rand() / (double) INT32_MAX + low;	
 }
 
 void random_double_test(int low, int high)
 {
 	for (int i = 0; i < 100; i++)
 	{
-		test_double("%Lf", db_random(low, high));
+		test_double("%.10f", db_random(low, high));
 		printf("\n");
 	}
 }
@@ -126,14 +126,14 @@ int main(void)
 	printf("%.0d\n", 0);
 	ft_printf("%.0X", 0);*/
 	
-	/*int nb = 8;
+	int nb = 8;
 	int *p_nb;
 	p_nb = &nb;
 
-	ft_printf("%p", p_nb);
+	/*ft_printf("%p", p_nb);
 	printf(" <- ft_printf\n");
 	printf("%p", p_nb);
-	printf(" <- original\n\n");
+	printf(" <- original\n\n");*/
 
 	ft_printf("%.3f", 0.0005);
 	printf(" <- ft_printf\n");
@@ -223,9 +223,9 @@ int main(void)
 	ft_printf("%    -30.20Lf", 314.01L);
 	printf(" <- ft_printf\n");
 	printf("%    -30.20Lf",  314.01L);
-	printf(" <- original\n\n");*/
+	printf(" <- original\n\n");
 
-	//random_double_test(0, 1);
+	random_double_test(0, 1);
 
 	test_int("%u", 4294967295);
 	test_int("%o", 4294967295);
@@ -234,6 +234,16 @@ int main(void)
 	test_int("%#o", 4294967295);
 	test_int("%#x", 4294967295);
 	test_int("%#X", 4294967295);
+
+	ft_printf("%.10f", -0.47560392166578300);
+	printf(" <- ft_printf\n");
+	printf("%.10f",  -0.47560392166578300);
+	printf(" <- original\n\n");
+
+	ft_printf("%-5c", 'a');
+	printf(" <- ft_printf\n");
+	printf("%-5c", 'a');
+	printf(" <- original\n\n");
 
 	return (0);
 }
