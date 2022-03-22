@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:50:25 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 15:21:09 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 15:45:43 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ static int	handle_uint(t_flag *flag, char *str, int negative)
 		ft_strdel(&str);
 		return (0);
 	}
-	if (flag->hash == TRUE && flag->spec == 'x' && *str != '0')
+	/*if (flag->hash == TRUE && flag->spec == 'x' && *str != '0')
 		return (write(1, "0x", 2) + handle_int(flag, str, negative));
 	if (flag->hash == TRUE && flag->spec == 'X' && *str != '0')
-		return (write(1, "0X", 2) + handle_int(flag, str, negative));
+		return (write(1, "0X", 2) + handle_int(flag, str, negative));*/
 	return (handle_int(flag, str, negative));
 }
 
