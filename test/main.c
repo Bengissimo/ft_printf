@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 10:56:53 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 13:04:55 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,15 +95,15 @@ int main(void)
 	/*test_int("%hX", pos);
 	test_int("%lX", pos);
 	test_int("%llX", pos);*/
-	/*test_int("%hhX", 'a');
+	test_int("%hhX", 'a');
 	test_int("%hX", -32768);
 	test_int("%hX", 32767);
 	test_int("%lX", 922337203685477580);
 	test_int("%lX", -922337203685477580);
-	test_int("%lX", -2147483648);*/
-	//test_int("%llX", 9223372036854775807);
-	//test_int("%llX", -9223372036854775808);
-	/*ft_printf("%hX", (short)-6);
+	test_int("%lX", -2147483648);
+	test_int("%llX", 9223372036854775807L);
+	test_int("%llX", -9223372036854775808);
+	ft_printf("%hX", (short)-6);
 	printf("\n");
 	printf("%hX", (short)-6);
 	printf("\n");
@@ -124,7 +124,7 @@ int main(void)
 	printf("%hhX", (char)97);
 	printf("\n");
 	printf("%.0d\n", 0);
-	ft_printf("%.0X", 0);*/
+	ft_printf("%.0X", 0);
 	
 	int nb = 8;
 	int *p_nb;
@@ -225,7 +225,7 @@ int main(void)
 	printf("%    -30.20Lf",  314.01L);
 	printf(" <- original\n\n");
 
-	random_double_test(0, 1);
+	//random_double_test(0, 1);
 
 	test_int("%u", 4294967295);
 	test_int("%o", 4294967295);

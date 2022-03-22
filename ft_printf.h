@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 11:27:26 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 13:58:10 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,30 @@ int	handle_int(t_flag *flag, char *str, int negative);
 int	print_signed_int(t_flag *flag, va_list ap);
 int	print_unsigned_int(t_flag *flag, va_list ap);
 int	print_double(t_flag *flag, va_list ap);
+
+/* get_flags */
+void	fill_specifier(t_flag *flag);
+void	fill_flags(t_flag *flag);
+void	fill_width(t_flag *flag);
+void	fill_precision(t_flag *flag);
+void	fill_len_mod(t_flag *flag, char c);
+
+/* handle_other_flags.c */
+int	handle_plus_or_space(t_flag *flag, char *str, int negative);
+intmax_t handle_length_mod(t_flag *flag, va_list ap);
+intmax_t handle_unsigned_length_mod(t_flag *flag, va_list ap); //p'yi ekleyince adi kotu oldu
+
+/* handle_width_flags.c */
+int handle_width(t_flag *flag, char *str, int negative);
+int handle_width_zero(t_flag *flag, char *str, int negative);
+int handle_width_dash(t_flag *flag, char *str, int negative);
+
+
+/* handle_precision */
+int	handle_precision(t_flag *flag, char *str, int negative);
+int	handle_width_precision_dash(t_flag *flag, char *str, int negative);
+int	handle_width_precision(t_flag *flag, char *str, int negative);
+
 
 
 
