@@ -6,13 +6,11 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 09:35:07 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 09:38:12 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-
 
 static void fill_specifier(t_flag *flag)
 {
@@ -28,23 +26,6 @@ static void fill_specifier(t_flag *flag)
 		i++;
 	}
 }
-
-
-/*static int	is_flag(char c)
-{
-	int i;
-
-	i = 0;
-	while (FLAGS[i] != '\0')
-	{
-		if (c == FLAGS[i])
-			return (TRUE);
-		i++;
-	}
-	return (FALSE);
-}*/
-
-
 
 static void	fill_flags(t_flag *flag)
 {
@@ -113,8 +94,6 @@ static void	fill_precision(t_flag *flag)
 	flag->precision = precision;
 }
 
-
-
 static int	fill_length_h(t_flag *flag)
 {
 	char	*h;
@@ -175,18 +154,6 @@ static int	fill_length_upper_l(t_flag *flag)
 
 void	fill(t_flag *flag)
 {
-	int	i;
-
-	i = 0;
-	while (flag->str[i] != '\0')
-	{
-		if (is_char_in_str(flag->str[i], VALID_CHARS) == FALSE) //TO DO
-		{
-			ft_putendl("invalid format");
-			exit(-1);
-		}
-		i++;
-	}
 	fill_specifier(flag);
 	if (ft_strlen(flag->str) > 1)
 	{
