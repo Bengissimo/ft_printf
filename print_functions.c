@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 11:13:37 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 11:23:34 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 		printf("%ju", flag->width);
 	if (flag->zero)
 		printf("0");
-	if (flag->precision > 0)
-		printf(".%ju", flag->precision);
+	if (flag->prec > 0)
+		printf(".%ju", flag->prec);
 	printf("length[0]: %c, length[1]: %c", flag->length[0], flag->length[1]);
 	fflush(stdout);
 	printf(":\n");
@@ -36,17 +36,17 @@ int	put_format(t_flag *flag, va_list ap)
 {
 	fill(flag);
 	//check_print(flag); //to be deleted 
-	if (flag->specifier == 'c')
+	if (flag->spec == 'c')
 		return (print_c(flag, ap));
-	else if (flag->specifier == 's')
+	else if (flag->spec == 's')
 		return (print_s(flag, ap));
-	else if (flag->specifier == 'd' || flag->specifier == 'i')
+	else if (flag->spec == 'd' || flag->spec == 'i')
 		return (print_signed_int(flag, ap));
-	else if (is_char_in_str(flag->specifier, UINT) == TRUE)
+	else if (is_char_in_str(flag->spec, UINT) == TRUE)
 		return (print_unsigned_int(flag, ap));
-	else if (flag->specifier == 'f')
+	else if (flag->spec == 'f')
 		return (print_double(flag, ap)); //TO DO change double name to float
-	else if (flag->specifier == '%')
+	else if (flag->spec == '%')
 		return (handle_char(flag, '%'));
 	return (0); //to be deleted
 }
@@ -75,8 +75,8 @@ int	print_s(t_flag *flag, va_list ap)
 
 	s = va_arg(ap, char *);
 	len = ft_strlen(s);
-	if (flag->precision > 0 && flag->precision > len)
-		len = flag->precision;
+	if (flag->prec > 0 && flag->prec > len)
+		len = flag->prec;
 	if (flag->width <= len)
 		return (putstr_nbyte(s, len));
 	if (flag->dash == TRUE) // width > len
@@ -97,7 +97,7 @@ static int	handle_precision(t_flag *flag, char *str, int negative)
 		ret = write(1, "+", 1);
 	else if (flag->space == TRUE)
 		ret = write(1, " ", 1);
-	return (ret + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
+	return (ret + putchar_nbyte('0', flag->prec - len) + putstr_nbyte(str, len));
 }
 
 static int	handle_width_precision_dash(t_flag *flag, char *str, int negative)
@@ -108,9 +108,9 @@ static int	handle_width_precision_dash(t_flag *flag, char *str, int negative)
 
 	len = ft_strlen(str);
 	if (flag->plus == TRUE || flag->space == TRUE || negative == TRUE)
-		space = flag->width - flag->precision - 1;
+		space = flag->width - flag->prec - 1;
 	else
-		space = flag->width - flag->precision;
+		space = flag->width - flag->prec;
 	ret = 0;
 	if (negative == TRUE)
 		ret = write(1, "-", 1);
@@ -118,7 +118,7 @@ static int	handle_width_precision_dash(t_flag *flag, char *str, int negative)
 		ret = write(1, "+", 1);
 	else if (flag->space == TRUE)
 		ret = write(1, " ", 1);
-	return (ret + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len) + putchar_nbyte(' ', space));
+	return (ret + putchar_nbyte('0', flag->prec - len) + putstr_nbyte(str, len) + putchar_nbyte(' ', space));
 }
 
 static int	handle_width_precision(t_flag *flag, char *str, int negative)
@@ -129,16 +129,16 @@ static int	handle_width_precision(t_flag *flag, char *str, int negative)
 	ret = 0;
 	len = ft_strlen(str);
 	if (flag->plus == TRUE || flag->space == TRUE || negative == TRUE)
-		ret = putchar_nbyte(' ', flag->width - flag->precision - 1);
+		ret = putchar_nbyte(' ', flag->width - flag->prec - 1);
 	else
-		ret = putchar_nbyte(' ', flag->width - flag->precision);
+		ret = putchar_nbyte(' ', flag->width - flag->prec);
 	if (negative == TRUE)
 		ret += write(1, "-", 1);
 	else if (flag->plus == TRUE)
 		ret += write(1, "+", 1);
 	else if (flag->space == TRUE)
 		ret += write(1, " ", 1);
-	return (ret + putchar_nbyte('0', flag->precision - len) + putstr_nbyte(str, len));
+	return (ret + putchar_nbyte('0', flag->prec - len) + putstr_nbyte(str, len));
 }
 
 static int	handle_plus_or_space(t_flag *flag, char *str, int negative)
@@ -240,9 +240,9 @@ static intmax_t handle_unsigned_length_mod(t_flag *flag, va_list ap) //p'yi ekle
 {
 	uintmax_t nb;
 
-	if (flag->specifier == 'p')
+	if (flag->spec == 'p')
 	{
-		flag->specifier = 'x';
+		flag->spec = 'x';
 		flag->hash = TRUE;
 		return (nb = (uintptr_t)va_arg(ap, void *));
 	}	
@@ -269,12 +269,12 @@ int	handle_int(t_flag *flag, char *str, int negative)
 	int			ret;
 
 	len = ft_strlen(str);
-	if (flag->precision > len && flag->width > flag->precision
+	if (flag->prec > len && flag->width > flag->prec
 		&& flag->dash == TRUE)
 		ret = handle_width_precision_dash(flag, str, negative);
-	if (flag->precision > len && flag->width > flag->precision)
+	if (flag->prec > len && flag->width > flag->prec)
 		ret = handle_width_precision(flag, str, negative);
-	if (flag->precision > len)
+	if (flag->prec > len)
 		ret = handle_precision(flag, str, negative);
 	if (flag->width > len && flag->dash == TRUE)
 		ret = handle_width_dash(flag, str, negative);
@@ -295,7 +295,7 @@ int	print_signed_int(t_flag *flag, va_list ap)
 
 	nb = handle_length_mod(flag, ap);
 	nb = (intmax_t)abs_value((intmax_t)nb, &negative);
-	if (flag->dot == TRUE && flag->precision == 0 && nb == 0)
+	if (flag->dot == TRUE && flag->prec == 0 && nb == 0)
 		return (0);
 	str = ft_itoa_base(nb, 10);
 	return (handle_int(flag, str, negative));
@@ -303,9 +303,9 @@ int	print_signed_int(t_flag *flag, va_list ap)
 
 static int handle_uint(t_flag *flag, char *str, int negative)
 {
-	if (flag->specifier == 'o')
+	if (flag->spec == 'o')
 	{
-		if (flag->dot == TRUE && flag->precision == 0 && *str == '0' && flag->hash == FALSE)
+		if (flag->dot == TRUE && flag->prec == 0 && *str == '0' && flag->hash == FALSE)
 		{
 			ft_strdel(&str);
 			return (0);
@@ -314,14 +314,14 @@ static int handle_uint(t_flag *flag, char *str, int negative)
 			return (write(1, "0", 1) + handle_int(flag, str, negative));
 		return (handle_int(flag, str, negative));
 	}
-	if (flag->dot == TRUE && flag->precision == 0 && *str == '0')
+	if (flag->dot == TRUE && flag->prec == 0 && *str == '0')
 	{
 		ft_strdel(&str);
 		return (0);
 	}
-	if (flag->hash == TRUE && flag->specifier == 'x' && *str != '0')
+	if (flag->hash == TRUE && flag->spec == 'x' && *str != '0')
 		return (write(1, "0x", 2) + handle_int(flag, str, negative));
-	if (flag->hash == TRUE && flag->specifier == 'X' && *str != '0')
+	if (flag->hash == TRUE && flag->spec == 'X' && *str != '0')
 		return (write(1, "0X", 2) + handle_int(flag, str, negative));
 	return (handle_int(flag, str, negative));
 }
@@ -333,11 +333,11 @@ int	print_unsigned_int(t_flag *flag, va_list ap)
 	int			negative;
 
 	nb = handle_unsigned_length_mod(flag, ap);
-	if (flag->specifier == 'o')
+	if (flag->spec == 'o')
 		str = ft_itoa_base(nb, 8);
-	else if (flag->specifier == 'x')
+	else if (flag->spec == 'x')
 		str = ft_itoa_base(nb, 16);
-	else if (flag->specifier == 'X')
+	else if (flag->spec == 'X')
 		str = ft_itoa_base_upper(nb, 16);
 	else
 		str = ft_itoa_base(nb, 10);
@@ -352,17 +352,17 @@ static	int	get_mantissa_zeroes(t_flag *flag, long double nb_dec)
 	uintmax_t zeroes;
 
 	if (flag->dot == FALSE)
-		flag->precision = 6;
+		flag->prec = 6;
 	zeroes = 0;
-	while (nb_dec < 0.1 && zeroes < flag->precision)
+	while (nb_dec < 0.1 && zeroes < flag->prec)
 	{
 		nb_dec *= 10.0;
 		zeroes++;
 	}
-	if (flag->precision == zeroes)
+	if (flag->prec == zeroes)
 		(zeroes)--;
-	if (flag->precision < zeroes)
-		zeroes = flag->precision;
+	if (flag->prec < zeroes)
+		zeroes = flag->prec;
 	return (zeroes);
 }
 
@@ -372,20 +372,20 @@ static	void	round_to_precision(t_flag *flag, uintmax_t *nb_int, long double *nb_
 	uintmax_t	round_up;
 	long double	rounding_coeff;
 
-	rounding_coeff = ft_power(10.0, flag->precision);
+	rounding_coeff = ft_power(10.0, flag->prec);
 	*nb_dec = (*nb_dec) * rounding_coeff;
 	round_down = (uintmax_t)*nb_dec;
 	round_up  = (uintmax_t)(*nb_dec + 1);
 	if ((*nb_dec - round_down) > (round_up - *nb_dec))
 	{
 		*nb_dec = round_up;
-		if (flag->precision == 0)
+		if (flag->prec == 0)
 			(*nb_int)++;
 	}
 	else if ((*nb_dec - round_down) == (round_up - *nb_dec))
 	{
 		*nb_dec = round_up; //still not sure if a bankers round needed here?
-		if (flag->precision == 0 && (*nb_int + 1) % 2 == 0)
+		if (flag->prec == 0 && (*nb_int + 1) % 2 == 0)
 			(*nb_int)++;
 	}
 	else
@@ -409,7 +409,7 @@ static char *join_float_str(t_flag *flag, uintmax_t nb_int, uintmax_t nb_dec, ui
 	uintmax_t	i;
 	
 	str_float = ft_itoa_base(nb_int, 10);
-	if (!(flag->precision == 0 && flag->dot == TRUE))
+	if (!(flag->prec == 0 && flag->dot == TRUE))
 		str_float = join_and_free_str(str_float, ".");
 	if (zeroes > 0)
 	{
@@ -420,7 +420,7 @@ static char *join_float_str(t_flag *flag, uintmax_t nb_int, uintmax_t nb_dec, ui
 			i++;
 		}
 	}
-	if (flag->precision > zeroes && flag->precision != 0)
+	if (flag->prec > zeroes && flag->prec != 0)
 	{
 		str_dec = ft_itoa_base((uintmax_t)(nb_dec), 10);
 		str_float = join_and_free_str(str_float, str_dec);

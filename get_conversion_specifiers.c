@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 11:10:19 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 11:24:43 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void fill_specifier(t_flag *flag)
 	while (SPECS[i] != '\0')
 	{
 		if (*(end - 1) == SPECS[i])
-			flag->specifier = SPECS[i];
+			flag->spec = SPECS[i];
 		i++;
 	}
 }
@@ -91,7 +91,7 @@ static void	fill_precision(t_flag *flag)
 		}
 		i++;
 	}
-	flag->precision = precision;
+	flag->prec = precision;
 }
 
 static int	fill_length_h(t_flag *flag)
