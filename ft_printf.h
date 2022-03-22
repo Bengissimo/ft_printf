@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 09:42:15 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 10:26:53 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	putstr_nbyte(char const *s, int nbyte);
 int	is_char_in_str(char c, char *str);
 
 
+int	handle_char(t_flag *flag, char c);
 int	print_c(t_flag *flag, va_list ap);
 int	print_s(t_flag *flag, va_list ap);
 int	print_p(t_flag *flag, va_list ap);

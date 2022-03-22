@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 09:45:07 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 10:27:15 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,18 @@ int	put_format(t_flag *flag, va_list ap)
 		return (print_unsigned_int(flag, ap));
 	else if (flag->specifier == 'f')
 		return (print_double(flag, ap)); //TO DO change double name to float
-	//else if (flag->specifier == '%') // TO DO
-		//return (write(1, ));
+	else if (flag->specifier == '%')
+		return (handle_char(flag, '%'));
 	return (0); //to be deleted
+}
+
+int	handle_char(t_flag *flag, char c)
+{
+	if (flag->width < 1)
+		return (write(1, &c, 1));
+	if (flag->dash == TRUE)
+		return (write(1, &c, 1) + putchar_nbyte(' ', flag->width - 1));
+	return (putchar_nbyte(' ', flag->width - 1) + write(1, &c, 1));
 }
 
 int	print_c(t_flag *flag, va_list ap)
@@ -59,11 +68,12 @@ int	print_c(t_flag *flag, va_list ap)
 	char	c;
 
 	c = va_arg(ap, int);
-	if (flag->width < 1)
+	return (handle_char(flag, c));
+	/*if (flag->width < 1)
 		return (write(1, &c, 1));
 	if (flag->dash == TRUE)
 		return (write(1, &c, 1) + putchar_nbyte(' ', flag->width - 1));
-	return (putchar_nbyte(' ', flag->width - 1) + write(1, &c, 1));
+	return (putchar_nbyte(' ', flag->width - 1) + write(1, &c, 1));*/
 }
 
 int	print_s(t_flag *flag, va_list ap)
