@@ -6,15 +6,15 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 08:55:00 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 09:45:07 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	check_print(t_flag *flag) //to be deleted just for checking
+/*void	check_print(t_flag *flag) //to be deleted just for checking
 {
-	/*if (flag->dash)
+	if (flag->dash)
 		printf("-");
 	if (flag->plus)
 		printf("+");
@@ -28,14 +28,14 @@ void	check_print(t_flag *flag) //to be deleted just for checking
 		printf(".%ju", flag->precision);
 	printf("length[0]: %c, length[1]: %c", flag->length[0], flag->length[1]);
 	fflush(stdout);
-	printf(":\n");*/
-	printf("flag->str: %s\n", flag->str);
-}
+	printf(":\n");
+	//printf("flag->str: %s\n", flag->str);
+}*/
 
 int	put_format(t_flag *flag, va_list ap)
 {
 	fill(flag);
-	check_print(flag); //to be deleted 
+	//check_print(flag); //to be deleted 
 	if (flag->specifier == 'c')
 		return (print_c(flag, ap));
 	else if (flag->specifier == 's')

@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 09:01:41 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 09:48:27 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,9 +240,9 @@ int main(void)
 	printf("%.10f",  -0.47560392166578300);
 	printf(" <- original\n\n");
 
-	ft_printf("%-5c", 'a');
+	ft_printf("%-5c, %5d    jdgfjhgsdf %u", 'a', 5, 0);
 	printf(" <- ft_printf\n");
-	printf("%-5c", 'a');
+	printf("%-5c, %5d    jdgfjhgsdf %u", 'a', 5, 0);
 	printf(" <- original\n\n");
 
 	return (0);

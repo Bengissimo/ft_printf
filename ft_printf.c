@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:51:31 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 09:41:35 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 09:52:49 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,17 @@
 static void	realloc_before_append(char **str)
 {
 	char	*new;
+
 	new = (char *)ft_memalloc(ft_strlen(*str) + 2);
 	new = ft_strcpy(new, *str);
 	ft_strdel(str);
 	*str = new;
 }
 
-static int handle_format(const char *format, t_flag *flag, int *i, va_list ap)
+static int	handle_format(const char *format, t_flag *flag, int *i, va_list ap)
 {
-	int j;
-	int ret;
+	int	j;
+	int	ret;
 
 	j = 0;
 	ret = 0;
@@ -36,7 +37,7 @@ static int handle_format(const char *format, t_flag *flag, int *i, va_list ap)
 		{
 			ret = put_format(flag, ap);
 			reset(flag);
-			break;
+			break ;
 		}
 		*i = *i + 1;
 	}
@@ -60,6 +61,7 @@ static int	parse(const char *format, va_list ap)
 			ret = ret + handle_format(format, &flag, &i, ap);
 		else
 		{
+			i--;
 			ft_putchar(format[i]);
 			ret++;
 		}
@@ -71,8 +73,8 @@ static int	parse(const char *format, va_list ap)
 
 int	ft_printf(const char *format, ...)
 {
-	va_list ap;
-	int ret;
+	va_list	ap;
+	int		ret;
 
 	va_start(ap, format);
 	ret = parse(format, ap);
