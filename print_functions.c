@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 10:27:15 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 10:57:36 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,9 @@ int	put_format(t_flag *flag, va_list ap)
 		return (print_c(flag, ap));
 	else if (flag->specifier == 's')
 		return (print_s(flag, ap));
-	/*else if (flag->specifier == 'p')
-		return (print_p(flag, ap));*/
 	else if (flag->specifier == 'd' || flag->specifier == 'i')
 		return (print_signed_int(flag, ap));
-	else if (flag->specifier == 'u' || flag->specifier == 'o' || flag->specifier == 'x' 
-		|| flag->specifier == 'X' || flag->specifier == 'p')
+	else if (is_char_in_str(flag->specifier, UINT) == TRUE)
 		return (print_unsigned_int(flag, ap));
 	else if (flag->specifier == 'f')
 		return (print_double(flag, ap)); //TO DO change double name to float
@@ -69,11 +66,6 @@ int	print_c(t_flag *flag, va_list ap)
 
 	c = va_arg(ap, int);
 	return (handle_char(flag, c));
-	/*if (flag->width < 1)
-		return (write(1, &c, 1));
-	if (flag->dash == TRUE)
-		return (write(1, &c, 1) + putchar_nbyte(' ', flag->width - 1));
-	return (putchar_nbyte(' ', flag->width - 1) + write(1, &c, 1));*/
 }
 
 int	print_s(t_flag *flag, va_list ap)
@@ -91,27 +83,6 @@ int	print_s(t_flag *flag, va_list ap)
 		return(putstr_nbyte(s, len) + putchar_nbyte(' ', flag->width - len));
 	return (putchar_nbyte(' ', flag->width - len) + putstr_nbyte(s, len));
 }
-
-/*int print_p(t_flag *flag, va_list ap)
-{
-	void	*ptr;
-	uintptr_t arg;
-	char	*str;
-	int		strlen;
-	int negative;
-	negative = FALSE;
-
-	ptr = va_arg(ap, void *);
-	arg = (uintptr_t)va_arg(ap, void *);
-	str = ft_itoa_base((uintmax_t)arg, 16);
-	strlen = ft_strlen(str);
-	if ((int)flag->width < strlen)
-	{
-		ft_putstr("0x");
-		ft_putstr(str);
-	}
-	return (write(1, "0x", 2) + handle_int(flag, str, negative));
-}*/
 
 static int	handle_precision(t_flag *flag, char *str, int negative)
 {

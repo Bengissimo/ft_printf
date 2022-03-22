@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 10:28:19 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 10:56:53 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,10 +130,10 @@ int main(void)
 	int *p_nb;
 	p_nb = &nb;
 
-	/*ft_printf("%p", p_nb);
+	ft_printf("%p", p_nb);
 	printf(" <- ft_printf\n");
 	printf("%p", p_nb);
-	printf(" <- original\n\n");*/
+	printf(" <- original\n\n");
 
 	ft_printf("%.3f", 0.0005);
 	printf(" <- ft_printf\n");
