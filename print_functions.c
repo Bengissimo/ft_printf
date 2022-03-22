@@ -6,13 +6,13 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 10:57:36 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 11:13:37 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-/*void	check_print(t_flag *flag) //to be deleted just for checking
+/*static void	check_print(t_flag *flag) //to be deleted just for checking
 {
 	if (flag->dash)
 		printf("-");

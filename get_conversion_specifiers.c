@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 09:38:46 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 11:10:19 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static void fill_specifier(t_flag *flag)
 
 	i = 0;
 	end = ft_strchr(flag->str, '\0');
-	while (CONVERSIONS[i] != '\0')
+	while (SPECS[i] != '\0')
 	{
-		if (*(end - 1) == CONVERSIONS[i])
-			flag->specifier = CONVERSIONS[i];
+		if (*(end - 1) == SPECS[i])
+			flag->specifier = SPECS[i];
 		i++;
 	}
 }
@@ -101,12 +101,12 @@ static int	fill_length_h(t_flag *flag)
 	h = ft_strchr(flag->str, 'h');
 	if (h != NULL)
 	{
-		if (is_char_in_str(*(h + 1), INT_OR_OCTAL) == TRUE && *(h + 2) == '\0')
+		if (is_char_in_str(*(h + 1), INT) == TRUE && *(h + 2) == '\0')
 		{
 			flag->length[0] = 'h';
 			return (TRUE);
 		}
-		if (*(h + 1) == 'h' && is_char_in_str(*(h + 1), INT_OR_OCTAL) == TRUE && *(h + 3) == '\0')
+		if (*(h + 1) == 'h' && is_char_in_str(*(h + 1), INT) == TRUE && *(h + 3) == '\0')
 		{
 			flag->length[0] = 'h';
 			flag->length[1] = 'h';
@@ -123,12 +123,12 @@ static int	fill_length_l(t_flag *flag)
 	lower_l = ft_strchr(flag->str, 'l');
 	if (lower_l != NULL)
 	{
-		if (is_char_in_str(*(lower_l + 1), INT_OR_OCTAL) == TRUE && *(lower_l + 2) == '\0')
+		if (is_char_in_str(*(lower_l + 1), INT) == TRUE && *(lower_l + 2) == '\0')
 		{
 			flag->length[0] = 'l';
 			return (TRUE);
 		}
-		if (*(lower_l + 1) == 'l' && is_char_in_str(*(lower_l + 1), INT_OR_OCTAL) == TRUE && *(lower_l + 3) == '\0')
+		if (*(lower_l + 1) == 'l' && is_char_in_str(*(lower_l + 1), INT) == TRUE && *(lower_l + 3) == '\0')
 		{
 			flag->length[0] = 'l';
 			flag->length[1] = 'l';

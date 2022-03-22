@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 10:54:59 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 11:13:16 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 #define LIMIT 10000000000000000
 
 #define VALID_CHARS "#0-+ 123456789.hlLcspdiouxXf%"
-#define CONVERSIONS "cspdiouxXf%"
-#define INT_OR_OCTAL	"diouxX"
-#define UINT "ouxXp"
+#define SPECS		"cspdiouxXf%"
+#define INT			"diouxX"
+#define UINT		"ouxXp"
 #define FLAGS		"0# +-"
 
 
@@ -70,14 +70,6 @@ int	print_double(t_flag *flag, va_list ap);
 
 
 int	put_format(t_flag *flag, va_list ap);
-
-void	check_print(t_flag *flag); //to be deleted
-
-
-
-
-
-
 
 
 
