@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_double.c                                     :+:      :+:    :+:   */
+/*   print_float.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:46:49 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 13:47:37 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 14:14:54 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static	int	get_mantissa_zeroes(t_flag *flag, long double nb_dec)
 {
-	uintmax_t zeroes;
+	uintmax_t	zeroes;
 
 	if (flag->dot == FALSE)
 		flag->prec = 6;
@@ -31,7 +31,7 @@ static	int	get_mantissa_zeroes(t_flag *flag, long double nb_dec)
 	return (zeroes);
 }
 
-static	void	round_to_precision(t_flag *flag, uintmax_t *nb_int, long double *nb_dec)
+static	void	round_to_prec(t_flag *flag, uintmax_t *nb_int, long double *nb_dec)
 {
 	uintmax_t	round_down;
 	uintmax_t	round_up;
@@ -39,8 +39,8 @@ static	void	round_to_precision(t_flag *flag, uintmax_t *nb_int, long double *nb_
 
 	rounding_coeff = ft_power(10.0, flag->prec);
 	*nb_dec = (*nb_dec) * rounding_coeff;
-	round_down = (uintmax_t)*nb_dec;
-	round_up  = (uintmax_t)(*nb_dec + 1);
+	round_down = (uintmax_t)(*nb_dec);
+	round_up = (uintmax_t)(*nb_dec + 1);
 	if ((*nb_dec - round_down) > (round_up - *nb_dec))
 	{
 		*nb_dec = round_up;
@@ -57,7 +57,7 @@ static	void	round_to_precision(t_flag *flag, uintmax_t *nb_int, long double *nb_
 		*nb_dec = round_down;
 }
 
-static char *join_and_free_str(char *dst, char *str)
+static char	*join_and_free_str(char *dst, char *str)
 {
 	char	*temp;
 
@@ -67,12 +67,12 @@ static char *join_and_free_str(char *dst, char *str)
 	return (dst);
 }
 
-static char *join_float_str(t_flag *flag, uintmax_t nb_int, uintmax_t nb_dec, uintmax_t zeroes)
+static char	*join_float_str(t_flag *flag, uintmax_t nb_int, uintmax_t nb_dec, uintmax_t zeroes)
 {
 	char		*str_dec;
 	char		*str_float;
 	uintmax_t	i;
-	
+
 	str_float = ft_itoa_base(nb_int, 10);
 	if (!(flag->prec == 0 && flag->dot == TRUE))
 		str_float = join_and_free_str(str_float, ".");
@@ -94,7 +94,7 @@ static char *join_float_str(t_flag *flag, uintmax_t nb_int, uintmax_t nb_dec, ui
 	return (str_float);
 }
 
-static int handle_float(t_flag *flag, char *str_float, int negative)
+static int	handle_float(t_flag *flag, char *str_float, int negative)
 {
 	uintmax_t	len;
 
@@ -115,7 +115,7 @@ int	print_double(t_flag *flag, va_list ap)
 	long double	nb_dec;
 	int			negative;
 	int			zeroes;
-	char 		*str_float;
+	char		*str_float;
 	int			ret;
 
 	negative = FALSE;
@@ -127,7 +127,7 @@ int	print_double(t_flag *flag, va_list ap)
 	nb_int = (uintmax_t)nb_dbl;
 	nb_dec = nb_dbl - (uintmax_t)nb_dbl;
 	zeroes = get_mantissa_zeroes(flag, nb_dec);
-	round_to_precision(flag, &nb_int, &nb_dec);
+	round_to_prec(flag, &nb_int, &nb_dec);
 	str_float = join_float_str(flag, nb_int, (uintmax_t)(nb_dec), zeroes);
 	ret = handle_float(flag, str_float, negative);
 	ft_strdel(&str_float);

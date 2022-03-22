@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 13:04:55 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 15:18:40 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ int main(void)
 	/*test_int("%hX", pos);
 	test_int("%lX", pos);
 	test_int("%llX", pos);*/
-	test_int("%hhX", 'a');
+	
+	/*test_int("%hhX", 'a');
 	test_int("%hX", -32768);
 	test_int("%hX", 32767);
 	test_int("%lX", 922337203685477580);
@@ -245,7 +246,11 @@ int main(void)
 	int pf_ret = printf("%-5c, %5d    jdgfjhgsdf %+.10%", 'a', 5);
 	printf(" <- original\n\n");
 	if (ft_ret != pf_ret)
-		printf("return values are different\n\n");
+		printf("return values are different\n\n");*/
 
+	ft_printf("%-10x", 42);
+	printf(" <- ft_printf\n");
+	printf("%-10x", 42);
+	printf(" <- original\n\n");
 	return (0);
 }

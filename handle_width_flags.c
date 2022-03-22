@@ -6,13 +6,13 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:39:30 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 13:40:56 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 14:08:04 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int handle_width(t_flag *flag, char *str, int negative)
+int	handle_width(t_flag *flag, char *str, int negative)
 {
 	int			ret;
 	uintmax_t	len;
@@ -28,7 +28,7 @@ int handle_width(t_flag *flag, char *str, int negative)
 	return (ret + putstr_nbyte(str, len));
 }
 
-int handle_width_zero(t_flag *flag, char *str, int negative)
+int	handle_width_zero(t_flag *flag, char *str, int negative)
 {
 	int			ret;
 	int			n_zero;
@@ -46,10 +46,10 @@ int handle_width_zero(t_flag *flag, char *str, int negative)
 		ret = write(1, "+", 1);
 	else if (flag->space == TRUE)
 		ret = write(1, " ", 1);
-	return (ret + putchar_nbyte('0', n_zero)+ putstr_nbyte(str, len));
+	return (ret + putchar_nbyte('0', n_zero) + putstr_nbyte(str, len));
 }
 
-int handle_width_dash(t_flag *flag, char *str, int negative)
+int	handle_width_dash(t_flag *flag, char *str, int negative)
 {
 	int			ret;
 	int			n_space;

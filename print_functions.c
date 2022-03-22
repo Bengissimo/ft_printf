@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 13:50:39 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 15:24:08 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,6 @@ int	print_s(t_flag *flag, va_list ap)
 	if (flag->width <= len)
 		return (putstr_nbyte(s, len));
 	if (flag->dash == TRUE) // width > len
-		return(putstr_nbyte(s, len) + putchar_nbyte(' ', flag->width - len));
+		return (putstr_nbyte(s, len) + putchar_nbyte(' ', flag->width - len));
 	return (putchar_nbyte(' ', flag->width - len) + putstr_nbyte(s, len));
 }
-
-
-

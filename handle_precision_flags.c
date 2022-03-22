@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:36:25 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 13:57:52 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 14:06:53 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	handle_width_precision_dash(t_flag *flag, char *str, int negative)
 
 int	handle_width_precision(t_flag *flag, char *str, int negative)
 {
-	int ret;
+	int			ret;
 	uintmax_t	len;
 
 	ret = 0;

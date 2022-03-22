@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:50:25 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 13:50:56 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 15:21:09 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,22 @@ int	handle_int(t_flag *flag, char *str, int negative)
 	if (flag->prec > len && flag->width > flag->prec
 		&& flag->dash == TRUE)
 		ret = handle_width_precision_dash(flag, str, negative);
-	if (flag->prec > len && flag->width > flag->prec)
+	else if (flag->prec > len && flag->width > flag->prec)
 		ret = handle_width_precision(flag, str, negative);
-	if (flag->prec > len)
+	else if (flag->prec > len)
 		ret = handle_precision(flag, str, negative);
-	if (flag->width > len && flag->dash == TRUE)
+	else if (flag->width > len && flag->dash == TRUE)
 		ret = handle_width_dash(flag, str, negative);
-	if (flag->width > len && flag->zero == TRUE)
+	else if (flag->width > len && flag->zero == TRUE)
 		ret = handle_width_zero(flag, str, negative);
-	if (flag->width > len)
+	else if (flag->width > len)
 		ret = handle_width(flag, str, negative);
 	else
 		ret = handle_plus_or_space(flag, str, negative);
 	ft_strdel(&str);
 	return (ret);
 }
+
 int	print_signed_int(t_flag *flag, va_list ap)
 {
 	intmax_t	nb;
@@ -50,11 +51,12 @@ int	print_signed_int(t_flag *flag, va_list ap)
 	return (handle_int(flag, str, negative));
 }
 
-static int handle_uint(t_flag *flag, char *str, int negative)
+static int	handle_uint(t_flag *flag, char *str, int negative)
 {
 	if (flag->spec == 'o')
 	{
-		if (flag->dot == TRUE && flag->prec == 0 && *str == '0' && flag->hash == FALSE)
+		if (flag->dot == TRUE && flag->prec == 0
+			&& *str == '0' && flag->hash == FALSE)
 		{
 			ft_strdel(&str);
 			return (0);

@@ -6,7 +6,7 @@
 #    By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/31 11:00:37 by bkandemi          #+#    #+#              #
-#    Updated: 2022/03/22 13:49:36 by bkandemi         ###   ########.fr        #
+#    Updated: 2022/03/22 15:18:57 by bkandemi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,27 +20,31 @@ C_FILES = ft_printf.c\
 		handle_width_flags.c\
 		handle_other_flags.c\
 		print_float.c\
-		print_int.c\
+		print_int.c
 
 O_FILES = $(C_FILES:.c=.o)
 
 CC = gcc
 
-FLAGS = -c -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror
+
+RUN_LIB = make -C libft/ fclean && make -C libft/
 
 all : $(NAME)
 
 $(NAME):
-		@$(CC) $(FLAGS) $(C_FILES) 
-		@ar rc $(NAME) $(O_FILES)
+	@$(RUN_LIB)
+	@$(CC) $(FLAGS) -c $(C_FILES)
+	@cp libft/libft.a libftprintf.a
+	@ar rc $(NAME) $(O_FILES)
+	@ranlib $(NAME)
 		
 clean:
 	@rm -f $(O_FILES)
+	@make -C libft/ clean
  
 fclean: clean
 	@rm -f $(NAME)
+	@make -C libft/ clean
 
 re:	fclean all
-
-	
-

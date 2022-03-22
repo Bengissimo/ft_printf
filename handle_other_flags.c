@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:39:41 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 13:42:35 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/22 14:05:38 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,20 @@ int	handle_plus_or_space(t_flag *flag, char *str, int negative)
 	return (ret + putstr_nbyte(str, len));
 }
 
-intmax_t handle_length_mod(t_flag *flag, va_list ap)
+intmax_t	handle_length_mod(t_flag *flag, va_list ap)
 {
-	intmax_t nb;
+	intmax_t	nb;
 
 	if (flag->len[0] == 'h')
 	{
-		if(flag->len[1] == 'h')
+		if (flag->len[1] == 'h')
 			return (nb = (signed char)va_arg(ap, int));
 		else
 			return (nb = (short)va_arg(ap, int));
 	}
 	else if (flag->len[0] == 'l')
 	{
-		if(flag->len[1] == 'l')
+		if (flag->len[1] == 'l')
 			return (nb = va_arg(ap, long long));
 		else
 			return (nb = va_arg(ap, long));
@@ -49,9 +49,9 @@ intmax_t handle_length_mod(t_flag *flag, va_list ap)
 	return (nb = va_arg(ap, int));
 }
 
-intmax_t handle_unsigned_length_mod(t_flag *flag, va_list ap) //p'yi ekleyince adi kotu oldu
+intmax_t	handle_unsigned_length_mod(t_flag *flag, va_list ap)
 {
-	uintmax_t nb;
+	uintmax_t	nb;
 
 	if (flag->spec == 'p')
 	{
@@ -61,14 +61,14 @@ intmax_t handle_unsigned_length_mod(t_flag *flag, va_list ap) //p'yi ekleyince a
 	}	
 	if (flag->len[0] == 'h')
 	{
-		if(flag->len[1] == 'h')
+		if (flag->len[1] == 'h')
 			return (nb = (unsigned char)va_arg(ap, int));
 		else
 			return (nb = (unsigned short)va_arg(ap, int));
 	}
 	if (flag->len[0] == 'l')
 	{
-		if(flag->len[1] == 'l')
+		if (flag->len[1] == 'l')
 			return (nb = va_arg(ap, unsigned long long));
 		else
 			return (nb = va_arg(ap, unsigned long));
