@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:50:25 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/23 13:33:20 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/23 16:02:46 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,7 @@ int	handle_int(t_flag *flag, char *str, int negative)
 	int			ret;
 
 	len = calc_len(flag, str);
-	if (flag->dot == TRUE &&flag->prec >= len && flag->width > flag->prec && flag->dash == TRUE)
-		ret = handle_width_precision_dash(flag, str, negative);
-	else if (flag->dot == TRUE && flag->prec >= len && flag->width > flag->prec)
-		ret = handle_width_precision(flag, str, negative);
-	else if (flag->dot == TRUE && flag->prec >= len)
+	if (flag->dot == TRUE && flag->prec >= len)
 		ret = handle_precision(flag, str, negative);
 	else if (flag->width > len)
 		ret = handle_width(flag, str, negative);

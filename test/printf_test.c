@@ -70,7 +70,9 @@ int main(void)
 	printf("a: %d b: %d\n", a, b);
 	printf("%zd\n", write(1, "\0", 1));
 
-	printf("%#.0x\n", 0);
+	printf("%.10x\n", 123);
+	printf("%#.10x\n", 123);
+	printf("%x\n", 123);
 
 	//printf("expect: [% z5%]\n");
 
