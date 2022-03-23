@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:36:25 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/23 16:02:29 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/23 21:04:57 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 static uintmax_t	calc_len(t_flag *flag, char *str)
 {
 	if (*str == '0' && flag->dot == TRUE && flag->prec == 0)
+	{
+		if (flag->hash == TRUE && flag->spec == 'o')
+			return(ft_strlen(str));
 		return (0);
+	}
 	return (ft_strlen(str));
 }
 
@@ -27,8 +31,6 @@ static int	calc_space_padding(t_flag *flag, char *str, int neg)
 		{
 			if (flag->spec == 'x' || flag->spec == 'X')
 				return (flag->width - flag->prec - 2);
-			if (flag->spec == 'o')
-				return (flag->width - flag->prec - 1);
 		}
 		if (flag->plus == TRUE || neg == TRUE || flag->space == TRUE)
 			return (flag->width - flag->prec - 1);
@@ -51,7 +53,7 @@ static int	handle_flags(t_flag *flag, char *str, int negative)
 			return (write(1, "0x", 2));
 		if (flag->spec == 'X')
 			return (write(1, "0X", 2));
-		if (flag->spec == 'o')
+		if (flag->spec == 'o' && flag->dot == FALSE)
 			return (write(1, "0", 1));
 	}
 	return (0);
