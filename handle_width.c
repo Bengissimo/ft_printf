@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_width_flags.c                               :+:      :+:    :+:   */
+/*   handle_width.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:39:30 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/23 14:06:27 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/23 21:25:44 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,6 @@ static int	calc_padding(t_flag *flag, char *str, uintmax_t len, int neg)
 	if (flag->plus == TRUE || neg == TRUE || flag->space == TRUE)
 		return (flag->width - len - 1);
 	return (flag->width - len);
-}
-
-static int	handle_flags(t_flag *flag, char *str, int negative)
-{
-	if (negative == TRUE)
-		return (write(1, "-", 1));
-	if (flag->plus == TRUE)
-		return (write(1, "+", 1));
-	if (flag->space == TRUE)
-		return (write(1, " ", 1));
-	if (flag->hash == TRUE && *str != '0')
-	{
-		if (flag->spec == 'x')
-			return (write(1, "0x", 2));
-		if (flag->spec == 'X')
-			return (write(1, "0X", 2));
-		if (flag->spec == 'o')
-			return (write(1, "0", 1));
-	}
-	return (0);
 }
 
 int	handle_width(t_flag *flag, char *str, int negative)

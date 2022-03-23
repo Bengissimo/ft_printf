@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:46:49 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/23 13:31:08 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/23 21:26:54 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static int	handle_float(t_flag *flag, char *str_float, int negative)
 	len = ft_strlen(str_float);
 	if (flag->width > len)
 		return (handle_width(flag, str_float, negative));
-	return (handle_plus_or_space(flag, str_float, negative));
+	return (handle_plus_space_hash(flag, str_float, negative));
 }
 
 int	print_double(t_flag *flag, va_list ap)

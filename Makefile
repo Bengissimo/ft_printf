@@ -6,7 +6,7 @@
 #    By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/31 11:00:37 by bkandemi          #+#    #+#              #
-#    Updated: 2022/03/23 15:59:24 by bkandemi         ###   ########.fr        #
+#    Updated: 2022/03/23 21:26:20 by bkandemi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ C_FILES = ft_printf.c\
 		get_flags.c\
 		print_functions.c\
 		helper_print_functions.c\
-		handle_precision_flags.c\
+		handle_precision.c\
 		handle_width.c\
 		handle_other_flags.c\
 		print_float.c\

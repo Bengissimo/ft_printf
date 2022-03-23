@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:50:25 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/23 16:02:46 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/23 21:27:42 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	handle_int(t_flag *flag, char *str, int negative)
 	else if (flag->width > len)
 		ret = handle_width(flag, str, negative);
 	else
-		ret = handle_plus_or_space(flag, str, negative);
+		ret = handle_plus_space_hash(flag, str, negative);
 	ft_strdel(&str);
 	return (ret);
 }
@@ -44,11 +44,6 @@ int	print_signed_int(t_flag *flag, va_list ap)
 	nb = handle_length_mod(flag, ap);
 	nb = (intmax_t)abs_value((intmax_t)nb, &negative);
 	str = ft_itoa_base(nb, 10);
-	return (handle_int(flag, str, negative));
-}
-
-static int	handle_uint(t_flag *flag, char *str, int negative)
-{
 	return (handle_int(flag, str, negative));
 }
 
@@ -70,5 +65,5 @@ int	print_unsigned_int(t_flag *flag, va_list ap)
 	negative = FALSE;
 	flag->plus = FALSE;
 	flag->space = FALSE;
-	return (handle_uint(flag, str, negative));
+	return (handle_int(flag, str, negative));
 }
