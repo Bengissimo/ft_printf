@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/23 11:46:48 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/23 13:39:10 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,145 +55,224 @@ void random_double_test(int low, int high)
 void test_int_no_flag(void)
 {
 	printf("test_int_no_flag:\n");
-	test_int("%d", 123);
-	test_int("%i", 123);
-	test_int("%u", 123);
-	test_int("%o", 123);
-	test_int("%x", 123);
-	test_int("%X", 123);
+	test_int("%d", -0);
+	test_int("%i", -0);
+	test_int("%u", -0);
+	test_int("%o", -0);
+	test_int("%x", -0);
+	test_int("%X", -0);
 }
 
 void test_int_only_width(void)
 {
 	printf("test_int_only_width:\n");
-	test_int("%5d", 123);
-	test_int("%5i", 123);
-	test_int("%5u", 123);
-	test_int("%5o", 123);
-	test_int("%5x", 123);
-	test_int("%5X", 123);
+	test_int("%5d", -0);
+	test_int("%5i", -0);
+	test_int("%5u", -0);
+	test_int("%5o", -0);
+	test_int("%5x", -0);
+	test_int("%5X", -0);
 }
 
 void test_int_width_zero(void)
 {
 	printf("test_int_width_zero:\n");
-	test_int("%05d", 123);
-	test_int("%05i", 123);
-	test_int("%05u", 123);
-	test_int("%05o", 123);
-	test_int("%05x", 123);
-	test_int("%05X", 123);
+	test_int("%05d", -0);
+	test_int("%05i", -0);
+	test_int("%05u", -0);
+	test_int("%05o", -0);
+	test_int("%05x", -0);
+	test_int("%05X", -0);
 }
 
 void test_int_width_zero_plus(void)
 {
 	printf("test_int_width_zero_plus:\n");
-	test_int("%+05d", 123);
-	test_int("%+05i", 123);
-	test_int("%+05u", 123);
-	test_int("%+05o", 123);
-	test_int("%+05x", 123);
-	test_int("%+05X", 123);
+	test_int("%+05d", -0);
+	test_int("%+05i", -0);
+	test_int("%+05u", -0);
+	test_int("%+05o", -0);
+	test_int("%+05x", -0);
+	test_int("%+05X", -0);
 }
 
 void test_int_width_zero_space(void)
 {
 	printf("test_int_width_zero_space:\n");	
-	test_int("% 05d", 123);
-	test_int("% 05i", 123);
-	test_int("% 05u", 123);
-	test_int("% 05o", 123);
-	test_int("% 05x", 123);
-	test_int("% 05X", 123);
+	test_int("% 05d", -0);
+	test_int("% 05i", -0);
+	test_int("% 05u", -0);
+	test_int("% 05o", -0);
+	test_int("% 05x", -0);
+	test_int("% 05X", -0);
 }
 
 void test_int_width_zero_hash(void)
 {
 	printf("test_int_width_zero_hash:\n");
 
-	test_int("%#05d", 123);
-	test_int("%#05i", 123);
-	test_int("%#05u", 123);
-	test_int("%#05o", 123);
-	test_int("%#05x", 123);
-	test_int("%#05X", 123);
+	test_int("%#05d", -0);
+	test_int("%#05i", -0);
+	test_int("%#05u", -0);
+	test_int("%#05o", -0);
+	test_int("%#05x", -0);
+	test_int("%#05X", -0);
 }
 
 void test_int_width_hash_plus(void)
 {
 	printf("test_int_width_hash_plus: \n");
-	test_int("%#+5d", 123);
-	test_int("%#+5i", 123);
-	test_int("%#+5u", 123);
-	test_int("%#+5o", 123);
-	test_int("%#+5x", 123);
-	test_int("%#+5X", 123);
+	test_int("%#+5d", -0);
+	test_int("%#+5i", -0);
+	test_int("%#+5u", -0);
+	test_int("%#+5o", -0);
+	test_int("%#+5x", -0);
+	test_int("%#+5X", -0);
 }
 
 void test_int_width_hash(void)
 {
 	printf("test_int_width_hash: \n");
-	test_int("%#5d", 123);
-	test_int("%#5i", 123);
-	test_int("%#5u", 123);
-	test_int("%#5o", 123);
-	test_int("%#5x", 123);
-	test_int("%#5X", 123);
+	test_int("%#5d", -0);
+	test_int("%#5i", -0);
+	test_int("%#5u", -0);
+	test_int("%#5o", -0);
+	test_int("%#5x", -0);
+	test_int("%#5X", -0);
 }
 
 void test_int_hash(void)
 {
 	printf("test_int_hash: \n");
-	test_int("%#d", 123);
-	test_int("%#i", 123);
-	test_int("%#u", 123);
-	test_int("%#o", 123);
-	test_int("%#x", 123);
-	test_int("%#X", 123);
+	test_int("%#d", -0);
+	test_int("%#i", -0);
+	test_int("%#u", -0);
+	test_int("%#o", -0);
+	test_int("%#x", -0);
+	test_int("%#X", -0);
 }
 
 void test_int_width_plus(void)
 {
 	printf("test_int_width_plus:\n");
-	test_int("%+5d", 123);
-	test_int("%+5i", 123);
-	test_int("%+5u", 123);
-	test_int("%+5o", 123);
-	test_int("%+5x", 123);
-	test_int("%+5X", 123);
+	test_int("%+5d", -0);
+	test_int("%+5i", -0);
+	test_int("%+5u", -0);
+	test_int("%+5o", -0);
+	test_int("%+5x", -0);
+	test_int("%+5X", -0);
 }
 
 void test_int_width_space(void)
 {
 	printf("test_int_width_space:\n");
-	test_int("% 5d", 123);
-	test_int("% 5i", 123);
-	test_int("% 5u", 123);
-	test_int("% 5o", 123);
-	test_int("% 5x", 123);
-	test_int("% 5X", 123);
+	test_int("% 5d", -0);
+	test_int("% 5i", -0);
+	test_int("% 5u", -0);
+	test_int("% 5o", -0);
+	test_int("% 5x", -0);
+	test_int("% 5X", -0);
 }
 
 void test_int_width_plus_zero(void)
 {
 	printf("test_int_width_plus_zero:\n");
-	test_int("%+05d", 123);
-	test_int("%+05i", 123);
-	test_int("%+05u", 123);
-	test_int("%+05o", 123);
-	test_int("%+05x", 123);
-	test_int("%+05X", 123);
+	test_int("%+05d", -0);
+	test_int("%+05i", -0);
+	test_int("%+05u", -0);
+	test_int("%+05o", -0);
+	test_int("%+05x", -0);
+	test_int("%+05X", -0);
 }
 
 void test_int_width_plus_zero_hash(void)
 {
 	printf("test_int_width_plus_zero_hash:\n");
-	test_int("%+0#5d", 123);
-	test_int("%+0#5i", 123);
-	test_int("%+0#5u", 123);
-	test_int("%+0#5o", 123);
-	test_int("%+0#5x", 123);
-	test_int("%+0#5X", 123);
+	test_int("%+0#5d", -0);
+	test_int("%+0#5i", -0);
+	test_int("%+0#5u", -0);
+	test_int("%+0#5o", -0);
+	test_int("%+0#5x", -0);
+	test_int("%+0#5X", -0);
+}
+
+
+void test_int_dash(void)
+{
+	printf("test_int_dash:\n");
+	test_int("%-d", -0);
+	test_int("%-i", -0);
+	test_int("%-u", -0);
+	test_int("%-o", -0);
+	test_int("%-x", -0);
+	test_int("%-X", -0);
+}
+
+void test_int_dash_width(void)
+{
+	printf("test_int_dash_width:\n");
+	test_int("%-6d", -0);
+	test_int("%-6i", -0);
+	test_int("%-6u", -0);
+	test_int("%-6o", -0);
+	test_int("%-6x", -0);
+	test_int("%-6X", -0);
+}
+
+
+void test_int_dash_width_zero(void)
+{
+	printf("test_int_dash_width_zero:\n");
+	test_int("%-06d", -0);
+	test_int("%-06i", -0);
+	test_int("%-06u", -0);
+	test_int("%-06o", -0);
+	test_int("%-06x", -0);
+	test_int("%-06X", -0);
+}
+
+void test_int_dash_width_plus(void)
+{
+	printf("test_int_dash_width_plus:\n");
+	test_int("%-+6d", -0);
+	test_int("%-+6i", -0);
+	test_int("%-+6u", -0);
+	test_int("%-+6o", -0);
+	test_int("%-+6x", -0);
+	test_int("%-+6X", -0);
+}
+
+void test_int_dash_width_space(void)
+{
+	printf("test_int_dash_width_space:\n");
+	test_int("%- 6d", -0);
+	test_int("%- 6i", -0);
+	test_int("%- 6u", -0);
+	test_int("%- 6o", -0);
+	test_int("%- 6x", -0);
+	test_int("%- 6X", -0);
+}
+
+void test_int_dash_width_hash(void)
+{
+	printf("test_int_dash_width_hash:\n");
+	test_int("%-#6d", -0);
+	test_int("%-#6i", -0);
+	test_int("%-#6u", -0);
+	test_int("%-#6o", -0);
+	test_int("%-#6x", -0);
+	test_int("%-#6X", -0);
+}
+
+void test_int_dash_width_plus_hash(void)
+{
+	printf("test_int_dash_width_plus_hash:\n");
+	test_int("%-+#6d", -0);
+	test_int("%-+#6i", -0);
+	test_int("%-+#6u", -0);
+	test_int("%-+#6o", -0);
+	test_int("%-+#6x", -0);
+	test_int("%-+#6X", -0);
 }
 
 int main(void)
@@ -400,5 +479,15 @@ int main(void)
 	test_int_width_space();
 	test_int_width_plus_zero();
 	test_int_width_plus_zero_hash();
+
+	test_int_dash();
+	test_int_dash_width();
+	test_int_dash_width_hash();
+	test_int_dash_width_plus();
+	test_int_dash_width_plus_hash();
+	test_int_dash_width_space();
+	test_int_dash_width_zero();
+
+	
 	return (0);
 }
