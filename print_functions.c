@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 17:16:55 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/23 08:53:11 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,10 @@ int	print_s(t_flag *flag, va_list ap)
 	uintmax_t	len;
 
 	s = va_arg(ap, char *);
+	if (s == NULL)
+		s = "(null)";
 	len = ft_strlen(s);
-	if (flag->prec > 0 && flag->prec > len)
+	if (flag->dot == TRUE && flag->prec >= 0 && flag->prec < len)
 		len = flag->prec;
 	if (flag->width <= len)
 		return (putstr_nbyte(s, len));

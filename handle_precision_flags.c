@@ -6,11 +6,18 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:36:25 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 17:28:15 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/23 09:30:35 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+static uintmax_t	calc_len(t_flag *flag, char *str)
+{
+	if (*str == '0' && flag->dot == TRUE && flag->prec == 0)
+		return (0);
+	return (ft_strlen(str));
+}
 
 int	handle_precision(t_flag *flag, char *str, int negative)
 {
@@ -18,7 +25,7 @@ int	handle_precision(t_flag *flag, char *str, int negative)
 	uintmax_t	len;
 
 	ret = 0;
-	len = ft_strlen(str);
+	len = calc_len(flag, str);
 	if (negative == TRUE)
 		ret = write(1, "-", 1);
 	else if (flag->plus == TRUE)
@@ -34,7 +41,8 @@ int	handle_width_precision_dash(t_flag *flag, char *str, int negative)
 	int			space;
 	uintmax_t	len;
 
-	len = ft_strlen(str);
+	len = calc_len(flag, str);
+	//len = ft_strlen(str);
 	if (flag->plus == TRUE || flag->space == TRUE || negative == TRUE)
 		space = flag->width - flag->prec - 1;
 	else
@@ -55,10 +63,12 @@ int	handle_width_precision(t_flag *flag, char *str, int negative)
 	uintmax_t	len;
 
 	ret = 0;
-	len = ft_strlen(str);
+	len = calc_len(flag, str);
+	//printf("deneme: %ju\n", len);
+	//len = ft_strlen(str);
 	if (flag->plus == TRUE || flag->space == TRUE || negative == TRUE)
 		ret = putchar_nbyte(' ', flag->width - flag->prec - 1);
-	else
+	else 
 		ret = putchar_nbyte(' ', flag->width - flag->prec);
 	if (negative == TRUE)
 		ret += write(1, "-", 1);

@@ -6,25 +6,42 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:39:41 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 14:05:38 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/23 11:25:31 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+static char	fill_char(t_flag *flag, int negative)
+{
+	if (negative == TRUE)
+		return ('-');
+	if (flag->plus == TRUE)
+		return ('+');
+	if (flag->space == TRUE)
+		return (' ');
+	return ('\0');
+}
 int	handle_plus_or_space(t_flag *flag, char *str, int negative)
 {
 	int			ret;
 	uintmax_t	len;
+	char		fill;
+	int n_byte;
 
+	fill = fill_char(flag, negative);
+	if (fill == '\0')
+		n_byte = 0;
+	else
+		n_byte = 1;
+	ret = putchar_nbyte(fill, n_byte);
 	len = ft_strlen(str);
-	ret = 0;
-	if (negative == TRUE)
-		ret = write(1, "-", 1);
-	else if (flag->plus == TRUE)
-		ret = write(1, "+", 1);
-	else if (flag->space == TRUE)
-		ret = write(1, " ", 1);
+	if (flag->hash == TRUE && flag->spec == 'o' && *str != '0')
+		ret += write(1, "0", 1);
+	if (flag->hash == TRUE && flag->spec == 'x' && *str != '0')
+		ret += write(1, "0x", 2);
+	if (flag->hash == TRUE && flag->spec == 'X' && *str != '0')
+		ret += write(1, "0X", 2);
 	return (ret + putstr_nbyte(str, len));
 }
 

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <unistd.h>
 
 static double power(int nb, int power)
 {
@@ -63,7 +64,14 @@ int main(void)
 	printf("%f\n", power(10, 20));*/
 
 	
-	printf("%lll\n", 0.5);
+	int a = printf("(%.123d)\n", 0);
+	int b = printf("(%-5.0d)\n", 0);
+
+	printf("a: %d b: %d\n", a, b);
+	printf("%zd\n", write(1, "\0", 1));
+
+	printf("%#.0x\n", 0);
+
 	//printf("expect: [% z5%]\n");
 
 
