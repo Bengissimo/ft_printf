@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:46:49 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/23 21:26:54 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/24 11:25:01 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,30 @@ static	int	get_mantissa_zeroes(t_flag *flag, long double nb_dec)
 	return (zeroes);
 }
 
-static	void	round_to_prec(t_flag *flag, uintmax_t *nb_int, long double *nb_dec)
+static	void	round_to_prec(t_flag *flag, uintmax_t *nb_i, long double *nb_d)
 {
 	uintmax_t	round_down;
 	uintmax_t	round_up;
 	long double	rounding_coeff;
 
 	rounding_coeff = ft_power(10.0, flag->prec);
-	*nb_dec = (*nb_dec) * rounding_coeff;
-	round_down = (uintmax_t)(*nb_dec);
-	round_up = (uintmax_t)(*nb_dec + 1);
-	if ((*nb_dec - round_down) > (round_up - *nb_dec))
+	*nb_d = (*nb_d) * rounding_coeff;
+	round_down = (uintmax_t)(*nb_d);
+	round_up = (uintmax_t)(*nb_d + 1);
+	if ((*nb_d - round_down) > (round_up - *nb_d))
 	{
-		*nb_dec = round_up;
+		*nb_d = round_up;
 		if (flag->prec == 0)
-			(*nb_int)++;
+			(*nb_i)++;
 	}
-	else if ((*nb_dec - round_down) == (round_up - *nb_dec))
+	else if ((*nb_d - round_down) == (round_up - *nb_d))
 	{
-		*nb_dec = round_up; //still not sure if a bankers round needed here?
-		if (flag->prec == 0 && (*nb_int + 1) % 2 == 0)
-			(*nb_int)++;
+		*nb_d = round_up;
+		if (flag->prec == 0 && (*nb_i + 1) % 2 == 0)
+			(*nb_i)++;
 	}
 	else
-		*nb_dec = round_down;
+		*nb_d = round_down;
 }
 
 static char	*join_and_free_str(char *dst, char *str)
@@ -67,27 +67,27 @@ static char	*join_and_free_str(char *dst, char *str)
 	return (dst);
 }
 
-static char	*join_float_str(t_flag *flag, uintmax_t nb_int, uintmax_t nb_dec, uintmax_t zeroes)
+static char	*join_float_str(t_flag *f, uintmax_t ni, uintmax_t nd, uintmax_t z)
 {
 	char		*str_dec;
 	char		*str_float;
 	uintmax_t	i;
 
-	str_float = ft_itoa_base(nb_int, 10);
-	if (!(flag->prec == 0 && flag->dot == TRUE))
+	str_float = ft_itoa_base(ni, 10);
+	if (!(f->prec == 0 && f->dot == TRUE))
 		str_float = join_and_free_str(str_float, ".");
-	if (zeroes > 0)
+	if (z > 0)
 	{
 		i = 0;
-		while (i < zeroes)
+		while (i < z)
 		{
 			str_float = join_and_free_str(str_float, "0");
 			i++;
 		}
 	}
-	if (flag->prec > zeroes && flag->prec != 0)
+	if (f->prec > z && f->prec != 0)
 	{
-		str_dec = ft_itoa_base((uintmax_t)(nb_dec), 10);
+		str_dec = ft_itoa_base((uintmax_t)(nd), 10);
 		str_float = join_and_free_str(str_float, str_dec);
 		ft_strdel(&str_dec);
 	}

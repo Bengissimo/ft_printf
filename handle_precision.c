@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:36:25 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/24 10:06:40 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/24 10:44:39 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static uintmax_t	calc_len(t_flag *flag, char *str)
 	if (*str == '0' && flag->dot == TRUE && flag->prec == 0)
 	{
 		if (flag->hash == TRUE && flag->spec == 'o')
-			return(ft_strlen(str));
+			return (ft_strlen(str));
 		return (0);
 	}
 	return (ft_strlen(str));
@@ -43,7 +43,7 @@ int	handle_precision(t_flag *flag, char *str, int negative)
 {
 	int			ret;
 	uintmax_t	len;
-	int 		space;
+	int			space;
 
 	ret = 0;
 	len = calc_len(flag, str);

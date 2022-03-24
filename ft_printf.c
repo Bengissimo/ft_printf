@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:51:31 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/22 11:10:32 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/24 10:53:00 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	handle_format(const char *format, t_flag *flag, int *i, va_list ap)
 
 	j = 0;
 	ret = 0;
-	while (is_char_in_str(format[*i], VALID_CHARS) == TRUE)
+	while (is_char_in_str(format[*i], VALID) == TRUE)
 	{
 		realloc_before_append(&(flag->str));
 		flag->str[j++] = format[*i];

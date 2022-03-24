@@ -6,31 +6,11 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/24 09:55:10 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/24 10:49:08 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-/*static void	check_print(t_flag *flag) //to be deleted just for checking
-{
-	if (flag->dash)
-		printf("-");
-	if (flag->plus)
-		printf("+");
-	if(flag->space)
-		printf("sp");
-	if (flag->width > 0)
-		printf("%ju", flag->width);
-	if (flag->zero)
-		printf("0");
-	if (flag->prec > 0)
-		printf(".%ju", flag->prec);
-	printf("len[0]: %c, len[1]: %c", flag->len[0], flag->len[1]);
-	fflush(stdout);
-	printf(":\n");
-	//printf("flag->str: %s\n", flag->str);
-}*/
 
 void	fill(t_flag *flag)
 {
@@ -38,7 +18,7 @@ void	fill(t_flag *flag)
 	if (ft_strlen(flag->str) > 1)
 	{
 		fill_width(flag);
-		fill_flags(flag); //to do change the name
+		fill_flags(flag);
 		fill_len_mod(flag, 'h');
 		fill_len_mod(flag, 'l');
 		fill_len_mod(flag, 'L');
@@ -50,8 +30,6 @@ void	fill(t_flag *flag)
 int	put_format(t_flag *flag, va_list ap)
 {
 	fill(flag);
-	//check_print(flag); //to be deleted
-	//printf("flag->str: %s\n", flag->str);
 	if (flag->spec == 'c')
 		return (print_c(flag, ap));
 	else if (flag->spec == 's')
@@ -61,10 +39,10 @@ int	put_format(t_flag *flag, va_list ap)
 	else if (is_char_in_str(flag->spec, UINT) == TRUE)
 		return (print_unsigned_int(flag, ap));
 	else if (flag->spec == 'f')
-		return (print_double(flag, ap)); //TO DO change double name to float
+		return (print_double(flag, ap));
 	else if (flag->spec == '%')
 		return (handle_char(flag, '%'));
-	return (0); //to be deleted
+	return (0);
 }
 
 int	handle_char(t_flag *flag, char c)
