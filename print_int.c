@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:50:25 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/23 21:27:42 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/24 10:01:34 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	print_unsigned_int(t_flag *flag, va_list ap)
 	nb = handle_unsigned_length_mod(flag, ap);
 	if (flag->spec == 'o')
 		str = ft_itoa_base(nb, 8);
-	else if (flag->spec == 'x')
+	else if (flag->spec == 'x' || flag->spec == 'p')
 		str = ft_itoa_base(nb, 16);
 	else if (flag->spec == 'X')
 		str = ft_itoa_base_upper(nb, 16);

@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:39:41 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/23 21:26:39 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/24 09:05:01 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@ int	handle_flags(t_flag *flag, char *str, int negative)
 		return (write(1, "+", 1));
 	if (flag->space == TRUE)
 		return (write(1, " ", 1));
+	if (flag->spec == 'p')
+		return (write(1, "0x", 2));
 	if (flag->hash == TRUE && *str != '0')
 	{
 		if (flag->spec == 'x')
 			return (write(1, "0x", 2));
 		if (flag->spec == 'X')
 			return (write(1, "0X", 2));
-		if (flag->spec == 'o' && flag->dot == FALSE)
+		if (flag->spec == 'o' && flag->prec <= ft_strlen(str))
 			return (write(1, "0", 1));
 	}
 	return (0);
@@ -68,11 +70,7 @@ intmax_t	handle_unsigned_length_mod(t_flag *flag, va_list ap)
 	uintmax_t	nb;
 
 	if (flag->spec == 'p')
-	{
-		flag->spec = 'x';
-		flag->hash = TRUE;
 		return (nb = (uintptr_t)va_arg(ap, void *));
-	}	
 	if (flag->len[0] == 'h')
 	{
 		if (flag->len[1] == 'h')

@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/23 21:43:28 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/24 10:25:24 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -488,9 +488,9 @@ int main(void)
 	ft_printf("%    -30.20Lf", 314.01L);
 	printf(" <- ft_printf\n");
 	printf("%    -30.20Lf",  314.01L);
-	printf(" <- original\n\n");
+	printf(" <- original\n\n");*/
 
-	//random_double_test(0, 1);
+	random_double_test(0, 1);
 
 	test_int("%u", 4294967295);
 	test_int("%o", 4294967295);
@@ -510,9 +510,9 @@ int main(void)
 	int pf_ret = printf("%-5c, %5d    jdgfjhgsdf %+.10%", 'a', 5);
 	printf(" <- original\n\n");
 	if (ft_ret != pf_ret)
-		printf("return values are different\n\n");*/
+		printf("return values are different\n\n");
 
-	/*test_int_no_flag();
+	test_int_no_flag();
 	test_int_only_width();
 	test_int_hash_prec();
 	test_int_width_hash();
@@ -537,13 +537,22 @@ int main(void)
 	test_int_hash();
 	test_int_hash_plus();
 	test_int_plus();
-	test_int_space();*/
+	test_int_space();
 
-	ft_printf("%p", NULL);
+	ft_printf("%#.3o", 1);
 	printf(" <- ft_printf\n");
-	printf("%p", NULL);
+	printf("%#.3o", 1);
 	printf(" <- original\n\n");
 	
+	ft_printf("%5p", 0);
+	printf(" <- ft_printf\n");
+	printf("%5p", 0);
+	printf(" <- original\n\n");
+
+	ft_printf("% jhfjhds");
+	printf(" <- ft_printf\n");
+	printf("% jhfjhds");
+	printf(" <- original\n\n");
 	
 
 	

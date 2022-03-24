@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/25 11:11:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/23 09:18:16 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/24 09:24:16 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	putchar_nbyte(char c, int n)
 
 int	putstr_nbyte(char const *s, int nbyte)
 {
+	if (nbyte < 0)
+		nbyte = 0;
 	return (write(1, s, nbyte));
 }
 

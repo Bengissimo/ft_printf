@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:39:30 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/23 21:25:44 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/24 10:01:55 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static int	calc_padding(t_flag *flag, char *str, uintmax_t len, int neg)
 	}
 	if (flag->plus == TRUE || neg == TRUE || flag->space == TRUE)
 		return (flag->width - len - 1);
+	if (flag->spec == 'p')
+		return (flag->width - len - 2);
 	return (flag->width - len);
 }
 

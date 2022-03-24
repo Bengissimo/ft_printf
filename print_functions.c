@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/23 08:53:11 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/24 09:55:10 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	handle_char(t_flag *flag, char c)
 		return (write(1, &c, 1));
 	if (flag->dash == TRUE)
 		return (write(1, &c, 1) + putchar_nbyte(' ', flag->width - 1));
+	if (flag->zero == TRUE)
+		return (putchar_nbyte('0', flag->width - 1) + write(1, &c, 1));
 	return (putchar_nbyte(' ', flag->width - 1) + write(1, &c, 1));
 }
 
