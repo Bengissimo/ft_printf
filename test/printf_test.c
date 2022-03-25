@@ -72,7 +72,7 @@ int main(void)
 
 	printf("%.10x\n", 123);
 	printf("%#.10x\n", 123);
-	printf("%f\n", -0.0);
+	printf("{%05.*d}", -15, 42);
 
 	//printf("expect: [% z5%]\n");
 

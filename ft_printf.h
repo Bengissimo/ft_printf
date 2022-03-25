@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/24 11:41:51 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/24 16:01:48 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@
 # include <wctype.h>
 # include <stdint.h>
 
+#include <stdio.h>
+
 # define TRUE	1
 # define FALSE	0
 
-# define VALID	"#0-+ 123456789.hlLcspdiouxXf%"
+# define VALID	"#0-+ 123456789.hlLcspdiouxXf%*"
 # define SPECS	"cspdiouxXf%"
 # define INT	"diouxX"
 # define UINT	"ouxXp"
@@ -44,7 +46,7 @@ typedef struct s_flag
 }					t_flag;
 
 int			ft_printf(const char *format, ...);
-void		fill(t_flag *flag);
+void		fill(t_flag *flag, va_list ap);
 void		reset(t_flag *flag);
 void		initiate(t_flag *flag);
 
@@ -64,8 +66,8 @@ int			print_double(t_flag *flag, va_list ap);
 /* get_flags */
 void		fill_specifier(t_flag *flag);
 void		fill_flags(t_flag *flag);
-void		fill_width(t_flag *flag);
-void		fill_precision(t_flag *flag);
+void		fill_width(t_flag *flag, va_list ap);
+void		fill_precision(t_flag *flag, va_list ap);
 void		fill_len_mod(t_flag *flag, char c);
 
 /* handle_other_flags.c */

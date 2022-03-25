@@ -6,30 +6,36 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/24 10:49:08 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 08:47:59 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	fill(t_flag *flag)
+void	fill(t_flag *flag, va_list ap)
 {
 	fill_specifier(flag);
 	if (ft_strlen(flag->str) > 1)
 	{
-		fill_width(flag);
 		fill_flags(flag);
+		fill_width(flag, ap);
 		fill_len_mod(flag, 'h');
 		fill_len_mod(flag, 'l');
 		fill_len_mod(flag, 'L');
 	}
 	if (ft_strlen(flag->str) > 1)
-		fill_precision(flag);
+		fill_precision(flag, ap);
 }
 
 int	put_format(t_flag *flag, va_list ap)
 {
-	fill(flag);
+	fill(flag, ap);
+	//printf("%s\n", flag->str);
+	//printf("flag zero: %d\n", flag->zero);
+	//printf("flag width: %ju\n", flag->width);
+	//printf("flag prec: %ju\n", flag->prec);
+	
+	
 	if (flag->spec == 'c')
 		return (print_c(flag, ap));
 	else if (flag->spec == 's')
