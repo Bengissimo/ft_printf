@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 12:52:34 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 21:11:32 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,24 @@ void	fill_flags(t_flag *flag)
 		flag->zero = FALSE;
 }
 
-void	fill_width(t_flag *flag, va_list ap)
+static int	calc_width_asterix(t_flag *flag, va_list ap)
+{
+	int	asterisk;
+
+	asterisk = va_arg(ap, int);
+	if (asterisk < 0)
+	{
+		flag->dash = TRUE;
+		flag->zero = FALSE;
+		return (-1);
+	}
+	return (asterisk);
+}
+
+int	fill_width(t_flag *flag, va_list ap)
 {
 	int		i;
 	long	width;
-	int		ast;
 
 	i = 0;
 	width = 0;
@@ -62,55 +75,37 @@ void	fill_width(t_flag *flag, va_list ap)
 		i++;
 	if (flag->str[i] == '*')
 	{
-		ast = va_arg(ap, int);
-		if (ast < 0)
-		{
-			flag->dash = TRUE;
-			flag->zero = FALSE;
-			flag->width = -ast;
-		}
-		else
-			flag->width = ast;
 		if (ft_isdigit(flag->str[i + 1]) == TRUE)
 			i++;
 		else
-			return ;
+			return (calc_width_asterix(flag, ap));
 	}
 	while (flag->str[i] != '\0' && ft_isdigit(flag->str[i]) == TRUE)
 	{
 		width = width * 10 + flag->str[i] - '0';
 		if (width > 2147483644)
-		{
-			width = -1;
-			break ;
-		}
+			return (-1);
 		i++;
 	}
-	flag->width = width;
 	if (flag->width < 0)
 		flag->zero = FALSE;
+	return (width);
 }
 
-void	fill_precision(t_flag *flag, va_list ap)
+static int	calc_prec(char *dot, va_list ap)
 {
-	char	*dot;
-	long	precision;
-	int		i;
-	int		ast;
+	int	precision;
+	int	ast;
+	int	i;
 
 	precision = 0;
+	ast = 0;
 	i = 1;
-	dot = ft_strchr(flag->str, '.');
-	if (dot != NULL)
-		flag->dot = TRUE;
 	while (dot != NULL && dot[i] != '\0' && ft_isdigit(dot[i]) == TRUE)
 	{
 		precision = precision * 10 + dot[i] - '0';
 		if (precision > 2147483646)
-		{
-			precision = -1;
-			break ;
-		}
+			return (-1);
 		i++;
 	}
 	if (dot != NULL && *(dot + 1) == '*')
@@ -121,7 +116,17 @@ void	fill_precision(t_flag *flag, va_list ap)
 		else
 			precision = -1;
 	}
-	flag->prec = precision;
+	return (precision);
+}
+
+int	fill_precision(t_flag *flag, va_list ap)
+{
+	char	*dot;
+
+	dot = ft_strchr(flag->str, '.');
+	if (dot != NULL)
+		flag->dot = TRUE;
+	return (calc_prec(dot, ap));
 	if (flag->prec >= 0 && flag->dot == TRUE)
 		flag->zero = FALSE;
 }

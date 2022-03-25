@@ -6,34 +6,40 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:05:56 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 14:06:39 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 15:56:50 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	round_to_prec(t_flag *flag, uintmax_t *nb_i, long double *nb_d)
+long double	get_decimal_from_float(long double nb_dbl)
+{
+	return (nb_dbl - (uintmax_t)nb_dbl);
+}
+
+long double	round_to_prec(t_flag *flag, long double nb_dbl)
 {
 	uintmax_t	round_down;
 	uintmax_t	round_up;
-	long double	rounding_coeff;
+	uintmax_t	nb_dec;
 
-	rounding_coeff = ft_power(10.0, flag->prec);
-	*nb_d = (*nb_d) * rounding_coeff;
-	round_down = (uintmax_t)(*nb_d);
-	round_up = (uintmax_t)(*nb_d + 1);
-	if ((*nb_d - round_down) > (round_up - *nb_d))
+	nb_dec = get_decimal_from_float(nb_dbl);
+	nb_dec = nb_dec * ft_power(10.0, flag->prec);
+	round_down = (uintmax_t)(nb_dec);
+	round_up = (uintmax_t)(nb_dec + 1);
+	if ((nb_dec - round_down) > (round_up - nb_dec))
 	{
-		*nb_d = round_up;
+		nb_dec = round_up;
 		if (flag->prec == 0)
-			(*nb_i)++;
+			(nb_dbl)++;
 	}
-	else if ((*nb_d - round_down) == (round_up - *nb_d))
+	else if ((nb_dbl - round_down) == (round_up - nb_dbl))
 	{
-		*nb_d = round_up;
-		if (flag->prec == 0 && (*nb_i + 1) % 2 == 0)
-			(*nb_i)++;
+		nb_dec = round_up;
+		if (flag->prec == 0 && ((uintmax_t)nb_dbl + 1) % 2 == 0)
+			(nb_dbl)++;
 	}
 	else
-		*nb_d = round_down;
+		nb_dec = round_down;
+	return (nb_dec);
 }

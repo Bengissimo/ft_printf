@@ -6,7 +6,7 @@
 #    By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/31 11:00:37 by bkandemi          #+#    #+#              #
-#    Updated: 2022/03/23 21:26:20 by bkandemi         ###   ########.fr        #
+#    Updated: 2022/03/25 14:41:48 by bkandemi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ C_FILES = ft_printf.c\
 		handle_width.c\
 		handle_other_flags.c\
 		print_float.c\
-		print_int.c
+		print_int.c\
+		round_float.c
 
 O_FILES = $(C_FILES:.c=.o)
 

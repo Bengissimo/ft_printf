@@ -6,16 +6,18 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:46:49 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 14:07:44 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 15:30:21 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static	int	get_mantissa_zeroes(t_flag *flag, long double nb_dec)
+static	int	get_mantissa_zeroes(t_flag *flag, long double nb_dbl)
 {
-	int	zeroes;
+	int			zeroes;
+	long double	nb_dec;
 
+	nb_dec = get_decimal_from_float(nb_dbl);
 	if (flag->dot == FALSE)
 		flag->prec = 6;
 	zeroes = 0;
@@ -41,27 +43,29 @@ static char	*join_and_free_str(char *dst, char *str)
 	return (dst);
 }
 
-static char	*join_float_str(t_flag *f, uintmax_t ni, uintmax_t nd, int z)
+static char	*join_float_str(t_flag *flag, long double nb_dbl, int zeroes)
 {
-	char	*str_dec;
-	char	*str_float;
-	int		i;
+	char		*str_dec;
+	char		*str_float;
+	int			i;
+	long double	nb_dec;
 
-	str_float = ft_itoa_base(ni, 10);
-	if (!(f->prec == 0 && f->dot == TRUE))
+	nb_dec = round_to_prec(flag, nb_dbl);
+	str_float = ft_itoa_base((uintmax_t)nb_dbl, 10);
+	if (!(flag->prec == 0 && flag->dot == TRUE))
 		str_float = join_and_free_str(str_float, ".");
-	if (z > 0)
+	if (zeroes > 0)
 	{
 		i = 0;
-		while (i < z)
+		while (i < zeroes)
 		{
 			str_float = join_and_free_str(str_float, "0");
 			i++;
 		}
 	}
-	if (f->prec > z && f->prec != 0)
+	if (flag->prec > zeroes && flag->prec != 0)
 	{
-		str_dec = ft_itoa_base((uintmax_t)(nd), 10);
+		str_dec = ft_itoa_base(nb_dec, 10);
 		str_float = join_and_free_str(str_float, str_dec);
 		ft_strdel(&str_dec);
 	}
@@ -71,22 +75,25 @@ static char	*join_float_str(t_flag *f, uintmax_t ni, uintmax_t nd, int z)
 static int	handle_float(t_flag *flag, char *str_float, int negative)
 {
 	int	len;
+	int	ret;
 
+	ret = 0;
 	len = ft_strlen(str_float);
 	if (flag->width > len)
-		return (handle_width(flag, str_float, negative));
-	return (handle_plus_space_hash(flag, str_float, negative));
+		ret = handle_width(flag, str_float, negative);
+	else
+		ret = handle_plus_space_hash(flag, str_float, negative);
+	ft_strdel(&str_float);
+	return (ret);
 }
 
 int	print_float(t_flag *flag, va_list ap)
 {
 	long double	nb_dbl;
-	uintmax_t	nb_int;
-	long double	nb_dec;
+	//long double	nb_dec;
 	int			negative;
 	int			zeroes;
-	char		*str_float;
-	int			ret;
+	char		*str;
 
 	negative = FALSE;
 	if (flag->len[0] == 'L')
@@ -94,12 +101,8 @@ int	print_float(t_flag *flag, va_list ap)
 	else
 		nb_dbl = va_arg(ap, double);
 	nb_dbl = abs_value(nb_dbl, &negative);
-	nb_int = (uintmax_t)nb_dbl;
-	nb_dec = nb_dbl - (uintmax_t)nb_dbl;
-	zeroes = get_mantissa_zeroes(flag, nb_dec);
-	round_to_prec(flag, &nb_int, &nb_dec);
-	str_float = join_float_str(flag, nb_int, (uintmax_t)(nb_dec), zeroes);
-	ret = handle_float(flag, str_float, negative);
-	ft_strdel(&str_float);
-	return (ret);
+	zeroes = get_mantissa_zeroes(flag, nb_dbl);
+	//nb_dec = round_to_prec(flag, nb_dbl);
+	str = join_float_str(flag, nb_dbl, zeroes);
+	return (handle_float(flag, str, negative));
 }

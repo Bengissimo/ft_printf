@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 14:05:15 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 21:11:15 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@ void	fill(t_flag *flag, va_list ap)
 	if (ft_strlen(flag->str) > 1)
 	{
 		fill_flags(flag);
-		fill_width(flag, ap);
+		flag->width = fill_width(flag, ap);
+		flag->prec = fill_precision(flag, ap);
 		fill_len_mod(flag, 'h');
 		fill_len_mod(flag, 'l');
 		fill_len_mod(flag, 'L');
 	}
-	if (ft_strlen(flag->str) > 1)
-		fill_precision(flag, ap);
 }
 
 int	put_format(t_flag *flag, va_list ap)
