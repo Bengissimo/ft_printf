@@ -6,13 +6,13 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:36:25 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/24 10:44:39 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 09:04:10 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static uintmax_t	calc_len(t_flag *flag, char *str)
+static int	calc_len(t_flag *flag, char *str)
 {
 	if (*str == '0' && flag->dot == TRUE && flag->prec == 0)
 	{
@@ -42,7 +42,7 @@ static int	calc_space_padding(t_flag *flag, char *str, int neg)
 int	handle_precision(t_flag *flag, char *str, int negative)
 {
 	int			ret;
-	uintmax_t	len;
+	int	len;
 	int			space;
 
 	ret = 0;

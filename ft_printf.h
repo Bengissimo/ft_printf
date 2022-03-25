@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/24 16:01:48 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 09:04:34 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ typedef struct s_flag
 	int				space;
 	int				plus;
 	int				dash;
-	uintmax_t		width;
-	uintmax_t		prec;
+	int		width;
+	int		prec;
 	char			len[2];
 	char			spec;
 	int				dot;

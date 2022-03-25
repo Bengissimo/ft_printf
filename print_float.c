@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:46:49 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/24 11:25:01 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 09:06:45 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static	int	get_mantissa_zeroes(t_flag *flag, long double nb_dec)
 {
-	uintmax_t	zeroes;
+	int	zeroes;
 
 	if (flag->dot == FALSE)
 		flag->prec = 6;
@@ -67,11 +67,11 @@ static char	*join_and_free_str(char *dst, char *str)
 	return (dst);
 }
 
-static char	*join_float_str(t_flag *f, uintmax_t ni, uintmax_t nd, uintmax_t z)
+static char	*join_float_str(t_flag *f, uintmax_t ni, uintmax_t nd, int z)
 {
 	char		*str_dec;
 	char		*str_float;
-	uintmax_t	i;
+	int	i;
 
 	str_float = ft_itoa_base(ni, 10);
 	if (!(f->prec == 0 && f->dot == TRUE))
@@ -96,7 +96,7 @@ static char	*join_float_str(t_flag *f, uintmax_t ni, uintmax_t nd, uintmax_t z)
 
 static int	handle_float(t_flag *flag, char *str_float, int negative)
 {
-	uintmax_t	len;
+	int	len;
 
 	len = ft_strlen(str_float);
 	if (flag->width > len)
