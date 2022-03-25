@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 08:47:38 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 09:47:17 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	fill_width(t_flag *flag, va_list ap)
 		if (ast < 0)
 		{
 			flag->dash = TRUE;
+			flag->zero = FALSE;
 			flag->width = -ast;
 		}
 		else

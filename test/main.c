@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 09:11:50 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 12:02:21 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -553,6 +553,12 @@ int main(void)
 	printf(" <- ft_printf\n");
 	printf("%0*i", -7, -54);
 	printf(" <- original\n\n");
+
+	int x = ft_printf("%");
+	printf(" <- ft_printf\n");
+	//int y = printf("%");
+	printf(" <- original\n\n");
+	printf("pf: %d\n", x);
 	
 	
 
