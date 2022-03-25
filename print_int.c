@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:50:25 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 09:04:10 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 12:53:44 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	calc_len(t_flag *flag, char *str)
 int	handle_int(t_flag *flag, char *str, int negative)
 {
 	int	len;
-	int			ret;
+	int	ret;
 
 	len = calc_len(flag, str);
 	if (flag->dot == TRUE && flag->prec >= len)

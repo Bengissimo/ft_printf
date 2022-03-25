@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:39:30 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 09:01:21 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 12:56:02 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ static int	calc_padding(t_flag *flag, char *str, uintmax_t len, int neg)
 
 int	handle_width(t_flag *flag, char *str, int negative)
 {
-	int			ret;
+	int	ret;
 	int	len;
-	int			pad_size;
+	int	pad_size;
 
 	ret = 0;
 	len = ft_strlen(str);

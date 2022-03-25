@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 09:47:17 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 12:52:34 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,8 @@ void	fill_width(t_flag *flag, va_list ap)
 		if (ft_isdigit(flag->str[i + 1]) == TRUE)
 			i++;
 		else
-			return;
+			return ;
 	}
-	
 	while (flag->str[i] != '\0' && ft_isdigit(flag->str[i]) == TRUE)
 	{
 		width = width * 10 + flag->str[i] - '0';
@@ -97,6 +96,7 @@ void	fill_precision(t_flag *flag, va_list ap)
 	char	*dot;
 	long	precision;
 	int		i;
+	int		ast;
 
 	precision = 0;
 	i = 1;
@@ -115,16 +115,13 @@ void	fill_precision(t_flag *flag, va_list ap)
 	}
 	if (dot != NULL && *(dot + 1) == '*')
 	{
-		int ast;
 		ast = va_arg(ap, int);
-		//printf("asst: %d\n", ast);
 		if (ast >= 0)
 			precision = ast;
 		else
 			precision = -1;
 	}
 	flag->prec = precision;
-	//printf("flag prec: %ju\n", flag->prec);
 	if (flag->prec >= 0 && flag->dot == TRUE)
 		flag->zero = FALSE;
 }

@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 09:04:34 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 14:07:59 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 # include <wctype.h>
 # include <stdint.h>
 
-#include <stdio.h>
-
 # define TRUE	1
 # define FALSE	0
 
@@ -32,18 +30,18 @@
 
 typedef struct s_flag
 {
-	char			*str;
-	int				zero;
-	int				hash;
-	int				space;
-	int				plus;
-	int				dash;
+	char	*str;
+	int		zero;
+	int		hash;
+	int		space;
+	int		plus;
+	int		dash;
 	int		width;
 	int		prec;
-	char			len[2];
-	char			spec;
-	int				dot;
-}					t_flag;
+	char	len[2];
+	char	spec;
+	int		dot;
+}			t_flag;
 
 int			ft_printf(const char *format, ...);
 void		fill(t_flag *flag, va_list ap);
@@ -61,7 +59,9 @@ int			print_p(t_flag *flag, va_list ap);
 int			handle_int(t_flag *flag, char *str, int negative);
 int			print_signed_int(t_flag *flag, va_list ap);
 int			print_unsigned_int(t_flag *flag, va_list ap);
-int			print_double(t_flag *flag, va_list ap);
+int			print_float(t_flag *flag, va_list ap);
+
+void		round_to_prec(t_flag *flag, uintmax_t *nb_i, long double *nb_d);
 
 /* get_flags */
 void		fill_specifier(t_flag *flag);
@@ -81,7 +81,6 @@ int			handle_width(t_flag *flag, char *str, int negative);
 
 /* handle_precision */
 int			handle_precision(t_flag *flag, char *str, int negative);
-
 int			put_format(t_flag *flag, va_list ap);
 
 #endif

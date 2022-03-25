@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:46:49 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 09:06:45 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 14:07:44 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,32 +31,6 @@ static	int	get_mantissa_zeroes(t_flag *flag, long double nb_dec)
 	return (zeroes);
 }
 
-static	void	round_to_prec(t_flag *flag, uintmax_t *nb_i, long double *nb_d)
-{
-	uintmax_t	round_down;
-	uintmax_t	round_up;
-	long double	rounding_coeff;
-
-	rounding_coeff = ft_power(10.0, flag->prec);
-	*nb_d = (*nb_d) * rounding_coeff;
-	round_down = (uintmax_t)(*nb_d);
-	round_up = (uintmax_t)(*nb_d + 1);
-	if ((*nb_d - round_down) > (round_up - *nb_d))
-	{
-		*nb_d = round_up;
-		if (flag->prec == 0)
-			(*nb_i)++;
-	}
-	else if ((*nb_d - round_down) == (round_up - *nb_d))
-	{
-		*nb_d = round_up;
-		if (flag->prec == 0 && (*nb_i + 1) % 2 == 0)
-			(*nb_i)++;
-	}
-	else
-		*nb_d = round_down;
-}
-
 static char	*join_and_free_str(char *dst, char *str)
 {
 	char	*temp;
@@ -69,9 +43,9 @@ static char	*join_and_free_str(char *dst, char *str)
 
 static char	*join_float_str(t_flag *f, uintmax_t ni, uintmax_t nd, int z)
 {
-	char		*str_dec;
-	char		*str_float;
-	int	i;
+	char	*str_dec;
+	char	*str_float;
+	int		i;
 
 	str_float = ft_itoa_base(ni, 10);
 	if (!(f->prec == 0 && f->dot == TRUE))
@@ -104,7 +78,7 @@ static int	handle_float(t_flag *flag, char *str_float, int negative)
 	return (handle_plus_space_hash(flag, str_float, negative));
 }
 
-int	print_double(t_flag *flag, va_list ap)
+int	print_float(t_flag *flag, va_list ap)
 {
 	long double	nb_dbl;
 	uintmax_t	nb_int;

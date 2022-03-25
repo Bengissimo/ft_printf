@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:39:41 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 09:05:38 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 12:55:44 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	handle_flags(t_flag *flag, char *str, int negative)
 
 int	handle_plus_space_hash(t_flag *flag, char *str, int negative)
 {
-	int			ret;
+	int	ret;
 	int	len;
 
 	ret = handle_flags(flag, str, negative);

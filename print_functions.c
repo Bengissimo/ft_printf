@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 10:07:09 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 09:01:21 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 14:05:15 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,6 @@ void	fill(t_flag *flag, va_list ap)
 int	put_format(t_flag *flag, va_list ap)
 {
 	fill(flag, ap);
-	//printf("%s\n", flag->str);
-	//printf("flag zero: %d\n", flag->zero);
-	//printf("flag width: %ju\n", flag->width);
-	//printf("flag prec: %ju\n", flag->prec);
-	
-	
 	if (flag->spec == 'c')
 		return (print_c(flag, ap));
 	else if (flag->spec == 's')
@@ -45,7 +39,7 @@ int	put_format(t_flag *flag, va_list ap)
 	else if (is_char_in_str(flag->spec, UINT) == TRUE)
 		return (print_unsigned_int(flag, ap));
 	else if (flag->spec == 'f')
-		return (print_double(flag, ap));
+		return (print_float(flag, ap));
 	else if (flag->spec == '%')
 		return (handle_char(flag, '%'));
 	return (0);
@@ -72,8 +66,8 @@ int	print_c(t_flag *flag, va_list ap)
 
 int	print_s(t_flag *flag, va_list ap)
 {
-	char		*s;
-	int	len;
+	char	*s;
+	int		len;
 
 	s = va_arg(ap, char *);
 	if (s == NULL)
@@ -83,7 +77,7 @@ int	print_s(t_flag *flag, va_list ap)
 		len = flag->prec;
 	if (flag->width <= len)
 		return (putstr_nbyte(s, len));
-	if (flag->dash == TRUE) // width > len
+	if (flag->dash == TRUE)
 		return (putstr_nbyte(s, len) + putchar_nbyte(' ', flag->width - len));
 	return (putchar_nbyte(' ', flag->width - len) + putstr_nbyte(s, len));
 }
