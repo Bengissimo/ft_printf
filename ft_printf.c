@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 13:51:31 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 12:04:01 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 12:16:43 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,8 @@ static int	parse(const char *format, va_list ap)
 	t_flag	flag;
 	int		ret;
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
 	ret = 0;
 	initiate(&flag);
 	while (format[i] != '\0')
@@ -71,7 +69,6 @@ static int	parse(const char *format, va_list ap)
 		}
 		else
 		{
-			//i--;
 			ft_putchar(format[i]);
 			ret++;
 		}
