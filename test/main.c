@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 12:02:21 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 22:56:24 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -490,7 +490,7 @@ int main(void)
 	printf("%    -30.20Lf",  314.01L);
 	printf(" <- original\n\n");*/
 
-	random_double_test(0, 1);
+	random_double_test(20, 22);
 
 	test_int("%u", 4294967295);
 	test_int("%o", 4294967295);
@@ -549,16 +549,12 @@ int main(void)
 	printf("%5p", -0);
 	printf(" <- original\n\n");
 
-	ft_printf("%0*i", -7, -54);
+	ft_printf("{%05.*d}", -15, 42);
 	printf(" <- ft_printf\n");
-	printf("%0*i", -7, -54);
+	printf("{%05.*d}", -15, 42);
 	printf(" <- original\n\n");
 
-	int x = ft_printf("%");
-	printf(" <- ft_printf\n");
-	//int y = printf("%");
-	printf(" <- original\n\n");
-	printf("pf: %d\n", x);
+
 	
 	
 

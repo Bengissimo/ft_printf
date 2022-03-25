@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 21:28:55 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 21:11:32 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 23:03:16 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,15 @@ void	fill_flags(t_flag *flag)
 		flag->zero = FALSE;
 }
 
-static int	calc_width_asterix(t_flag *flag, va_list ap)
+static int	calc_width_asterix(t_flag *flag, int width)
 {
-	int	asterisk;
-
-	asterisk = va_arg(ap, int);
-	if (asterisk < 0)
+	if (width < 0)
 	{
 		flag->dash = TRUE;
 		flag->zero = FALSE;
-		return (-1);
+		return (-width);
 	}
-	return (asterisk);
+	return (width);
 }
 
 int	fill_width(t_flag *flag, va_list ap)
@@ -70,16 +67,17 @@ int	fill_width(t_flag *flag, va_list ap)
 	long	width;
 
 	i = 0;
-	width = 0;
 	while (is_char_in_str(flag->str[i], FLAGS) == TRUE && flag->str[i] != '\0')
 		i++;
 	if (flag->str[i] == '*')
 	{
+		width = va_arg(ap, int); //TODO
 		if (ft_isdigit(flag->str[i + 1]) == TRUE)
 			i++;
 		else
-			return (calc_width_asterix(flag, ap));
+			return (calc_width_asterix(flag, width));
 	}
+	width = 0;
 	while (flag->str[i] != '\0' && ft_isdigit(flag->str[i]) == TRUE)
 	{
 		width = width * 10 + flag->str[i] - '0';
@@ -105,7 +103,10 @@ static int	calc_prec(char *dot, va_list ap)
 	{
 		precision = precision * 10 + dot[i] - '0';
 		if (precision > 2147483646)
-			return (-1);
+		{
+			precision = -1;
+			break ;
+		}
 		i++;
 	}
 	if (dot != NULL && *(dot + 1) == '*')
@@ -126,9 +127,10 @@ int	fill_precision(t_flag *flag, va_list ap)
 	dot = ft_strchr(flag->str, '.');
 	if (dot != NULL)
 		flag->dot = TRUE;
-	return (calc_prec(dot, ap));
+	flag->prec = calc_prec(dot, ap);
 	if (flag->prec >= 0 && flag->dot == TRUE)
 		flag->zero = FALSE;
+	return (flag->prec);
 }
 
 void	fill_len_mod(t_flag *flag, char c)

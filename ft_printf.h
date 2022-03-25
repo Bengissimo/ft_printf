@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:31:19 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 21:12:19 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 21:40:09 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,13 @@ int			print_signed_int(t_flag *flag, va_list ap);
 int			print_unsigned_int(t_flag *flag, va_list ap);
 int			print_float(t_flag *flag, va_list ap);
 
-long double		round_to_prec(t_flag *flag, long double nb_dbl);
-long double	get_decimal_from_float(long double nb_dbl);
+long double		round_to_prec(t_flag *flag, long double *nb_dbl);
 
 /* get_flags */
 void		fill_specifier(t_flag *flag);
 void		fill_flags(t_flag *flag);
-int		fill_width(t_flag *flag, va_list ap);
-int		fill_precision(t_flag *flag, va_list ap);
+int			fill_width(t_flag *flag, va_list ap);
+int			fill_precision(t_flag *flag, va_list ap);
 void		fill_len_mod(t_flag *flag, char c);
 
 /* handle_other_flags.c */

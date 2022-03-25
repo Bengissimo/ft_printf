@@ -73,7 +73,7 @@ int main(void)
 	printf("%.10x\n", 123);
 	printf("%#.10x\n", 123);
 
-	printf("%0*10.*d\n", 10, 5, 3);
+	printf("%08.3d\n", 3);
 
 	//printf("expect: [% z5%]\n");
 

@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:46:49 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 15:30:21 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/25 23:05:36 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static	int	get_mantissa_zeroes(t_flag *flag, long double nb_dbl)
 	int			zeroes;
 	long double	nb_dec;
 
-	nb_dec = get_decimal_from_float(nb_dbl);
+	nb_dec = nb_dbl - (uintmax_t)nb_dbl;
 	if (flag->dot == FALSE)
 		flag->prec = 6;
 	zeroes = 0;
@@ -50,7 +50,7 @@ static char	*join_float_str(t_flag *flag, long double nb_dbl, int zeroes)
 	int			i;
 	long double	nb_dec;
 
-	nb_dec = round_to_prec(flag, nb_dbl);
+	nb_dec = round_to_prec(flag, &nb_dbl);
 	str_float = ft_itoa_base((uintmax_t)nb_dbl, 10);
 	if (!(flag->prec == 0 && flag->dot == TRUE))
 		str_float = join_and_free_str(str_float, ".");
@@ -65,7 +65,7 @@ static char	*join_float_str(t_flag *flag, long double nb_dbl, int zeroes)
 	}
 	if (flag->prec > zeroes && flag->prec != 0)
 	{
-		str_dec = ft_itoa_base(nb_dec, 10);
+		str_dec = ft_itoa_base((uintmax_t)nb_dec, 10);
 		str_float = join_and_free_str(str_float, str_dec);
 		ft_strdel(&str_dec);
 	}
@@ -102,7 +102,6 @@ int	print_float(t_flag *flag, va_list ap)
 		nb_dbl = va_arg(ap, double);
 	nb_dbl = abs_value(nb_dbl, &negative);
 	zeroes = get_mantissa_zeroes(flag, nb_dbl);
-	//nb_dec = round_to_prec(flag, nb_dbl);
 	str = join_float_str(flag, nb_dbl, zeroes);
 	return (handle_float(flag, str, negative));
 }
