@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:46:49 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/26 19:30:07 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/26 22:07:55 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int	print_float(t_flag *flag, va_list ap)
 	int			zeroes;
 	char		*str;
 
-	negative = FALSE;
 	if (flag->len[0] == 'L')
 		nb_dbl = va_arg(ap, long double);
 	else

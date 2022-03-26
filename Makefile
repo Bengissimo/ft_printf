@@ -6,7 +6,7 @@
 #    By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/31 11:00:37 by bkandemi          #+#    #+#              #
-#    Updated: 2022/03/26 21:33:05 by bkandemi         ###   ########.fr        #
+#    Updated: 2022/03/26 22:21:03 by bkandemi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,14 +34,11 @@ CC = gcc
 
 FLAGS = -Wall -Wextra -Werror
 
-RUN_LIB = make -C libft/ fclean && make -C libft/
-
 all : $(NAME)
 
 $(NAME):
-	@$(RUN_LIB)
+	@make -C libft/ fclean && make -C libft/
 	@$(CC) $(FLAGS) -c $(C_FILES)
-	@cp libft/libft.a libftprintf.a
 	@ar rc $(NAME) $(O_FILES)
 	@ranlib $(NAME)
 		

@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:36:25 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 12:55:54 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/26 22:03:42 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	handle_precision(t_flag *flag, char *str, int negative)
 		ret += putchar_nbyte('0', flag->prec - len);
 		ret += putstr_nbyte(str, len);
 	}
-	if (flag->dash == TRUE)
+	else
 	{
 		ret += handle_flags(flag, str, negative);
 		ret += putchar_nbyte('0', flag->prec - len);

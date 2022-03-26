@@ -6,13 +6,13 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 19:54:03 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/26 21:35:00 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/26 21:45:58 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	fill(t_flag *flag, va_list ap)
+static void	gather(t_flag *flag, va_list ap)
 {
 	gather_specifier(flag);
 	if (ft_strlen(flag->str) > 1)
@@ -28,7 +28,7 @@ static void	fill(t_flag *flag, va_list ap)
 
 int	put_format(t_flag *flag, va_list ap)
 {
-	fill(flag, ap);
+	gather(flag, ap);
 	if (flag->spec == 'c')
 		return (print_char(flag, ap));
 	else if (flag->spec == 's')
