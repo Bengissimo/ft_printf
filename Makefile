@@ -6,22 +6,27 @@
 #    By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/31 11:00:37 by bkandemi          #+#    #+#              #
-#    Updated: 2022/03/25 14:41:48 by bkandemi         ###   ########.fr        #
+#    Updated: 2022/03/26 21:33:05 by bkandemi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
 C_FILES = ft_printf.c\
-		get_flags.c\
-		print_functions.c\
-		helper_print_functions.c\
+		gather_flags.c\
+		gather_precision.c\
+		gather_width.c\
+		handle_flags.c\
 		handle_precision.c\
 		handle_width.c\
-		handle_other_flags.c\
+		helper_functions.c\
+		parse_format.c\
+		print_char_str.c\
 		print_float.c\
 		print_int.c\
+		put_format.c\
 		round_float.c
+		
 
 O_FILES = $(C_FILES:.c=.o)
 

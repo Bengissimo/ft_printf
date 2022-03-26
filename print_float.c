@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:46:49 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 23:05:36 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/26 19:30:07 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ static int	handle_float(t_flag *flag, char *str_float, int negative)
 int	print_float(t_flag *flag, va_list ap)
 {
 	long double	nb_dbl;
-	//long double	nb_dec;
 	int			negative;
 	int			zeroes;
 	char		*str;

@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:50:25 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 22:48:18 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/26 20:44:19 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	calc_len(t_flag *flag, char *str)
 	return (ft_strlen(str));
 }
 
-int	handle_int(t_flag *flag, char *str, int negative)
+static int	handle_int(t_flag *flag, char *str, int negative)
 {
 	int	len;
 	int	ret;
