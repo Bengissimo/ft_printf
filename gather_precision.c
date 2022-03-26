@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 19:49:45 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/26 21:36:10 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/26 22:41:13 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ static int	calc_prec(char *dot, va_list ap)
 	return (precision);
 }
 
-int	gather_precision(t_flag *flag, va_list ap)
+int	gather_precision(t_opts *opts, va_list ap)
 {
 	char	*dot;
 
-	dot = ft_strchr(flag->str, '.');
+	dot = ft_strchr(opts->str, '.');
 	if (dot != NULL)
-		flag->dot = TRUE;
-	flag->prec = calc_prec(dot, ap);
-	if (flag->prec >= 0 && flag->dot == TRUE)
-		flag->zero = FALSE;
-	return (flag->prec);
+		opts->dot = TRUE;
+	opts->prec = calc_prec(dot, ap);
+	if (opts->prec >= 0 && opts->dot == TRUE)
+		opts->zero = FALSE;
+	return (opts->prec);
 }

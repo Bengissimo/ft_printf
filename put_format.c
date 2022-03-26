@@ -6,41 +6,41 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 19:54:03 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/26 21:45:58 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/26 22:41:13 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	gather(t_flag *flag, va_list ap)
+static void	gather(t_opts *opts, va_list ap)
 {
-	gather_specifier(flag);
-	if (ft_strlen(flag->str) > 1)
+	gather_specifier(opts);
+	if (ft_strlen(opts->str) > 1)
 	{
-		gather_flags(flag);
-		flag->width = gather_width(flag, ap);
-		flag->prec = gather_precision(flag, ap);
-		gather_len_mod(flag, 'h');
-		gather_len_mod(flag, 'l');
-		gather_len_mod(flag, 'L');
+		gather_flags(opts);
+		opts->width = gather_width(opts, ap);
+		opts->prec = gather_precision(opts, ap);
+		gather_len_mod(opts, 'h');
+		gather_len_mod(opts, 'l');
+		gather_len_mod(opts, 'L');
 	}
 }
 
-int	put_format(t_flag *flag, va_list ap)
+int	put_format(t_opts *opts, va_list ap)
 {
-	gather(flag, ap);
-	if (flag->spec == 'c')
-		return (print_char(flag, ap));
-	else if (flag->spec == 's')
-		return (print_str(flag, ap));
-	else if (flag->spec == 'd' || flag->spec == 'i')
-		return (print_signed_int(flag, ap));
-	else if (is_char_in_str(flag->spec, UINT) == TRUE)
-		return (print_unsigned_int(flag, ap));
-	else if (flag->spec == 'f')
-		return (print_float(flag, ap));
-	else if (flag->spec == '%')
-		return (handle_char(flag, '%'));
+	gather(opts, ap);
+	if (opts->spec == 'c')
+		return (print_char(opts, ap));
+	else if (opts->spec == 's')
+		return (print_str(opts, ap));
+	else if (opts->spec == 'd' || opts->spec == 'i')
+		return (print_signed_int(opts, ap));
+	else if (is_char_in_str(opts->spec, UINT) == TRUE)
+		return (print_unsigned_int(opts, ap));
+	else if (opts->spec == 'f')
+		return (print_float(opts, ap));
+	else if (opts->spec == '%')
+		return (handle_char(opts, '%'));
 	else
 		exit(1);
 }

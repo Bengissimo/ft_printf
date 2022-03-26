@@ -6,64 +6,64 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:50:25 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/26 20:44:19 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/26 22:41:13 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	calc_len(t_flag *flag, char *str)
+static int	calc_len(t_opts *opts, char *str)
 {
-	if (*str == '0' && flag->dot == TRUE && flag->prec == 0)
+	if (*str == '0' && opts->dot == TRUE && opts->prec == 0)
 		return (0);
 	return (ft_strlen(str));
 }
 
-static int	handle_int(t_flag *flag, char *str, int negative)
+static int	handle_int(t_opts *opts, char *str, int negative)
 {
 	int	len;
 	int	ret;
 
-	len = calc_len(flag, str);
-	if (flag->dot == TRUE && flag->prec >= len)
-		ret = handle_precision(flag, str, negative);
-	else if (flag->width > len)
-		ret = handle_width(flag, str, negative);
+	len = calc_len(opts, str);
+	if (opts->dot == TRUE && opts->prec >= len)
+		ret = handle_precision(opts, str, negative);
+	else if (opts->width > len)
+		ret = handle_width(opts, str, negative);
 	else
-		ret = handle_plus_space_hash(flag, str, negative);
+		ret = handle_plus_space_hash(opts, str, negative);
 	ft_strdel(&str);
 	return (ret);
 }
 
-int	print_signed_int(t_flag *flag, va_list ap)
+int	print_signed_int(t_opts *opts, va_list ap)
 {
 	intmax_t	nb;
 	char		*str;
 	int			negative;
 
-	nb = handle_length_mod(flag, ap);
+	nb = handle_length_mod(opts, ap);
 	nb = (intmax_t)abs_value((intmax_t)nb, &negative);
 	str = ft_itoa_base(nb, 10);
-	return (handle_int(flag, str, negative));
+	return (handle_int(opts, str, negative));
 }
 
-int	print_unsigned_int(t_flag *flag, va_list ap)
+int	print_unsigned_int(t_opts *opts, va_list ap)
 {
 	uintmax_t	nb;
 	char		*str;
 	int			negative;
 
-	nb = handle_unsigned_length_mod(flag, ap);
-	if (flag->spec == 'o')
+	nb = handle_unsigned_length_mod(opts, ap);
+	if (opts->spec == 'o')
 		str = ft_itoa_base(nb, 8);
-	else if (flag->spec == 'x' || flag->spec == 'p')
+	else if (opts->spec == 'x' || opts->spec == 'p')
 		str = ft_itoa_base(nb, 16);
-	else if (flag->spec == 'X')
+	else if (opts->spec == 'X')
 		str = ft_itoa_base_upper(nb, 16);
 	else
 		str = ft_itoa_base(nb, 10);
 	negative = FALSE;
-	flag->plus = FALSE;
-	flag->space = FALSE;
-	return (handle_int(flag, str, negative));
+	opts->plus = FALSE;
+	opts->space = FALSE;
+	return (handle_int(opts, str, negative));
 }

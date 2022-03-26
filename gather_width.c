@@ -6,48 +6,48 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 19:49:24 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/26 21:35:47 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/26 22:41:13 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	calc_width_asterix(t_flag *flag, int width)
+static int	calc_width_asterix(t_opts *opts, int width)
 {
 	if (width < 0)
 	{
-		flag->dash = TRUE;
-		flag->zero = FALSE;
+		opts->dash = TRUE;
+		opts->zero = FALSE;
 		return (-width);
 	}
 	return (width);
 }
 
-int	gather_width(t_flag *flag, va_list ap)
+int	gather_width(t_opts *opts, va_list ap)
 {
 	int		i;
 	long	width;
 
 	i = 0;
-	while (is_char_in_str(flag->str[i], FLAGS) == TRUE && flag->str[i] != '\0')
+	while (is_char_in_str(opts->str[i], FLAGS) == TRUE && opts->str[i] != '\0')
 		i++;
-	if (flag->str[i] == '*')
+	if (opts->str[i] == '*')
 	{
 		width = va_arg(ap, int);
-		if (ft_isdigit(flag->str[i + 1]) == TRUE)
+		if (ft_isdigit(opts->str[i + 1]) == TRUE)
 			i++;
 		else
-			return (calc_width_asterix(flag, width));
+			return (calc_width_asterix(opts, width));
 	}
 	width = 0;
-	while (flag->str[i] != '\0' && ft_isdigit(flag->str[i]) == TRUE)
+	while (opts->str[i] != '\0' && ft_isdigit(opts->str[i]) == TRUE)
 	{
-		width = width * 10 + flag->str[i] - '0';
+		width = width * 10 + opts->str[i] - '0';
 		if (width > 2147483644)
 			return (-1);
 		i++;
 	}
-	if (flag->width < 0)
-		flag->zero = FALSE;
+	if (opts->width < 0)
+		opts->zero = FALSE;
 	return (width);
 }

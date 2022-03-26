@@ -6,29 +6,29 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:39:30 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/25 12:56:02 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/26 22:41:13 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	calc_padding(t_flag *flag, char *str, uintmax_t len, int neg)
+static int	calc_padding(t_opts *opts, char *str, uintmax_t len, int neg)
 {
-	if (flag->hash == TRUE && *str != '0')
+	if (opts->hash == TRUE && *str != '0')
 	{
-		if (flag->spec == 'x' || flag->spec == 'X')
-			return (flag->width - len - 2);
-		if (flag->spec == 'o')
-			return (flag->width - len - 1);
+		if (opts->spec == 'x' || opts->spec == 'X')
+			return (opts->width - len - 2);
+		if (opts->spec == 'o')
+			return (opts->width - len - 1);
 	}
-	if (flag->plus == TRUE || neg == TRUE || flag->space == TRUE)
-		return (flag->width - len - 1);
-	if (flag->spec == 'p')
-		return (flag->width - len - 2);
-	return (flag->width - len);
+	if (opts->plus == TRUE || neg == TRUE || opts->space == TRUE)
+		return (opts->width - len - 1);
+	if (opts->spec == 'p')
+		return (opts->width - len - 2);
+	return (opts->width - len);
 }
 
-int	handle_width(t_flag *flag, char *str, int negative)
+int	handle_width(t_opts *opts, char *str, int negative)
 {
 	int	ret;
 	int	len;
@@ -36,13 +36,13 @@ int	handle_width(t_flag *flag, char *str, int negative)
 
 	ret = 0;
 	len = ft_strlen(str);
-	pad_size = calc_padding(flag, str, len, negative);
-	if (flag->zero == FALSE && flag->dash == FALSE)
+	pad_size = calc_padding(opts, str, len, negative);
+	if (opts->zero == FALSE && opts->dash == FALSE)
 		ret = putchar_nbyte(' ', pad_size);
-	ret += handle_flags(flag, str, negative);
-	if (flag->zero == TRUE)
+	ret += handle_flags(opts, str, negative);
+	if (opts->zero == TRUE)
 		ret = ret + putchar_nbyte('0', pad_size);
-	if (flag->dash == TRUE)
+	if (opts->dash == TRUE)
 		return (ret + putstr_nbyte(str, len) + putchar_nbyte(' ', pad_size));
 	return (ret + putstr_nbyte(str, len));
 }

@@ -6,25 +6,25 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 20:31:07 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/26 20:39:32 by bkandemi         ###   ########.fr       */
+/*   Updated: 2022/03/26 22:41:13 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	initiate(t_flag *flag)
+static void	initiate(t_opts *opts)
 {
-	flag->str = ft_memalloc(1);
-	flag->spec = '\0';
-	flag->dash = FALSE;
-	flag->hash = FALSE;
-	flag->plus = FALSE;
-	flag->space = FALSE;
-	flag->zero = FALSE;
-	flag->width = 0;
-	flag->dot = FALSE;
-	flag->prec = 0;
-	ft_bzero(flag->len, 2);
+	opts->str = ft_memalloc(1);
+	opts->spec = '\0';
+	opts->dash = FALSE;
+	opts->hash = FALSE;
+	opts->plus = FALSE;
+	opts->space = FALSE;
+	opts->zero = FALSE;
+	opts->width = 0;
+	opts->dot = FALSE;
+	opts->prec = 0;
+	ft_bzero(opts->len, 2);
 }
 
 static void	realloc_before_append(char **str)
@@ -37,13 +37,13 @@ static void	realloc_before_append(char **str)
 	*str = new;
 }
 
-static void	reset(t_flag *flag)
+static void	reset(t_opts *opts)
 {
-	ft_strdel(&(flag->str));
-	initiate(flag);
+	ft_strdel(&(opts->str));
+	initiate(opts);
 }
 
-static int	handle_format(const char *format, t_flag *flag, int *i, va_list ap)
+static int	handle_format(const char *format, t_opts *opts, int *i, va_list ap)
 {
 	int	j;
 	int	ret;
@@ -59,12 +59,12 @@ static int	handle_format(const char *format, t_flag *flag, int *i, va_list ap)
 	}
 	while (is_char_in_str(format[*i], VALID) == TRUE)
 	{
-		realloc_before_append(&(flag->str));
-		flag->str[j++] = format[*i];
+		realloc_before_append(&(opts->str));
+		opts->str[j++] = format[*i];
 		if (is_char_in_str(format[*i], SPECS) == TRUE)
 		{
-			ret = put_format(flag, ap);
-			reset(flag);
+			ret = put_format(opts, ap);
+			reset(opts);
 			break ;
 		}
 		*i = *i + 1;
@@ -74,19 +74,19 @@ static int	handle_format(const char *format, t_flag *flag, int *i, va_list ap)
 
 int	parse(const char *format, va_list ap)
 {
-	t_flag	flag;
+	t_opts	opts;
 	int		ret;
 	int		i;
 
 	i = 0;
 	ret = 0;
-	initiate(&flag);
+	initiate(&opts);
 	while (format[i] != '\0')
 	{
 		if (format[i] == '%')
 		{
 			i++;
-			ret = ret + handle_format(format, &flag, &i, ap);
+			ret = ret + handle_format(format, &opts, &i, ap);
 		}
 		else
 		{
@@ -96,6 +96,6 @@ int	parse(const char *format, va_list ap)
 		if (format[i] != '\0')
 			i++;
 	}
-	ft_strdel(&(flag.str));
+	ft_strdel(&(opts.str));
 	return (ret);
 }
