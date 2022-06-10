@@ -14,4 +14,4 @@ Each conversion specification is introduced by the character % like this:
 ```
 For this project my main reference was [International Standard ISO/IEC 9899](https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf), and I prepared format guide for myself based on this standard, where you can see which conversion specifiers and flags were implemented for ft_printf:
 
-
+![format guide](printf_format_guide.png)
