@@ -14,11 +14,3 @@ Each conversion specification is introduced by the character % like this:
 ```
 For this project my main reference was [International Standard ISO/IEC 9899](https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf)
 
-## Usage 
-To compile, go to the library path and run:
-```
-Make
-```
-### Example
-```
-```
