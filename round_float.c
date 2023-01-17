@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 14:05:56 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/29 22:23:59 by bkandemi         ###   ########.fr       */
+/*   Updated: 2023/01/17 15:14:00 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,3 @@ long double	round_to_prec(t_opts *opts, long double *nb_dbl)
 		nb_dec = round_down;
 	return (nb_dec);
 }
-
-/* FIX FOR 0.999999
-if ((nb_dec - round_down) > (round_up - nb_dec))
-	{
-		if (count_digits(round_up, 10) > count_digits((nb_dec), 10))
-		{
-			(*nb_dbl)++;
-			nb_dec = 0;
-		}
-		else
-		{
-			nb_dec = round_up;
-			if (opts->prec == 0)
-				(*nb_dbl)++;
-		} 
-	}
-*/

@@ -6,7 +6,7 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 14:40:33 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/29 09:54:56 by bkandemi         ###   ########.fr       */
+/*   Updated: 2023/01/17 15:20:17 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -554,15 +554,10 @@ int main(void)
 	printf("{%05.*d}", -15, 42);
 	printf(" <- original\n\n");
 
-	ft_printf("{e}", 42.0);
+	/*ft_printf("{e}", 42.0);
 	printf(" <- ft_printf\n");
 	printf("{e}", 42.0);
-	printf(" <- original\n\n");
+	printf(" <- original\n\n");*/
 
-
-	
-	
-
-	
 	return (0);
 }

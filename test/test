@@ -7,4 +7,5 @@ make -C ../libft/ fclean && make -C ../libft/
 make -C ../ fclean && make -C ../
 gcc -Wall -Wextra -I../ -L../ -L../libft -lft -lftprintf main.c
 make -C ../libft/ fclean && make -C ../ fclean
+./a.out
 

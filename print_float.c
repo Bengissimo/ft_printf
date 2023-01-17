@@ -6,12 +6,11 @@
 /*   By: bkandemi <bkandemi@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:46:49 by bkandemi          #+#    #+#             */
-/*   Updated: 2022/03/29 21:17:13 by bkandemi         ###   ########.fr       */
+/*   Updated: 2023/01/17 15:12:47 by bkandemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h> //delete
 
 static	int	get_mantissa_zeroes(t_opts *opts, long double nb_dbl)
 {
@@ -51,9 +50,7 @@ static char	*join_float_str(t_opts *opts, long double nb_dbl, int zeroes)
 	int			i;
 	long double	nb_dec;
 
-	printf("nb_dec before round: %f\n", nb_dec);
 	nb_dec = round_to_prec(opts, &nb_dbl);
-	printf("nb_dec after round: %f\n", nb_dec);
 	str_float = ft_itoa_base((uintmax_t)nb_dbl, 10);
 	if (!(opts->prec == 0 && opts->dot == TRUE))
 		str_float = join_and_free_str(str_float, ".");
